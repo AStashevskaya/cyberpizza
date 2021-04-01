@@ -6,6 +6,8 @@ app.get('/', (req, res) => {
     res.send('Hello from cyberpizza!')
 })
 
+app.use(express.static('./dist'))
+
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
 })
