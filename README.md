@@ -1,1 +1,1 @@
-deploy:  https://ciberpizza.herokuapp.com/
+deploy - https://ciberpizza.herokuapp.com/
