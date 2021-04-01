@@ -1,7 +1,7 @@
 {
   "name": "pizza1",
   "version": "1.0.0",
-  "description": "��#\u0000 \u0000c\u0000y\u0000b\u0000e\u0000r\u0000p\u0000i\u0000z\u0000z\u0000a\u0000\r\u0000 \u0000",
+  "description":"CYBERPIZZA",
   "main": "index.js",
   "scripts": {
     "start": "node server"
