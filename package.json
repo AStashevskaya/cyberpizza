@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/AStashevskaya/cyberpizza/issues"
   },
-  "homepage": "https://github.com/AStashevskaya/cyberpizza#readme"
+  "homepage": "https://github.com/AStashevskaya/cyberpizza#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
