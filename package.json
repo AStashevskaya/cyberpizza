@@ -4,8 +4,7 @@
   "description": "CYBERPIZZA",
   "main": "index.js",
   "scripts": {
-    "start": "webpack serve",
-    "client:watch": "webpack --mode development --watch",
+    "client:watch": "webpack serve --hot --mode development",
     "client:build": "webpack --mode production",
     "server:watch": "nodemon server --watch server"
   },
