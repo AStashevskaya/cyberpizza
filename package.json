@@ -5,9 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node server",
-    "build": "webpack",
+    "build": "webpack --mode production",
     "client:watch": "webpack serve --hot --mode development",
-    "client:build": "webpack --mode production",
     "server:watch": "nodemon server --watch server"
   },
   "heroku-run-build-script": true,
