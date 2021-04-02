@@ -5,10 +5,12 @@
   "main": "index.js",
   "scripts": {
     "start": "node server",
+    "build": "webpack",
     "client:watch": "webpack serve --hot --mode development",
     "client:build": "webpack --mode production",
     "server:watch": "nodemon server --watch server"
   },
+  "heroku-run-build-script": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AStashevskaya/cyberpizza.git"
