@@ -4,6 +4,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
+require('dotenv').config()
+
 module.exports = (env, options) => {
   const isProd = options.mode === 'production'
 
@@ -22,6 +24,9 @@ module.exports = (env, options) => {
       compress: true,
       hot: true,
       port: 8080,
+      proxy: {
+       '/' : "http://localhost:3000"
+      },
     },
     resolve: {
       extensions: ['.js', '.jsx'],

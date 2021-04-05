@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node server",
     "build": "webpack --mode production",
+    "db:seed": "node client/sendProducts.js",
     "client:watch": "webpack serve --hot --mode development",
     "server:watch": "nodemon server --watch server"
   },
@@ -21,7 +22,11 @@
   },
   "homepage": "https://github.com/AStashevskaya/cyberpizza#readme",
   "dependencies": {
+    "axios": "^0.21.1",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "mongoose": "^5.12.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-hot-loader": "^4.13.0"
@@ -32,6 +37,7 @@
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-react": "^7.12.10",
     "babel-loader": "^8.2.1",
+    "babel-polyfill": "^6.26.0",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^5.2.0",
     "html-webpack-plugin": "^5.3.1",
