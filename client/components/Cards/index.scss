@@ -1,0 +1,8 @@
+@import '../../styles/variables';
+
+.container {
+    &_cards {
+      @include rowFlex(space-evenly, flex-start);
+      width: 70%;
+    }
+}

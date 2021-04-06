@@ -1,0 +1,11 @@
+@import '_reset';
+@import '_variables';
+
+
+#root {
+    @include equalSides(100%);
+
+    &>div {
+    @include equalSides(100%)
+    }
+}

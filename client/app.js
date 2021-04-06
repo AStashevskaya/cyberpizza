@@ -1,23 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { hot } from 'react-hot-loader/root'
 
-import { fetchPizza } from './api/index'
+import MainPage from './pages/main'
 
 const App = () => {
-  const [pizzaData, setPizzaData] = useState([])
 
-  useEffect(() => {
-    async function getData() {
-      const response = await fetchPizza()
-      const { data } = await response
-      console.log(data)
-      if (data) setPizzaData([...data])
-    }
-
-    getData()
-  }, [])
-
-  return <div>Hello from react cyberpizza!</div>
+  return <div>
+    <Router>
+      <Switch>
+      <Route exact path="/" component={MainPage} />
+      </Switch>
+    </Router>
+  </div>
 }
 
 export default hot(App)

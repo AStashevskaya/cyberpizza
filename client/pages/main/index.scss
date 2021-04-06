@@ -1,0 +1,8 @@
+@import '../../styles/variables';
+
+.page__main {
+    min-height: 100vh;
+    max-height: 100%;
+    @include colomnFlex(space-between, flex-end);
+    width: 100%
+}

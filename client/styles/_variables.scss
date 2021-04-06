@@ -1,0 +1,46 @@
+$color-primary: #F1CDB3;
+$color-primary-light: #FDDCC4;
+
+@mixin colomnFlex($j-c: center, $a-i: center) {
+    display: flex;
+    flex-direction: column;
+    justify-content: $j-c;
+    align-items: $a-i;
+}
+
+@mixin rowFlex($j-c: center, $a-i: center) {
+    display: flex;
+    justify-content: $j-c;
+    align-items: $a-i;
+}
+
+@mixin fontA {
+    font-family: Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+}
+
+@mixin fixed($pos) {
+  position: $pos;
+  top: 0;
+  bottom: 0;
+}
+
+@mixin equalSides($size) {
+  width: $size;
+  height: $size;
+}
+
+@mixin roundLink($sz: 45px){
+    width: $sz;
+    height: $sz;
+    border-radius: 50%;
+}
+
+@mixin activeLink {
+    border: solid 0.2rem $color-primary;
+    color: #fff;
+    &:hover{
+      background-color:  $color-primary-light;
+      border: solid 0.2rem $color-primary-light;
+  }}
