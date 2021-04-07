@@ -1,17 +1,31 @@
-import React from 'react';
+import React from 'react'
+import { Link } from 'react-router-dom'
 
-import Category from '../Category'
-import './index.scss'
+import './sideBar.scss'
 
 const SideBar = () => {
+  const categories = [
+    {
+      title: 'pizza',
+      path: '/',
+    },
 
-    return (
-        <div className="sidebar">
-        <span>catigories:</span>
-        <Category text={'pizzas'} path={'/'} />
-        <Category text={'drinks'} path={'/'} />
-        </div>
-    )
+    {
+      title: 'drinks',
+      path: '/',
+    },
+  ]
+
+  return (
+    <div className="sidebar">
+      <span>categories:</span>
+      {categories.map((el, idx) => (
+        <Link to={el.path} key={idx.toString()}>
+          {el.title}
+        </Link>
+      ))}
+    </div>
+  )
 }
 
-export default SideBar;
+export default SideBar

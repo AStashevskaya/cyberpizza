@@ -1,0 +1,33 @@
+@import '../../styles/variables';
+
+.display {
+  @include rowFlex(space-between);
+  min-width: 300px;
+  width: 30%;
+
+  &__status {
+    @include roundLink(90px);
+    @include rowFlex(center, center);
+    background-color: $color-sideBar;
+    position: relative;
+    color: $color-text-header;
+    font-size: 25px;
+
+    &>span {
+      position: absolute;
+      text-transform: uppercase;
+      transform: translateX(75%);
+      min-width: 125px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+  }
+
+  &__counter {
+    @include roundLink(30px);
+    @include rowFlex(center, center);
+    background-color: $color-link;
+    color: #fff;
+    margin-left: 10px;
+  }
+}

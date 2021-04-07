@@ -1,29 +1,38 @@
-$color-primary: #F1CDB3;
-$color-primary-light: #FDDCC4;
+$color-primary: #f1cdb3;
+$color-primary-light: #fddcc4;
+$color-sideBar: #ffdf8c;
+$color-link: #ff7870;
+$color-text-header: #27201b;
+$color-text-text: #848484;
+
+$sidebar-width-768: 350px;
+
+
 
 @mixin colomnFlex($j-c: center, $a-i: center) {
-    display: flex;
-    flex-direction: column;
-    justify-content: $j-c;
-    align-items: $a-i;
+  display: flex;
+  flex-direction: column;
+  justify-content: $j-c;
+  align-items: $a-i;
 }
 
 @mixin rowFlex($j-c: center, $a-i: center) {
-    display: flex;
-    justify-content: $j-c;
-    align-items: $a-i;
+  display: flex;
+  justify-content: $j-c;
+  align-items: $a-i;
 }
 
 @mixin fontA {
-    font-family: Arial, sans-serif;
-    font-style: normal;
-    font-weight: normal;
+  font-family: Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
 }
 
 @mixin fixed($pos) {
   position: $pos;
   top: 0;
   bottom: 0;
+  left: 0;
 }
 
 @mixin equalSides($size) {
@@ -31,16 +40,18 @@ $color-primary-light: #FDDCC4;
   height: $size;
 }
 
-@mixin roundLink($sz: 45px){
-    width: $sz;
-    height: $sz;
-    border-radius: 50%;
+@mixin roundLink($sz: 45px) {
+  width: $sz;
+  height: $sz;
+  border-radius: 50%;
 }
 
 @mixin activeLink {
-    border: solid 0.2rem $color-primary;
-    color: #fff;
-    &:hover{
-      background-color:  $color-primary-light;
-      border: solid 0.2rem $color-primary-light;
-  }}
+  background-color: $color-link;
+  opacity: 1;
+  color: #fff;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.8;
+  }
+}

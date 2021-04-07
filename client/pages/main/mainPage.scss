@@ -1,0 +1,13 @@
+@import '../../styles/variables';
+
+.page_main {
+  display: flex;
+  justify-content: flex-end;
+  min-height: 100vh;
+  max-height: 100%;
+
+  main {
+    z-index: 10;
+    width: 105%;
+  }
+}

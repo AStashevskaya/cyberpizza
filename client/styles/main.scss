@@ -1,11 +1,11 @@
 @import '_reset';
 @import '_variables';
-
+@import '_containers';
 
 #root {
-    @include equalSides(100%);
+  @include equalSides(100%);
 
-    &>div {
-    @include equalSides(100%)
-    }
+  & > div {
+    @include equalSides(100%);
+  }
 }

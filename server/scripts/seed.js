@@ -5,14 +5,14 @@ require('dotenv').config()
 const productsArr = [
   {
     name: 'Pepperoni',
-    image: '/files/pepperoni.jpg',
+    image: '/files/pepperoni.png',
     price: '12BYN',
     description: 'Pizza with pepperoni. No vegetarian',
     enabled: ['mozzarella', 'pepperoni'],
   },
   {
     name: '4 cheese',
-    image: '/files/4-cheese.jpg',
+    image: '/files/4-cheese.png',
     price: '14BYN',
     description: 'Cheesy pizza.Vegetarian',
     enabled: ['mozzarella', 'blue cheese'],

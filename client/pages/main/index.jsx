@@ -1,15 +1,20 @@
-import React from 'react';
+import React from 'react'
 import SideBar from '../../components/SideBar'
-import Cards from '../../components/Cards'
+import Header from '../../components/Header/Header'
+import Main from '../../components/Main'
 
-import './index.scss'
+import './mainPage.scss'
 
 const MainPage = () => {
-
-    return (<div className="page__main">
-<SideBar />
-<Cards />
-    </div>)
+  return (
+    <div className="page_main">
+      <div className="container_main">
+      <Header />
+      <Main />
+      </div> 
+      <SideBar />
+    </div>
+  )
 }
 
-export default MainPage;
+export default MainPage

@@ -1,0 +1,17 @@
+.container {
+    &_main {
+        @include colomnFlex(flex-start, flex-end);
+        width: calc(100% - #{$sidebar-width-768});
+    }
+
+    &_cards {
+        @include rowFlex(space-between, flex-start);
+        flex-wrap: wrap;
+        width: 100%;
+    }
+
+    &_hashtag {
+        @include rowFlex(flex-start, flex-start);
+        flex-wrap: wrap;
+    }
+}  
