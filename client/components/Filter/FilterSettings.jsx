@@ -4,7 +4,7 @@ import { VscSettings } from 'react-icons/vsc'
 const FilterSettings = () => {
 
     return (
-        <span>
+        <span className="filter__settings">
         All filters < VscSettings />
         </span>
     )

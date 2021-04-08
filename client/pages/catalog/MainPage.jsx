@@ -1,16 +1,16 @@
 import React from 'react'
 import SideBar from '../../components/SideBar'
 import Header from '../../components/Header/Header'
-import Main from '../../components/Main'
+import Catalog from '../../components/Catalog'
 
-import './mainPage.scss'
+import './MainPage.scss'
 
 const MainPage = () => {
   return (
     <div className="page_main">
       <div className="container_main">
       <Header />
-      <Main />
+      <Catalog />
       </div> 
       <SideBar />
     </div>

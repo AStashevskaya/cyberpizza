@@ -4,4 +4,8 @@ header {
   width: 100%;
   padding: 50px 35px 20px;
   @include rowFlex(space-between);
+
+  @media (max-width: 1024px) {
+  padding: 50px 25px 20px; 
+  }
 }

@@ -1,0 +1,27 @@
+@import '../../styles/variables';
+
+.page_main {
+  display: flex;
+  justify-content: flex-end;
+  min-height: 100vh;
+  max-height: 100%;
+
+  @media (max-width: 768px) {
+    width: 100%;
+      flex-direction: column;
+    justify-content: space-between;
+}
+
+  main {
+    z-index: 10;
+    width: 115%;
+    padding: 40px 25px 0;
+    max-width: 1200px;
+
+    @media (max-width: 768px) {
+      width: 100%;
+  }
+  }
+
+  
+}

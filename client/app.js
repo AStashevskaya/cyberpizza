@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { hot } from 'react-hot-loader/root'
 
-import MainPage from './pages/main'
+import CatalogPage from './pages/catalog'
 
 const App = () => {
   return (
     <div>
       <Router>
         <Switch>
-          <Route exact path="/" component={MainPage} />
+          <Route exact path="/" component={CatalogPage} />
         </Switch>
       </Router>
     </div>

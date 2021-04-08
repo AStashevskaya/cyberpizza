@@ -1,6 +1,6 @@
 import React from 'react'
 
-import OrderDisplay from '../OrderDisplay'
+import OrderDisplay from '../Order'
 import Filter from '../Filter'
 
 import './header.scss'

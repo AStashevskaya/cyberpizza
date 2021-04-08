@@ -1,11 +1,41 @@
 .container {
     &_main {
         @include colomnFlex(flex-start, flex-end);
-        width: calc(100% - #{$sidebar-width-768});
+        width: calc(100% - #{$sidebar-width-1024});
+
+        @media (max-width: 1024px) {
+            width: calc(100% - #{$sidebar-width-768});
+        }
+
+        @media (max-width: 768px) {
+            width: 100%;
+          }
+
+          @media (min-width: 1400px) {
+            align-items: center;
+          }
+
+          
     }
 
     &_cards {
         @include rowFlex(space-between, flex-start);
+        flex-wrap: wrap;
+        width: 100%;
+
+        @media (max-width: 768px) {
+         justify-content: center;
+        }
+    }
+
+    &_filter {
+        @include colomnFlex(flex-start, flex-start);
+        width: 370px;
+        height: 100%;
+    }
+
+    &_settings {
+        @include rowFlex(space-between, flex-end);
         flex-wrap: wrap;
         width: 100%;
     }

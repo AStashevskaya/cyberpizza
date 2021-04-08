@@ -1,9 +1,10 @@
 @import '../../styles/variables';
 
-.display {
+.order {
   @include rowFlex(space-between);
-  min-width: 300px;
-  width: 30%;
+  flex-shrink: 0;
+  width: 240px;
+  margin-left: 30px;
 
   &__status {
     @include roundLink(90px);
@@ -11,13 +12,13 @@
     background-color: $color-sideBar;
     position: relative;
     color: $color-text-header;
-    font-size: 25px;
+    font-size: 30px;
 
     &>span {
       position: absolute;
       text-transform: uppercase;
       transform: translateX(75%);
-      min-width: 125px;
+      width: 125px;
       font-size: 16px;
       font-weight: bold;
     }

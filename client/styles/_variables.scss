@@ -5,9 +5,13 @@ $color-link: #ff7870;
 $color-text-header: #27201b;
 $color-text-text: #848484;
 
-$sidebar-width-768: 350px;
+$sidebar-width-1024: 350px;
+$sidebar-width-768: 300px;
 
-
+// @font-face {
+//   font-family: Archivo;
+//   src: url(../assets/fonts/ArchivoBlack-Regular.ttf);
+// }
 
 @mixin colomnFlex($j-c: center, $a-i: center) {
   display: flex;
@@ -22,8 +26,8 @@ $sidebar-width-768: 350px;
   align-items: $a-i;
 }
 
-@mixin fontA {
-  font-family: Arial, sans-serif;
+@mixin fontHeader {
+  font-family: Archivo;
   font-style: normal;
   font-weight: normal;
 }
