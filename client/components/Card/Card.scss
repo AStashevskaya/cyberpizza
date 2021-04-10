@@ -29,6 +29,15 @@
     -webkit-border-radius: 50%;
     position: relative;
     margin-bottom: 30px;
+
+    & > button {
+      @include roundLink($plusBtn-size);
+      @include activeLink;
+      position: absolute;
+      font-size: 20px;
+      bottom: -$plusBtn-size / 2;
+      left: calc(200px / 2 - #{$plusBtn-size / 2});
+    }
     
     img {
         @include equalSides(100%); 

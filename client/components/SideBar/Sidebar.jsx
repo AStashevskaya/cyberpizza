@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import './sideBar.scss'
+import './SideBar.scss'
 
 const SideBar = () => {
   const categories = [
@@ -18,6 +18,7 @@ const SideBar = () => {
 
   return (
     <aside className="sidebar">
+      {/* <div className="background"></div>  */}
       <span>categories:</span>
       <nav >
         <ul className="sidebar__nav">

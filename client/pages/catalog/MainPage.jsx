@@ -8,7 +8,7 @@ import './MainPage.scss'
 const MainPage = () => {
   return (
     <div className="page_main">
-      <div className="container_main">
+      <div className="container_main container">
       <Header />
       <Catalog />
       </div> 

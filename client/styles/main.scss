@@ -4,6 +4,8 @@
 
 #root {
   @include equalSides(100%);
+  overflow: hidden;
+  height: 100vh;
 
   & > div {
     @include equalSides(100%);

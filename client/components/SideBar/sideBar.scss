@@ -2,20 +2,41 @@
 
 .sidebar {
   @include fixed(fixed);
-  @include colomnFlex(center, flex-start);
+  // position: absolute;
+  @include colomnFlex(flex-start, flex-start);
   flex-direction: column;
-  width: $sidebar-width-1024;
+  // width: $sidebar-width-1024;
+  width: calc((100% - 1280px) / 2 + #{$sidebar-width-1024});
   background-color: $color-sideBar;
   padding-left: 35px;
+  padding-top: 160px;
 
-  @media (max-width: 1024px) {
-    width: $sidebar-width-768;
+  @media (max-width: 1300px) {
+    // width: $sidebar-width-768;
+    width: calc((100% - 1280px) / 2 + #{$sidebar-width-768});
+}
+
+@media (max-width: 1300px) {
+  width: $sidebar-width-1024;
+  // width: calc((100% - 1280px) / 2 + #{$sidebar-width-768});
+}
+
+@media (max-width: 1024px) {
+  width: $sidebar-width-768;
+  // width: calc((100% - 1280px) / 2 + #{$sidebar-width-768});
 }
 
 @media (max-width: 768px) {
   position: relative;
+  padding-top: 20px;
   width: 100%;
 }
+
+// .background {
+//   @include fixed(fixed);
+//   width: calc((100% - 1280px) / 2 + 200px);
+//   background-color: $color-sideBar;
+// }
 
 nav {
   width: 100%;

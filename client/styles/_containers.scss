@@ -1,7 +1,8 @@
 .container {
     &_main {
         @include colomnFlex(flex-start, flex-end);
-        width: calc(100% - #{$sidebar-width-1024});
+        // width: calc(100% - #{$sidebar-width-1024});
+        margin: 0 auto;
 
         @media (max-width: 1024px) {
             width: calc(100% - #{$sidebar-width-768});
@@ -45,3 +46,44 @@
         flex-wrap: wrap;
     }
 }  
+
+.container {
+    width: 100%;
+
+      @media (max-width: 1400px) {
+      max-width: calc(1280px - #{$sidebar-width-1024});
+      margin: 0;
+    }
+
+    @media (max-width: 1280px) {
+        max-width: calc(1024px - #{$sidebar-width-1024});
+        margin: 0;
+      }
+
+  }
+
+
+  
+//   @media (min-width: 640px) {
+//     .container {
+//       max-width: 640px
+//     }
+//   }
+  
+//   @media (min-width: 768px) {
+//     .container {
+//       max-width: 768px
+//     }
+//   }
+  
+//   @media (min-width: 1024px) {
+//     .container {
+//       max-width: 1024px
+//     }
+//   }
+  
+  @media (min-width: 1600px) {
+    .container {
+      max-width: 1280px
+    }
+  }

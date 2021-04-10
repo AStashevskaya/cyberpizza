@@ -7,9 +7,10 @@ $color-text-text: #848484;
 
 $sidebar-width-1024: 350px;
 $sidebar-width-768: 300px;
+$plusBtn-size: 45px;
 
 // @font-face {
-//   font-family: Archivo;
+//   font-family: Archivo, sans-serif;
 //   src: url(../assets/fonts/ArchivoBlack-Regular.ttf);
 // }
 
@@ -55,7 +56,22 @@ $sidebar-width-768: 300px;
   opacity: 1;
   color: #fff;
   cursor: pointer;
+  transform: scale(1.0);
+  -webkit-transform: scale(1.0);
+  -moz-transform: scale(1.0);
+  -ms-transform: scale(1.0);
+  -o-transform: scale(1.0);
+  transition: all .3s ease-in;
+  -webkit-transition: all .3s ease-in;
+  -moz-transition: all .3s ease-in;
+  -ms-transition: all .3s ease-in;
+  -o-transition: all .3s ease-in;
+  
   &:hover {
-    opacity: 0.8;
-  }
+    transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    -o-transform: scale(1.2);
+}
 }

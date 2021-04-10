@@ -13,9 +13,10 @@ const Card = ({ item }) => {
     <div className="card">
       <div className="card__image">
       <img src={image} alt={name} />
-      </div>
       <button>+</button>
-      <div className="card__price">{price}</div>
+      </div>
+
+      <div className="card__price">{`${price}$`}</div>
       <div className="card__title">{name}</div>
       <div className="card__description">{description}</div>
     </div>
