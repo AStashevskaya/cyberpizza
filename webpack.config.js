@@ -27,7 +27,7 @@ module.exports = (env, options) => {
       },
     },
     resolve: {
-      extensions: ['.js', '.jsx'],
+      extensions: ['.js', '.jsx', '.scss'],
     },
     module: {
       rules: [
