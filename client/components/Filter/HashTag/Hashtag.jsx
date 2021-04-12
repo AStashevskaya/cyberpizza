@@ -1,6 +1,6 @@
 import React from 'react'
 
-import './hashtag.scss'
+import './Hashtag.scss'
 
 const Hashtag = ({ text }) => <span className="hashtag">{`#${text}`}</span>
 
