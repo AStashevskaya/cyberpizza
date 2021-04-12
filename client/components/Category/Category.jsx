@@ -1,6 +1,6 @@
 import React from 'react'
 
-import './category.scss'
+import './Category.scss'
 
 const Category = ({ text }) => {
   return <div className="category">{text}</div>
