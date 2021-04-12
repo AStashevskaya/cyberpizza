@@ -18,7 +18,6 @@ const SideBar = () => {
 
   return (
     <aside className="sidebar">
-      {/* <div className="background"></div>  */}
       <span>categories:</span>
       <nav>
         <ul className="sidebar__nav">
