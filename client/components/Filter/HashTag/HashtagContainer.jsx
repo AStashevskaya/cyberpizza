@@ -1,12 +1,12 @@
-import React from 'react';
+import React from 'react'
 
 import Hashtag from './Hashtag'
 
-const HashtagContainer = () => 
-(    <div className="container_hashtag">
-   <Hashtag text={'vegetarian'} />
-   <Hashtag text={'vegan'} />
-    </div>)
+const HashtagContainer = () => (
+  <div className="container_hashtag">
+    <Hashtag text={'vegetarian'} />
+    <Hashtag text={'vegan'} />
+  </div>
+)
 
-
-export default HashtagContainer;
+export default HashtagContainer

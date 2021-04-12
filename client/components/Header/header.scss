@@ -5,24 +5,33 @@ header {
   padding: 50px 35px 20px;
   @include rowFlex(space-between);
 
-  @media (max-width: 1024px) {
-  padding: 50px 25px 20px; 
-  padding-left: $sidebar-width-768 + 20px;
-  }
-
-  @media (max-width: 1400px) {
-    padding-left: calc((100% - 1280px) / 2 + #{$sidebar-width-768});
-  }
-
-  @media (max-width: 1200px) {
-    padding-left: calc((100% - 1024px) / 2 + #{$sidebar-width-768});
+  @media (max-width: 1600px) {
+    padding-left: 15%;
   }
 
   @media (max-width: 1024px) {
-    padding-left: calc((100% - 960px) / 2 + #{$sidebar-width-768});
+    padding: 50px 25px 20px;
+    padding-left: $sidebar-width-768 + 20px;
   }
 
-  @media (min-width: 1400px) {
+  @media (max-width: 1280px) {
+    padding-left: calc(10% + 60px);
+    margin: 0;
+  }
+
+  @media (max-width: 1024px) {
+    padding-left: calc(10% + 80px);
+  }
+
+  @media (max-width: 768px) {
+    padding-left: 25px;
+  }
+
+  @media (max-width: 560px) {
+    flex-direction: column-reverse;
+  }
+
+  @media (min-width: 1600px) {
     padding-left: $sidebar-width-1024 + 20px;
   }
 }

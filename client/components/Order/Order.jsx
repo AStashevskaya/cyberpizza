@@ -1,5 +1,5 @@
 import React from 'react'
-import {BiDish} from 'react-icons/bi'
+import { BiDish } from 'react-icons/bi'
 
 import './Order.scss'
 

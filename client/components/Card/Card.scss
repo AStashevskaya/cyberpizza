@@ -5,13 +5,13 @@
   width: 300px;
   margin-bottom: 50px;
 
-  @media(max-width: 960px) {
+  @media (max-width: 960px) {
     width: 250px;
-}
+  }
 
-@media(max-width: 768px) {
-  width: 300px;
-}
+  @media (max-width: 768px) {
+    width: 300px;
+  }
 
   & > button {
     @include roundLink;
@@ -38,32 +38,32 @@
       bottom: -$plusBtn-size / 2;
       left: calc(200px / 2 - #{$plusBtn-size / 2});
     }
-    
+
     img {
-        @include equalSides(100%); 
-        object-fit: cover;
-        // box-shadow: 0px 27px 36px -7px rgb(0 0 0 / 16%);
-        // -webkit-box-shadow: 2px 60px 38px -19px rgb(0 0 0 / 16%);
+      @include equalSides(100%);
+      object-fit: cover;
+      // box-shadow: 0px 27px 36px -7px rgb(0 0 0 / 16%);
+      // -webkit-box-shadow: 2px 60px 38px -19px rgb(0 0 0 / 16%);
     }
   }
 
-&__title {
+  &__title {
     font-size: 30px;
     font-weight: bold;
     color: $color-text-header;
     margin-bottom: 10px;
-}
+  }
 
-&__price {
+  &__price {
     font-size: 20px;
     color: #212121;
     font-weight: 100;
-}
+  }
 
-&__description {
+  &__description {
     font-size: 16px;
     color: $color-text-header;
     text-align: center;
     opacity: 0.6;
-}
+  }
 }

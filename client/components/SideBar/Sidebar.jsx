@@ -20,15 +20,18 @@ const SideBar = () => {
     <aside className="sidebar">
       {/* <div className="background"></div>  */}
       <span>categories:</span>
-      <nav >
+      <nav>
         <ul className="sidebar__nav">
-        {categories.map((el, idx) => (
-        <li className={`sidebar__nav-link ${el.title === 'pizza' ? 'active' : ''}`} key={idx.toString()}>
-   <Link to={el.path} >
-          {el.title}
-        </Link>
-        </li>   
-      ))}
+          {categories.map((el, idx) => (
+            <li
+              className={`sidebar__nav-link ${
+                el.title === 'pizza' ? 'active' : ''
+              }`}
+              key={idx.toString()}
+            >
+              <Link to={el.path}>{el.title}</Link>
+            </li>
+          ))}
         </ul>
       </nav>
     </aside>

@@ -12,8 +12,8 @@ const Card = ({ item }) => {
   return (
     <div className="card">
       <div className="card__image">
-      <img src={image} alt={name} />
-      <button>+</button>
+        <img src={image} alt={name} />
+        <button>+</button>
       </div>
 
       <div className="card__price">{`${price}$`}</div>

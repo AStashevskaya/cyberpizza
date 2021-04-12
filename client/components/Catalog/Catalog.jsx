@@ -4,11 +4,11 @@ import Cards from '../Cards'
 
 import './Catalog.scss'
 
-const Catalog = () => {
+const Catalog = ({ data }) => {
   return (
     <div className="catalog">
       <Category text="pizza" />
-      <Cards />
+      <Cards cards={data} />
     </div>
   )
 }

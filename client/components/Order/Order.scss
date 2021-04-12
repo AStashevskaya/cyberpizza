@@ -14,7 +14,7 @@
     color: $color-text-header;
     font-size: 30px;
 
-    &>span {
+    & > span {
       position: absolute;
       text-transform: uppercase;
       transform: translateX(75%);
@@ -30,5 +30,9 @@
     background-color: $color-link;
     color: #fff;
     margin-left: 10px;
+  }
+
+  @media (max-width: 560px) {
+    align-self: flex-end;
   }
 }
