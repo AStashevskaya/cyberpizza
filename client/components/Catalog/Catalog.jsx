@@ -2,13 +2,15 @@ import React from 'react'
 import Category from '../Category'
 import Cards from '../Cards'
 
-const Main = () => {
+import './Catalog.scss'
+
+const Catalog = () => {
   return (
-    <main>
+    <div className="catalog">
       <Category text="pizza" />
       <Cards />
-    </main>
+    </div>
   )
 }
 
-export default Main
+export default Catalog
