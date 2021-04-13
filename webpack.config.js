@@ -28,7 +28,7 @@ module.exports = (env, options) => {
     },
     resolve: {
        alias: {
-      components: path.resolve(__dirname, 'client/components'),
+      components: path.resolve(__dirname, './client/components'),
     },
       extensions: ['.js', '.jsx'],
     },
@@ -68,8 +68,8 @@ module.exports = (env, options) => {
         filename: 'index.html',
       }),
       new MiniCssExtractPlugin({
-        filename: 'main.css',
-        chunkFilename: '[id].css',
+          filename: 'styles.css',
+          chunkFilename: '[id].css',
       }),
     ],
   }
