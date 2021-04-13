@@ -27,7 +27,7 @@ module.exports = (env, options) => {
       },
     },
     resolve: {
-      extensions: ['.js', '.jsx', '.scss'],
+      extensions: ['.js', '.jsx'],
     },
     module: {
       rules: [
@@ -66,7 +66,7 @@ module.exports = (env, options) => {
       }),
       new MiniCssExtractPlugin({
         filename: 'main.css',
-        chunkFilename: 'main.css',
+        chunkFilename: '[id].css',
       }),
     ],
   }
