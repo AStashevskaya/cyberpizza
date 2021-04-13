@@ -9,7 +9,7 @@ const App = () => {
     <div>
       <Router hashType="noslash">
         <Switch>
-          <Route exact path="/" component={CatalogPage} />
+          <Route exact path="#/" component={CatalogPage} />
         </Switch>
       </Router>
     </div>
