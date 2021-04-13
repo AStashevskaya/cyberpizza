@@ -24,6 +24,7 @@ async function start() {
     app.use(bodyParser.json({ extended: true }))
     app.use(bodyParser.urlencoded({ extended: true }))
     app.use(express.static('dist'))
+    app.get('*', (req, res) => res.sendFile(path.resolve('dist', 'index.html')))
     app.use('/files', express.static(path.join(__dirname, './files')))
     app.use(productsRouts)
     app.listen(port, 'localhost', () => {
