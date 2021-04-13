@@ -25,7 +25,7 @@ async function start() {
     app.use(bodyParser.urlencoded({ extended: true }))
     app.use(express.static('dist'))
     app.get("/*", function(req, res) {
-      res.sendFile(path.join(__dirname, "dist/index.html"));
+      res.sendFile(path.join(__dirname, "./client/index.html"));
     });
     app.use('/files', express.static(path.join(__dirname, './files')))
     app.use(productsRouts)
