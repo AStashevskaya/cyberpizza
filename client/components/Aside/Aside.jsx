@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-// import './Sidebar.scss'
+import './Aside.scss'
 
 const SideBar = () => {
   const categories = [
