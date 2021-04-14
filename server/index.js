@@ -27,9 +27,6 @@ async function start() {
     app.use('/files', express.static(path.join(__dirname, './files')))
     app.use(productsRouts)
     app.listen(port, () => {
-      if (err) {
-        throw err
-      }
       console.log(`server is listing in ${port} - ${env} environment`)
     })
   } catch (error) {
