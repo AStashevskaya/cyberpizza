@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import SideBar from '../../components/SideBar'
+
 import Header from '../../components/Header/Header'
 import Catalog from '../../components/Catalog'
+import Sidebar from '../../components/Sidebar'
 
 import { fetchPizza } from '../../api/index'
 
@@ -34,7 +35,7 @@ const MainPage = () => {
             <Header />
             <Catalog data={pizzaData} />
           </div>
-          <SideBar />
+          <Sidebar />
         </>
       )}
     </div>

@@ -7,7 +7,7 @@ import './Filter.scss'
 const Filter = () => {
   return (
     <div className="container_filter">
-      <span className="filter__title">Filters :</span>
+      <span className="filter__title">Filters:</span>
       <div className="container_settings">
         <HashtagContainer />
         <FilterSettings />

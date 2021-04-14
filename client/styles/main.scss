@@ -1,6 +1,7 @@
 @import '_reset';
 @import '_variables';
 @import '_containers';
+@import 'normalize.css';
 
 #root {
   @include equalSides(100%);

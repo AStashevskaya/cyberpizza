@@ -21,14 +21,14 @@ const SideBar = () => {
       <span>categories:</span>
       <nav>
         <ul className="sidebar__nav">
-          {categories.map((el, idx) => (
+          {categories.map((category) => (
             <li
               className={`sidebar__nav-link ${
-                el.title === 'pizza' ? 'active' : ''
+                category.title === 'pizza' ? 'active' : ''
               }`}
-              key={idx.toString()}
+              key={category.title}
             >
-              <Link to={el.path}>{el.title}</Link>
+              <Link to={category.path}>{category.title}</Link>
             </li>
           ))}
         </ul>

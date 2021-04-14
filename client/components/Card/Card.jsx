@@ -3,11 +3,7 @@ import React from 'react'
 import './Card.scss'
 
 const Card = ({ item }) => {
-  const { name, image, price, description, enabled } = item
-
-  const onAdd = () => {
-    console.log('plus one')
-  }
+  const { name, image, price, description } = item
 
   return (
     <div className="card">

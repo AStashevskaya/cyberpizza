@@ -1,11 +1,6 @@
 .catalog {
   z-index: 10;
-  // width: 115%;
   width: 100%;
   padding: 40px 25px 0;
   max-width: 1200px;
-
-  @media (max-width: 768px) {
-    width: 100%;
-  }
 }

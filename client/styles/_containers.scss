@@ -3,38 +3,38 @@
     @include colomnFlex(flex-start, flex-end);
     margin: 0;
 
-    @media (max-width: 1024px) {
+    @media (max-width: $screen-1024) {
       width: calc(100% - #{$sidebar-width-768});
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: $screen-768) {
       width: 100%;
     }
 
-    @media (min-width: 1400px) {
+    @media (min-width: $screen-1400) {
       align-items: center;
     }
 
-    @media (max-width: 1400px) {
+    @media (max-width: $screen-1400) {
       width: calc(1400px - #{$sidebar-width-1024} + 50px);
       margin: 0;
     }
 
-    @media (max-width: 1280px) {
+    @media (max-width: $screen-1280) {
       width: calc(100% - #{$sidebar-width-1024} + 100px);
 
       margin: 0;
     }
 
-    @media (max-width: 1024px) {
+    @media (max-width: $screen-1024) {
       width: calc(100% - #{$sidebar-width-768} + 100px);
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: $screen-768) {
       width: 100%;
     }
 
-    @media (min-width: 1600px) {
+    @media (min-width: $screen-1600) {
       max-width: 1200px;
       margin: 0 auto;
     }
@@ -45,7 +45,7 @@
     flex-wrap: wrap;
     width: 100%;
 
-    @media (max-width: 768px) {
+    @media (max-width: $screen-768) {
       justify-content: center;
     }
   }
@@ -55,7 +55,7 @@
     width: 370px;
     height: 100%;
 
-    @media (max-width: 560px) {
+    @media (max-width: $screen-560) {
       width: 100%;
     }
   }
