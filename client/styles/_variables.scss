@@ -21,11 +21,6 @@ $screen-768: 768px;
 $screen-560: 560px;
 $screen-768: 768px;
 
-// @font-face {
-//   font-family: Archivo, sans-serif;
-//   src: url(../assets/fonts/ArchivoBlack-Regular.ttf);
-// }
-
 @mixin colomnFlex($j-c: center, $a-i: center) {
   display: flex;
   flex-direction: column;

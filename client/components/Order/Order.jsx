@@ -1,13 +1,14 @@
 import React from 'react'
-import { BiDish } from 'react-icons/bi'
 
+import dish from '../../assets/icons/dish.svg'
 import './Order.scss'
 
 const OrderDisplay = () => {
   return (
     <div className="order">
       <div className="order__status">
-        <BiDish />
+        {/* <BiDish /> */}
+        <img src={dish} alt='dish' />
         <span>order status</span>
       </div>
 

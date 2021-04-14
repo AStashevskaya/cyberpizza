@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import Header from '../../components/Header/Header'
 import Catalog from '../../components/Catalog'
-import Sidebar from '../../components/Aside'
+import Sidebar from '../../components/Sidebar'
 
 import { fetchPizza } from '../../api/index'
 

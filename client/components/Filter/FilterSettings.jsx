@@ -1,10 +1,12 @@
 import React from 'react'
-import { VscSettings } from 'react-icons/vsc'
+
+import settings from '../../assets/icons/settings.svg'
 
 const FilterSettings = () => {
   return (
     <span className="filter__settings">
-      All filters <VscSettings />
+      All filters 
+      <img src={settings} alt='settings' />
     </span>
   )
 }
