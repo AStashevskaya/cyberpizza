@@ -1,0 +1,73 @@
+.sidebar {
+    @include fixed(fixed);
+    @include colomnFlex(flex-start, flex-start);
+    width: calc((100% - 1280px) / 2 + #{$sidebar-width-1024});
+    background-color: $color-sideBar;
+    padding-left: 35px;
+    padding-top: 160px;
+  
+    @media (min-width: $screen-1280) {
+      width: calc((100% - 1280px) / 2 + #{$sidebar-width-768});
+    }
+  
+    @media (max-width: $screen-1280) {
+      width: $sidebar-width-1024;
+    }
+  
+    @media (max-width: $screen-1024) {
+      width: $sidebar-width-768;
+    }
+  
+    @media (max-width: $screen-768) {
+      position: relative;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      width: 100%;
+    }
+  
+    nav {
+      width: 100%;
+    }
+  
+    & > span {
+      opacity: 0.6;
+      text-transform: uppercase;
+    }
+  
+    &__nav {
+      @include colomnFlex(flex-end, flex-start);
+      width: 100%;
+    }
+  
+    &__nav-link {
+      height: 50px;
+      width: 100%;
+      list-style: none;
+  
+      a {
+        @include colomnFlex(flex-end, flex-start);
+        @include equalSides(100%);
+        font-size: 20px;
+        color: $color-text-header;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+    }
+  
+    &__nav-link.active {
+      position: relative;
+      padding-left: 30px;
+  
+      &:before {
+        content: '';
+        display: block;
+        width: 20px;
+        height: 1px;
+        background: $color-card-header;
+        left: 0;
+        top: 75%;
+        position: absolute;
+      }
+    }
+  }
+  

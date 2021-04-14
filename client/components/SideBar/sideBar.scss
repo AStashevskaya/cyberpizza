@@ -44,6 +44,7 @@
   &__nav-link {
     height: 50px;
     width: 100%;
+    list-style: none;
 
     a {
       @include colomnFlex(flex-end, flex-start);

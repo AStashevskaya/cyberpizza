@@ -1,7 +1,6 @@
-@import '_reset';
 @import '_variables';
 @import '_containers';
-@import 'normalize.css';
+@import '_sidebar.scss';
 
 #root {
   @include equalSides(100%);
@@ -11,4 +10,25 @@
   & > div {
     @include equalSides(100%);
   }
+}
+
+html {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+a,
+a:visited {
+  text-decoration: none;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  font-size: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
 }

@@ -4,6 +4,8 @@
 header {
   width: 100%;
   padding: 50px 35px 20px;
+  box-sizing: border-box;
+  
   @include rowFlex(space-between);
 
   @media (max-width: $screen-1600) {
