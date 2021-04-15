@@ -7,7 +7,6 @@ const OrderDisplay = () => {
   return (
     <div className="order">
       <div className="order__status">
-        {/* <BiDish /> */}
         <img src={dish} alt='dish' />
         <span>order status</span>
       </div>

@@ -3,13 +3,13 @@
 .sidebar {
   @include fixed(fixed);
   @include colomnFlex(flex-start, flex-start);
-  width: calc((100% - 1280px) / 2 + #{$sidebar-width-1024});
+  width: calc((100% - #{$screen-1280}) / 2 + #{$sidebar-width-1024});
   background-color: $color-sideBar;
   padding-left: 35px;
   padding-top: 160px;
 
   @media (min-width: $screen-1280) {
-    width: calc((100% - 1280px) / 2 + #{$sidebar-width-768});
+    width: calc((100% - #{$screen-1280}) / 2 + #{$sidebar-width-768});
   }
 
   @media (max-width: $screen-1280) {

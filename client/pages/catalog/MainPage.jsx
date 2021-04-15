@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import Header from '../../components/Header/Header'
+import Header from '../../components/Header'
 import Catalog from '../../components/Catalog'
 import Sidebar from '../../components/Sidebar'
 
