@@ -23,9 +23,7 @@ const SideBar = () => {
         <ul className="sidebar__nav">
           {categories.map((category) => (
             <li
-              className={`sidebar__nav-link ${
-                category.title === 'pizza' ? 'active' : ''
-              }`}
+              className={`sidebar__nav-link ${category.title === 'pizza' ? 'active' : ''}`}
               key={category.title}
             >
               <Link to={category.path}>{category.title}</Link>

@@ -1,4 +1,5 @@
 import React from 'react'
+import pt from 'prop-types'
 
 import Card from '../Card'
 
@@ -10,6 +11,14 @@ const Cards = ({ cards }) => {
       ))}
     </div>
   )
+}
+
+Cards.propTypes = {
+  cards: pt.array,
+}
+
+Cards.defaultProps = {
+  cards: [],
 }
 
 export default Cards

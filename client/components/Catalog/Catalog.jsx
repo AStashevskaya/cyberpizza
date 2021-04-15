@@ -1,4 +1,6 @@
 import React from 'react'
+import pt from 'prop-types'
+
 import Category from '../Category'
 import Cards from '../Cards'
 
@@ -11,6 +13,10 @@ const Catalog = ({ data }) => {
       <Cards cards={data} />
     </div>
   )
+}
+
+Catalog.propTypes = {
+  data: pt.array,
 }
 
 export default Catalog
