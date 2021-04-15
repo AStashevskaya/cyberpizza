@@ -1,0 +1,10 @@
+@import '../../../styles/variables';
+
+.hashtag {
+  text-transform: uppercase;
+  color: $color-text-header;
+  font-size: 16px;
+  margin-right: 10px;
+  letter-spacing: 0.5px;
+  font-weight: bold;
+}

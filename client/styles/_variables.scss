@@ -1,0 +1,84 @@
+$color-primary: #f1cdb3;
+$color-primary-light: #fddcc4;
+$color-sideBar: #ffdf8c;
+$color-link: #ff7870;
+$color-text-header: #27201b;
+$color-text-text: #848484;
+$color-card-header: #212121;
+$color-counter: #fff;
+
+
+$sidebar-width-1024: 350px;
+$sidebar-width-768: 300px;
+$plusBtn-size: 45px;
+
+$screen-1600: 1600px;
+$screen-1400: 1400px;
+$screen-1280: 1280px;
+$screen-1024: 1024px;
+$screen-960: 960px;
+$screen-768: 768px;
+$screen-560: 560px;
+$screen-768: 768px;
+
+@mixin colomnFlex($j-c: center, $a-i: center) {
+  display: flex;
+  flex-direction: column;
+  justify-content: $j-c;
+  align-items: $a-i;
+}
+
+@mixin rowFlex($j-c: center, $a-i: center) {
+  display: flex;
+  justify-content: $j-c;
+  align-items: $a-i;
+}
+
+@mixin fontHeader {
+  font-family: Archivo;
+  font-style: normal;
+  font-weight: normal;
+}
+
+@mixin fixed($pos) {
+  position: $pos;
+  top: 0;
+  bottom: 0;
+  left: 0;
+}
+
+@mixin equalSides($size) {
+  width: $size;
+  height: $size;
+}
+
+@mixin roundLink($sz: 45px) {
+  width: $sz;
+  height: $sz;
+  border-radius: 50%;
+}
+
+@mixin activeLink {
+  background-color: $color-link;
+  opacity: 1;
+  color: #fff;
+  cursor: pointer;
+  transform: scale(1);
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  -ms-transform: scale(1);
+  -o-transform: scale(1);
+  transition: all 0.3s ease-in;
+  -webkit-transition: all 0.3s ease-in;
+  -moz-transition: all 0.3s ease-in;
+  -ms-transition: all 0.3s ease-in;
+  -o-transition: all 0.3s ease-in;
+
+  &:hover {
+    transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    -o-transform: scale(1.2);
+  }
+}

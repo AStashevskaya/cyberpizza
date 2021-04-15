@@ -1,0 +1,60 @@
+@import '../../styles/variables';
+
+.card {
+  @include colomnFlex(center, center);
+  width: 300px;
+  margin-bottom: 50px;
+
+  @media (max-width: $screen-960) {
+    width: 250px;
+  }
+
+  @media (max-width: $screen-768) {
+    width: 300px;
+  }
+
+  &__image {
+    @include equalSides(200px);
+    box-shadow: 0px 27px 36px -7px rgb(0 0 0 / 16%);
+    -webkit-box-shadow: 2px 60px 38px -19px rgb(0 0 0 / 16%);
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    position: relative;
+    margin-bottom: 30px;
+
+    & > button {
+      @include roundLink($plusBtn-size);
+      @include activeLink;
+      position: absolute;
+      font-size: 20px;
+      border: 0;
+      bottom: -$plusBtn-size / 2;
+      left: calc(200px / 2 - #{$plusBtn-size / 2});
+    }
+
+    img {
+      @include equalSides(100%);
+      object-fit: cover;
+    }
+  }
+
+  &__title {
+    font-size: 30px;
+    font-weight: bold;
+    color: $color-text-header;
+    margin-bottom: 10px;
+  }
+
+  &__price {
+    font-size: 20px;
+    color: $color-card-header;
+    font-weight: 100;
+  }
+
+  &__description {
+    font-size: 16px;
+    color: $color-text-header;
+    text-align: center;
+    opacity: 0.6;
+  }
+}

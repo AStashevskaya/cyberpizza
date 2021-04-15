@@ -27,6 +27,9 @@ module.exports = (env, options) => {
       },
     },
     resolve: {
+      alias: {
+        components: path.resolve(__dirname, './client/components'),
+      },
       extensions: ['.js', '.jsx'],
     },
     module: {
@@ -37,8 +40,22 @@ module.exports = (env, options) => {
           use: ['babel-loader'],
         },
         {
-          test: /\.(css)$/,
-          use: [MiniCssExtractPlugin.loader, 'css-loader'],
+          test: /\.(scss|css)$/,
+          use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+        },
+        {
+          test: /\.(woff|woff2|ttf)$/,
+          use: {
+            loader: 'url-loader',
+          },
+        },
+        {
+          test: /\.(png|svg|jpe?g|gif)$/i,
+          use: [
+            {
+              loader: 'file-loader',
+            },
+          ],
         },
       ],
     },
@@ -51,8 +68,8 @@ module.exports = (env, options) => {
         filename: 'index.html',
       }),
       new MiniCssExtractPlugin({
-        filename: 'main.css',
-        chunkFilename: 'main.css',
+          filename: 'styles.css',
+          chunkFilename: '[id].css',
       }),
     ],
   }
