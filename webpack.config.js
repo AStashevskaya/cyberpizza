@@ -68,8 +68,8 @@ module.exports = (env, options) => {
         filename: 'index.html',
       }),
       new MiniCssExtractPlugin({
-          filename: 'styles.css',
-          chunkFilename: '[id].css',
+        filename: 'styles.css',
+        chunkFilename: '[id].css',
       }),
     ],
   }

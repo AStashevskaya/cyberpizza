@@ -1,4 +1,5 @@
 import React from 'react'
+import pt from 'prop-types'
 
 import './Card.scss'
 
@@ -17,6 +18,10 @@ const Card = ({ item }) => {
       <div className="card__description">{description}</div>
     </div>
   )
+}
+
+Card.propTypes = {
+  item: pt.object,
 }
 
 export default Card
