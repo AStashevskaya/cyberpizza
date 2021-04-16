@@ -26,9 +26,9 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module',
   },
-  plugins: ['react', 'import'],
+  plugins: ['react'],
   settings: {
-    'import/extensions': ['.js', '.jsx'],
+    'import/resolver': 'webpack',
   },
   rules: {},
 }
