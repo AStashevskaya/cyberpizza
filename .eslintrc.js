@@ -26,6 +26,7 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module',
   },
+  babelOptions: { "configFile": "./.babelrc", },
   plugins: ['react'],
   settings: {
     'import/resolver': 'webpack',
