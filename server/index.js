@@ -5,7 +5,7 @@ const path = require('path')
 
 
 app.get('/', (req, res) => {
-  res.send('Hello from cyberpizza!')
+  res.send('Hello')
 })
 
 app.use('/files', express.static(path.join(__dirname, './files')))
