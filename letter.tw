@@ -505,19 +505,7 @@
 {% endfor %}
 ---
 </pre>
-
-         {% if item.variant or item.product.images[0].file.url} 
-   <div style="border: 1px solid #d9dcdf; border-radius: 3px; width: 64px; height: 64px;">
-                                <img width="64" height="64" style="display: block;"
-                                              src="{% if item.variant %}{{ item.variant | img_url: 'width=128&height=128' }}{% else item.product.images[0].file.url %}{{ item.product | img_url: 'width=128&height=128' }}{% endif %}" />
-                                          </div>
-{% else %}
-   <div style="width: 64px; height: 64px;">
-                                <img width="64" height="64" style="display: block; opacity: 0.3;"
-                                              src="https://ciberpizza.herokuapp.com/files/no-image.png" />
-                                          </div>
-{% endif %}
-     
+              
 
        <img width="64" height="64" style="display: block;"
                                               src="{% if item.variant %}{{ item.variant | img_url: 'width=128&height=128' }}{% elsif item.product.images[0].file.url %}{{ item.product | img_url: 'width=128&height=128' }}{% else %}{{ 'https://rcdev.null.by/images/empty-image.svg' }}{% endif %}" />
