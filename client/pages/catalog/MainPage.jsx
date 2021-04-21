@@ -5,6 +5,7 @@ import Catalog from '../../components/Catalog'
 import Sidebar from '../../components/Sidebar'
 
 import { fetchPizza } from '../../api/index'
+import { createCart } from '../../api/cart'
 
 import './MainPage.scss'
 
@@ -19,6 +20,11 @@ const MainPage = () => {
       setPizzaData([...data])
       setLoading(false)
     }
+
+    const cart = {
+      products: []
+    }
+    createCart(cart)
 
     if (loading) {
       getData()
