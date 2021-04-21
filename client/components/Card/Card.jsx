@@ -7,6 +7,10 @@ import './Card.scss'
 const Card = ({ item }) => {
   const { name, image, price, description, _id } = item
 
+  const getcartData = async () => {
+    const newCart = await getCart()
+  }
+
   const handleClick = (id) => {
     console.log(id)
 

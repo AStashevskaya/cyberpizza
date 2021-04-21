@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 
 import Header from '../../components/Header'
 import Catalog from '../../components/Catalog'
 import Sidebar from '../../components/Sidebar'
+import Cart from '../../components/Cart'
 
 import { fetchPizza } from '../../api/index'
-import { createCart } from '../../api/cart'
+// import { createCart } from '../../api/cart'
 
 import './MainPage.scss'
 
@@ -20,11 +22,6 @@ const MainPage = () => {
       setPizzaData([...data])
       setLoading(false)
     }
-
-    const cart = {
-      products: []
-    }
-    createCart(cart)
 
     if (loading) {
       getData()
@@ -42,6 +39,7 @@ const MainPage = () => {
             <Catalog data={pizzaData} />
           </div>
           <Sidebar />
+         <Cart />
         </>
       )}
     </div>

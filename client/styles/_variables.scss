@@ -44,7 +44,7 @@ $screen-768: 768px;
   position: $pos;
   top: 0;
   bottom: 0;
-  left: 0;
+  // left: 0;
 }
 
 @mixin equalSides($size) {

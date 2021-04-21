@@ -2,6 +2,7 @@
 
 .sidebar {
   @include fixed(fixed);
+  left: 0;
   @include colomnFlex(flex-start, flex-start);
   width: calc((100% - #{$screen-1280}) / 2 + #{$sidebar-width-1024});
   background-color: $color-sideBar;
