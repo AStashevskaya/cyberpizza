@@ -1,19 +1,22 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import CartItemList from './CartItemsList/CartItemList'
-import { toggleCart } from '../../redux/cart/actions'
+import Total from './Total/Total'
+import { toggleCart, getCartProducts } from '../../redux/cart/actions'
 
 import './Cart.scss'
 
 const Cart = () => {
   const [showCart, setShowCart] = useState(false)
   const isOpen = useSelector((state) => state.cart.isOpen)
+  const totalSum = useSelector((state) => state.cart.total)
   const dispatch = useDispatch()
+  console.log(totalSum)
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     dispatch(toggleCart())
-  }
+  })
 
   useEffect(() => {
     if (isOpen) {
@@ -21,8 +24,11 @@ const Cart = () => {
     } else {
       setShowCart(false)
     }
-    console.log(showCart)
   }, [isOpen])
+
+  useEffect(() => {
+    dispatch(getCartProducts())
+  }, [])
 
   return (
     <div className={showCart ? 'cart active' : 'cart'}>
@@ -32,6 +38,7 @@ const Cart = () => {
           <div className="cart__info">
             <span className="cart__order">Orders:</span>
             <CartItemList />
+            <Total sum={totalSum} />
           </div>
         </div>
       </div>

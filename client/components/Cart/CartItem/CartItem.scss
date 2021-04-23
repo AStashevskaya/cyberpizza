@@ -16,6 +16,7 @@
         @include rowFlex(space-between, center);
         margin-left: 30px;
         border-bottom: 1px solid $color-text-text;
+        position: relative;
 
 
         & > span {
@@ -29,5 +30,15 @@
         @include rowFlex(center, center);
         background-color: $color-link;
         color: $color-counter;
+    }
+
+    &__close {
+        opacity: .4;
+        font-size: 20px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        cursor: pointer;
+        padding: 0 10px;
     }
 }

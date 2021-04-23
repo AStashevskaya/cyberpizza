@@ -3,7 +3,7 @@ import pt from 'prop-types'
 
 import Card from '../Card'
 
-const Cards = ({ cards }) => {
+const Cards = ({cards}) => {
   return (
     <div className="container_cards">
       {cards.map((el) => (

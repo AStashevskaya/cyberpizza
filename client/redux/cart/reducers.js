@@ -1,7 +1,15 @@
-import { TOGGLE_CART } from './constants'
+import {
+  TOGGLE_CART,
+  FETCH_CART_PRODUCTS_FAILURE,
+  FETCH_CART_PRODUCTS_SUCCESS,
+  FETCH_CART_PRODUCTS_REQUEST,
+} from './constants'
 
 const initialState = {
   isOpen: false,
+  loading: false,
+  products: [],
+  total: 0,
   error: '',
 }
 
@@ -13,6 +21,22 @@ const cart = (state = initialState, action) => {
       return {
         ...state,
         isOpen: !state.isOpen,
+      }
+    case FETCH_CART_PRODUCTS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      }
+    case FETCH_CART_PRODUCTS_SUCCESS:
+      return {
+        ...state,
+        products: payload.products,
+        total: payload.total,
+      }
+    case FETCH_CART_PRODUCTS_FAILURE:
+      return {
+        ...state,
+        error: payload,
       }
     default:
       return state

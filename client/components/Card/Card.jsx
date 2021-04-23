@@ -1,32 +1,35 @@
 import React from 'react'
 import pt from 'prop-types'
 
-import { createCart, getCart } from '../../api/cart'
+import { useSelector, useDispatch } from 'react-redux'
+
+// import { createCart, getCart, addToCart } from '../../api/cart'
+import { updateCartProducts } from '../../redux/cart/actions'
 import './Card.scss'
 
 const Card = ({ item }) => {
   const { name, image, price, description, _id } = item
+  const dispatch = useDispatch()
 
-  const getcartData = async () => {
-    const newCart = await getCart()
-  }
+  // const products = useSelector(state => state.cart.products)
 
-  const handleClick = (id) => {
+  const handleClick = (e, id) => {
+    e.preventDefault()
     console.log(id)
+    dispatch(updateCartProducts(id))
+    // async function getData() {
+    //   const { data } = await getCart('607ffefed115ba028025cf9b')
+    //   console.log(data)
+    // }
 
-    async function getcartData() {
-      const newCart = await getCart()
-      console.log(newCart)
-    }
-    getcartData()
-    
+    // getData()
   }
 
   return (
     <div className="card">
       <div className="card__image">
         <img src={image} alt={name} />
-        <button onClick={handleClick}>+</button>
+        <button onClick={(e) => handleClick(e, _id)}>+</button>
       </div>
 
       <div className="card__price">{`${price}$`}</div>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { toggleCart } from '../../redux/cart/actions'
 
@@ -8,8 +8,9 @@ import './Order.scss'
 
 const OrderDisplay = () => {
   const dispatch = useDispatch()
+  const products = useSelector(state => state.cart.products)
+
   const handleClick = () => {
-    console.log('cart should open')
     dispatch(toggleCart())
   }
 
