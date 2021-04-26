@@ -5,7 +5,6 @@ import Catalog from '../../components/Catalog'
 import Sidebar from '../../components/Sidebar'
 import Cart from '../../components/Cart'
 
-// import { fetchPizza } from '../../api/index'
 import { fetchProducts } from '../../redux/catalog/actions'
 
 import './MainPage.scss'

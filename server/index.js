@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const path = require('path')
+const cookieParser = require('cookie-parser')
 const productsRouts = require('./routes/products')
 const cartRouts = require('./routes/carts')
 
@@ -26,6 +27,7 @@ async function start() {
     app.use(bodyParser.urlencoded({ extended: true }))
     app.use(express.static('dist'))
     app.use('/files', express.static(path.join(__dirname, './files')))
+    app.use(cookieParser())
     app.use(productsRouts)
     app.use(cartRouts)
     app.listen(port, () => {

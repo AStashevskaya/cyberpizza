@@ -8,7 +8,7 @@ import './Order.scss'
 
 const OrderDisplay = () => {
   const dispatch = useDispatch()
-  const products = useSelector(state => state.cart.products)
+  const quantity = useSelector((state) => state.cart.quantity)
 
   const handleClick = () => {
     dispatch(toggleCart())
@@ -18,10 +18,10 @@ const OrderDisplay = () => {
     <div className="order">
       <div className="order__status" onClick={handleClick}>
         <img src={dish} alt="dish" />
-        <span>order status</span>
+        <span>Cart</span>
       </div>
 
-      <span className="order__counter">4</span>
+      <span className="order__counter">{quantity}</span>
     </div>
   )
 }

@@ -3,26 +3,27 @@ import pt from 'prop-types'
 
 import { useSelector, useDispatch } from 'react-redux'
 
-// import { createCart, getCart, addToCart } from '../../api/cart'
-import { updateCartProducts } from '../../redux/cart/actions'
+import { updateCartProducts, createCart } from '../../redux/cart/actions'
+// import { createCart } from '../../api/cart'
 import './Card.scss'
 
 const Card = ({ item }) => {
   const { name, image, price, description, _id } = item
+
   const dispatch = useDispatch()
+  const loading = useSelector((state) => state.cart.loading)
+  const cartId = useSelector((state) => state.cart.id)
 
-  // const products = useSelector(state => state.cart.products)
-
-  const handleClick = (e, id) => {
+  const handleClick = (e, productId) => {
     e.preventDefault()
-    console.log(id)
-    dispatch(updateCartProducts(id))
-    // async function getData() {
-    //   const { data } = await getCart('607ffefed115ba028025cf9b')
-    //   console.log(data)
-    // }
 
-    // getData()
+    if (loading) return
+
+    if (cartId) {
+      dispatch(updateCartProducts(productId))
+    } else {
+      dispatch(createCart(productId))
+    }
   }
 
   return (

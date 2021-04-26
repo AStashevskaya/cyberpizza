@@ -11,8 +11,8 @@ const Cart = () => {
   const [showCart, setShowCart] = useState(false)
   const isOpen = useSelector((state) => state.cart.isOpen)
   const totalSum = useSelector((state) => state.cart.total)
+  const cartId = useSelector((state) => state.cart.id)
   const dispatch = useDispatch()
-  console.log(totalSum)
 
   const handleClick = useCallback(() => {
     dispatch(toggleCart())
@@ -27,8 +27,10 @@ const Cart = () => {
   }, [isOpen])
 
   useEffect(() => {
-    dispatch(getCartProducts())
-  }, [])
+    if (cartId) {
+      dispatch(getCartProducts())
+    }
+  }, [cartId, dispatch])
 
   return (
     <div className={showCart ? 'cart active' : 'cart'}>

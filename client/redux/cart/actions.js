@@ -1,11 +1,10 @@
 import {
   TOGGLE_CART,
-  ADD_TO_CART,
   UPDATE_CART,
-  REMOVE_FROM_CART,
   FETCH_CART_PRODUCTS_FAILURE,
   FETCH_CART_PRODUCTS_SUCCESS,
   FETCH_CART_PRODUCTS_REQUEST,
+  UPDATE_CART_ID,
 } from './constants'
 
 import * as api from '../../api/cart'
@@ -14,16 +13,9 @@ export const toggleCart = () => ({
   type: TOGGLE_CART,
 })
 
-export const addToCart = () => ({
-  type: ADD_TO_CART,
-})
-
-export const updateCart = () => ({
+export const updateCart = (cart) => ({
   type: UPDATE_CART,
-})
-
-export const removeFromCart = () => ({
-  type: REMOVE_FROM_CART,
+  payload: cart,
 })
 
 export const fetchCartProductsRequest = () => ({
@@ -40,33 +32,59 @@ export const fetchCartProductsSuccess = (products) => ({
   payload: products,
 })
 
-export const getCartProducts = () => async (dispatch) => {
+export const getCartProducts = () => async (dispatch, getState) => {
+  const { id: cartId } = getState().cart
   dispatch(fetchCartProductsRequest())
 
   try {
-    const data = await api.getCart()
+    const data = await api.getCart(cartId)
 
     const { products, total } = await data.data
 
-    dispatch(fetchCartProductsSuccess({ products, total }))
+    const quantity = products.reduce((accum, product) => (accum += product.quantity), 0)
+
+    dispatch(fetchCartProductsSuccess({ products, total, quantity }))
+  } catch (error) {
+    dispatch(fetchCartProductsFailure(error.message))
+  }
+}
+
+export const createCart = (productId) => async (dispatch) => {
+  try {
+    await api.createCart({})
+
+    const arr = document.cookie.split('; ')
+    console.log(arr)
+    const cart_id = arr.find((el) => el.startsWith('cart_id'))
+    let arr1 = cart_id ? cart_id.split('=') : []
+    const id = arr1.find((el) => !el.startsWith('cart_id'))
+
+    dispatch({ type: UPDATE_CART_ID, payload: id })
+    dispatch(updateCartProducts(productId))
   } catch (error) {
     dispatch(fetchCartProductsFailure(error.message))
   }
 }
 
 export const updateCartProducts = (productId) => async (dispatch, getState) => {
-  const { products } = getState().cart
+  dispatch(fetchCartProductsRequest())
+  const { products, id: cartId } = getState().cart
 
   const productInCart = products.find((product) => productId === product.productId)
 
   if (productInCart) {
     try {
-      await api.changeQuantity({ productId, quantity: productInCart.quantity + 1 })
+      await api.changeQuantity({ productId, quantity: productInCart.quantity + 1 }, cartId)
 
-      const data = await api.getCart()
-      const { products, total } = await data.data
+      productInCart.quantity += 1
 
-      dispatch(fetchCartProductsSuccess({ products, total }))
+      const total = products.reduce(
+        (accum, product) => (accum += product.quantity * product.price),
+        0
+      )
+      const quantity = products.reduce((accum, product) => (accum += product.quantity), 0)
+
+      dispatch(updateCart({ total, products, quantity }))
     } catch (error) {
       dispatch(fetchCartProductsFailure(error.message))
     }
@@ -76,29 +94,44 @@ export const updateCartProducts = (productId) => async (dispatch, getState) => {
     const { image, name, price } = currentProduct
 
     try {
-      await api.addToCart({ productId, image, name, price, quantity: 1 })
+      await api.addToCart({ productId, image, name, price, quantity: 1 }, cartId)
 
-      const data = await api.getCart()
-      const { products, total } = await data.data
-      console.log(products)
+      products.push({ productId, image, name, price, quantity: 1 })
 
-      dispatch(fetchCartProductsSuccess({ products, total }))
+      const total = products.reduce(
+        (accum, product) => (accum += product.quantity * product.price),
+        0
+      )
+
+      const quantity = products.reduce((accum, product) => (accum += product.quantity), 0)
+
+      dispatch(updateCart({ total, products, quantity }))
     } catch (error) {
       dispatch(fetchCartProductsFailure(error.message))
     }
   }
 }
 
-export const removeProduct = (productId) => async (dispatch) => {
+export const removeProduct = (productId) => async (dispatch, getState) => {
+  dispatch(fetchCartProductsRequest())
+  const { products, id: cartId } = getState().cart
+
   try {
-    console.log('from action', productId)
-    await api.deleteProduct(productId)
+    await api.deleteProduct(productId, cartId)
 
-    const data = await api.getCart()
-    const { products, total } = await data.data
-    console.log(products)
+    const product = products.find((product) => product.productId === productId)
+    const prodIdx = products.indexOf(product)
 
-    dispatch(fetchCartProductsSuccess({ products, total }))
+    products.splice(prodIdx, prodIdx + 1)
+
+    const total = products.reduce(
+      (accum, product) => (accum += product.quantity * product.price),
+      0
+    )
+
+    const quantity = products.reduce((accum, product) => (accum += product.quantity), 0)
+
+    dispatch(updateCart({ total, products, quantity }))
   } catch (error) {
     dispatch(fetchCartProductsFailure(error.message))
   }

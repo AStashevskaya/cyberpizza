@@ -11,23 +11,15 @@ router.delete('/api/carts/:id/products', deleteProduct)
 
 async function createCart(req, res) {
   const cart = req.body
-  const { id: _id } = req.params
-  console.log('id', _id)
-  console.log('cart', cart)
 
-  if (_id) {
-    console.log('id')
-  } else {
-    const newCart = new Cart(cart)
-    try {
-      await newCart.save()
+  const newCart = new Cart(cart)
+  try {
+    await newCart.save()
 
-      console.log(newCart)
-
-      res.status(201).json(newCart)
-    } catch (error) {
-      res.status(409).json({ message: error.message })
-    }
+    res.cookie('cart_id', newCart._id.toString())
+    res.status(201).json(newCart)
+  } catch (error) {
+    res.status(409).json({ message: error.message })
   }
 }
 
