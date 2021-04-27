@@ -54,7 +54,6 @@ export const createCart = (productId) => async (dispatch) => {
     await api.createCart({})
 
     const arr = document.cookie.split('; ')
-    console.log(arr)
     const cart_id = arr.find((el) => el.startsWith('cart_id'))
     let arr1 = cart_id ? cart_id.split('=') : []
     const id = arr1.find((el) => !el.startsWith('cart_id'))
@@ -122,7 +121,7 @@ export const removeProduct = (productId) => async (dispatch, getState) => {
     const product = products.find((product) => product.productId === productId)
     const prodIdx = products.indexOf(product)
 
-    products.splice(prodIdx, prodIdx + 1)
+    products.splice(prodIdx, 1)
 
     const total = products.reduce(
       (accum, product) => (accum += product.quantity * product.price),

@@ -99,7 +99,7 @@ async function deleteProduct(req, res) {
     const product = cart.products.find((product) => product.productId === productId)
     const prodIdx = cart.products.indexOf(product)
 
-    cart.products.splice(prodIdx, prodIdx + 1)
+    cart.products.splice(prodIdx, 1)
     cart.total = cart.total - product.price * product.quantity
 
     cart.save()
