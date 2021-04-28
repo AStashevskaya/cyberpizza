@@ -3,7 +3,7 @@
 .item {
 
     &__image {
-        width: 100px;
+        width: 80px;
 
         img {
             @include equalSides(100%)
@@ -17,10 +17,14 @@
         margin-left: 30px;
         border-bottom: 1px solid $color-text-text;
         position: relative;
+        
+        @media (max-width: $screen-560) {
+            margin-left: 20px;
+        }
 
 
         & > span {
-            font-size: 30px;
+            font-size: 27px;
         }
 
     }
