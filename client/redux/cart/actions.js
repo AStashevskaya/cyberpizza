@@ -6,6 +6,7 @@ import {
   FETCH_CART_PRODUCTS_REQUEST,
   UPDATE_CART_ID,
 } from './constants'
+import getCookies from '../../utils/getCookie'
 
 import * as api from '../../api/cart'
 
@@ -41,7 +42,7 @@ export const getCartProducts = () => async (dispatch, getState) => {
 
     const { products, total } = await data.data
 
-    const quantity = products.reduce((accum, product) => (accum += product.quantity), 0)
+    const quantity = products.reduce((accum, product) => accum + product.quantity, 0)
 
     dispatch(fetchCartProductsSuccess({ products, total, quantity }))
   } catch (error) {
@@ -51,12 +52,11 @@ export const getCartProducts = () => async (dispatch, getState) => {
 
 export const createCart = (productId) => async (dispatch) => {
   try {
-    await api.createCart({})
+    const result = await api.createCart({})
+    const { data } = result
+    console.log(result, data)
 
-    const arr = document.cookie.split('; ')
-    const cart_id = arr.find((el) => el.startsWith('cart_id'))
-    let arr1 = cart_id ? cart_id.split('=') : []
-    const id = arr1.find((el) => !el.startsWith('cart_id'))
+    const id = getCookies()
 
     dispatch({ type: UPDATE_CART_ID, payload: id })
     dispatch(updateCartProducts(productId))
@@ -74,14 +74,14 @@ export const updateCartProducts = (productId) => async (dispatch, getState) => {
   if (productInCart) {
     try {
       await api.changeQuantity({ productId, quantity: productInCart.quantity + 1 }, cartId)
+      console.log(productInCart)
 
       productInCart.quantity += 1
 
-      const total = products.reduce(
-        (accum, product) => (accum += product.quantity * product.price),
-        0
-      )
-      const quantity = products.reduce((accum, product) => (accum += product.quantity), 0)
+      const total = products.reduce((accum, product) => accum + product.quantity * product.price, 0)
+      const quantity = products.reduce((accum, product) => accum + product.quantity, 0)
+
+      console.log(total, quantity)
 
       dispatch(updateCart({ total, products, quantity }))
     } catch (error) {
@@ -96,13 +96,12 @@ export const updateCartProducts = (productId) => async (dispatch, getState) => {
       await api.addToCart({ productId, image, name, price, quantity: 1 }, cartId)
 
       products.push({ productId, image, name, price, quantity: 1 })
+      console.log(products)
 
-      const total = products.reduce(
-        (accum, product) => (accum += product.quantity * product.price),
-        0
-      )
+      const total = products.reduce((accum, product) => accum + product.quantity * product.price, 0)
 
-      const quantity = products.reduce((accum, product) => (accum += product.quantity), 0)
+      const quantity = products.reduce((accum, product) => accum + product.quantity, 0)
+      console.log(total, quantity)
 
       dispatch(updateCart({ total, products, quantity }))
     } catch (error) {
@@ -123,12 +122,9 @@ export const removeProduct = (productId) => async (dispatch, getState) => {
 
     products.splice(prodIdx, 1)
 
-    const total = products.reduce(
-      (accum, product) => (accum += product.quantity * product.price),
-      0
-    )
+    const total = products.reduce((accum, product) => accum + product.quantity * product.price, 0)
 
-    const quantity = products.reduce((accum, product) => (accum += product.quantity), 0)
+    const quantity = products.reduce((accum, product) => accum + product.quantity, 0)
 
     dispatch(updateCart({ total, products, quantity }))
   } catch (error) {

@@ -1,36 +1,42 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import pt from 'prop-types'
 
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import { updateCartProducts, createCart } from '../../redux/cart/actions'
-// import { createCart } from '../../api/cart'
+
 import './Card.scss'
 
-const Card = ({ item }) => {
+const Card = ({ item, loading, cartId }) => {
   const { name, image, price, description, _id } = item
 
   const dispatch = useDispatch()
-  const loading = useSelector((state) => state.cart.loading)
-  const cartId = useSelector((state) => state.cart.id)
 
-  const handleClick = (e, productId) => {
-    e.preventDefault()
+  const handleClick = useCallback(
+    (e) => {
+      e.preventDefault()
 
-    if (loading) return
+      if (loading) return
 
-    if (cartId) {
-      dispatch(updateCartProducts(productId))
-    } else {
-      dispatch(createCart(productId))
-    }
-  }
+      if (cartId) {
+        dispatch(updateCartProducts(_id))
+      } else {
+        dispatch(createCart(_id))
+      }
+    },
+    [dispatch, cartId, loading, _id]
+  )
 
   return (
     <div className="card">
       <div className="card__image">
         <img src={image} alt={name} />
-        <button onClick={(e) => handleClick(e, _id)}>+</button>
+        <button
+          onClick={handleClick}
+          className={loading ? 'card__button disabled' : 'card__button'}
+        >
+          +
+        </button>
       </div>
 
       <div className="card__price">{`${price}$`}</div>
@@ -42,6 +48,8 @@ const Card = ({ item }) => {
 
 Card.propTypes = {
   item: pt.object,
+  loading: pt.bool,
+  cartId: pt.string,
 }
 
 export default Card

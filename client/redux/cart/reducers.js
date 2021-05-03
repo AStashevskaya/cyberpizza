@@ -6,17 +6,10 @@ import {
   UPDATE_CART,
   UPDATE_CART_ID,
 } from './constants'
-
-const checkCookies = () => {
-  const arr = document.cookie.split('; ')
-  const cart_id = arr.find((el) => el.startsWith('cart_id'))
-  let arr1 = cart_id ? cart_id.split('=') : []
-  const id = arr1.find((el) => !el.startsWith('cart_id'))
-  return id
-}
+import getCookies from '../../utils/getCookie'
 
 const initialState = {
-  id: checkCookies(),
+  id: getCookies(),
   isOpen: false,
   loading: false,
   products: [],

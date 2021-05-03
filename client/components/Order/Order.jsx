@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { toggleCart } from '../../redux/cart/actions'
@@ -10,9 +10,9 @@ const OrderDisplay = () => {
   const dispatch = useDispatch()
   const quantity = useSelector((state) => state.cart.quantity)
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     dispatch(toggleCart())
-  }
+  }, [dispatch])
 
   return (
     <div className="order">

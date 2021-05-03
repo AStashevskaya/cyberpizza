@@ -17,7 +17,7 @@ const Cart = () => {
 
   const handleClick = useCallback(() => {
     dispatch(toggleCart())
-  })
+  }, [dispatch])
 
   useEffect(() => {
     if (isOpen) {
