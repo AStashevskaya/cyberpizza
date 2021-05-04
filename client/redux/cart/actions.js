@@ -6,7 +6,6 @@ import {
   FETCH_CART_PRODUCTS_REQUEST,
   UPDATE_CART_ID,
 } from './constants'
-import getCookies from '../../utils/getCookie'
 
 import * as api from '../../api/cart'
 
@@ -54,11 +53,8 @@ export const createCart = (productId) => async (dispatch) => {
   try {
     const result = await api.createCart({})
     const { data } = result
-    console.log(result, data)
 
-    const id = getCookies()
-
-    dispatch({ type: UPDATE_CART_ID, payload: id })
+    dispatch({ type: UPDATE_CART_ID, payload: data._id })
     dispatch(updateCartProducts(productId))
   } catch (error) {
     dispatch(fetchCartProductsFailure(error.message))
@@ -74,14 +70,11 @@ export const updateCartProducts = (productId) => async (dispatch, getState) => {
   if (productInCart) {
     try {
       await api.changeQuantity({ productId, quantity: productInCart.quantity + 1 }, cartId)
-      console.log(productInCart)
 
       productInCart.quantity += 1
 
       const total = products.reduce((accum, product) => accum + product.quantity * product.price, 0)
       const quantity = products.reduce((accum, product) => accum + product.quantity, 0)
-
-      console.log(total, quantity)
 
       dispatch(updateCart({ total, products, quantity }))
     } catch (error) {
@@ -96,12 +89,10 @@ export const updateCartProducts = (productId) => async (dispatch, getState) => {
       await api.addToCart({ productId, image, name, price, quantity: 1 }, cartId)
 
       products.push({ productId, image, name, price, quantity: 1 })
-      console.log(products)
 
       const total = products.reduce((accum, product) => accum + product.quantity * product.price, 0)
 
       const quantity = products.reduce((accum, product) => accum + product.quantity, 0)
-      console.log(total, quantity)
 
       dispatch(updateCart({ total, products, quantity }))
     } catch (error) {

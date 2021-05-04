@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import CartItemList from './CartItemsList/CartItemList'
+import CartListContainer from './CartListContainer/CartListContainer'
 import Total from './Total/Total'
 import { toggleCart, getCartProducts } from '../../redux/cart/actions'
 import arrow from '../../assets/icons/right-arrow.svg'
@@ -31,19 +31,19 @@ const Cart = () => {
     if (cartId) {
       dispatch(getCartProducts())
     }
-  }, [cartId, dispatch])
+  }, [])
 
   return (
     <div className={showCart ? 'cart active' : 'cart'}>
       <div className="cart__overlay">
-        <div className="cart__container">
+        <div className="cart__wrapper">
           <span onClick={handleClick}>
             Hide
             <img src={arrow} alt="arrow" />
           </span>
           <div className="cart__info">
             <span className="cart__order">Orders:</span>
-            <CartItemList />
+            <CartListContainer />
             <Total sum={totalSum} />
           </div>
         </div>

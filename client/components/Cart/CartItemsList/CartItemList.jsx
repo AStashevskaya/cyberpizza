@@ -1,24 +1,24 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import pt from 'prop-types'
 
-import CartItem from '../CartItem/CartItem'
+import CartItemContainer from '../CartItemContainer/CartItemContainer'
 
-const CartItemList = () => {
-  const cartsItemList = useSelector((state) => state.cart.products)
-
+const CartItemList = ({ products }) => {
   return (
     <div className="cart__item-list">
-      {cartsItemList.map((el) => (
-        <CartItem
-          key={el.productId}
-          image={el.image}
-          quantity={el.quantity}
-          name={el.name}
-          id={el.productId}
-        />
+      {products.map((el) => (
+        <CartItemContainer key={el.productId} product={el} />
       ))}
     </div>
   )
+}
+
+CartItemList.propTypes = {
+  products: pt.array,
+}
+
+CartItemList.defaultProps = {
+  products: [],
 }
 
 export default CartItemList

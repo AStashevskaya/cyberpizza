@@ -10,7 +10,7 @@
     transition: all 0.5s ease-in-out;
   }
 
-  &__container {
+  &__wrapper {
     @include fixed(fixed);
     right: -400px;
     width: 400px;
@@ -45,10 +45,17 @@
     height: 80%;
   }
 
-  &__item-list {
+  &__container {
     padding-top: 20px;
     overflow-y: scroll;
     height: 60%;
+  }
+
+  &__item-list {
+    // padding-top: 20px;
+    // overflow-y: scroll;
+    // height: 60%;
+    height: 100%;
   }
 
   &__item {
@@ -77,7 +84,7 @@
     transition: all 0.5s ease-in-out;
   }
 
-  &__container {
+  &__wrapper {
     right: 0;
     transition: all 0.5s ease-in-out;
   }

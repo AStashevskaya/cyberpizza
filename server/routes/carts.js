@@ -28,6 +28,8 @@ async function getCarts(req, res) {
   try {
     const carts = await Cart.find()
 
+    console.log(carts)
+
     res.status(200).json(carts)
   } catch (error) {
     res.status(404).json({ message: error.message })

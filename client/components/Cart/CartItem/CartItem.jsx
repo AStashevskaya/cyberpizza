@@ -1,27 +1,20 @@
-import React, { useCallback } from 'react'
+import React from 'react'
 import pt from 'prop-types'
-import { useDispatch } from 'react-redux'
-
-import { removeProduct } from '../../../redux/cart/actions'
 
 import './CartItem.scss'
 
-const CartItem = ({ image, name, quantity, id }) => {
-  const dispatch = useDispatch()
-
-  const deleteProduct = useCallback(() => {
-    dispatch(removeProduct(id))
-  }, [dispatch, id])
+const CartItem = ({ product, handleClick }) => {
+  const { quantity, name, image } = product
 
   return (
-    <div className="cart__item item">
+    <div className="cart__item">
       <div className="item__image">
         <img src={image} alt={name} />
       </div>
       <div className="item__content">
         <span>{name}</span>
         <div className="item__quantity">{quantity}</div>
-        <div className="item__close" onClick={deleteProduct}>
+        <div className="item__close" onClick={handleClick}>
           &times;
         </div>
       </div>
@@ -30,10 +23,13 @@ const CartItem = ({ image, name, quantity, id }) => {
 }
 
 CartItem.propTypes = {
-  image: pt.string,
-  name: pt.string,
-  quantity: pt.number,
-  id: pt.string,
+  product: pt.object,
+  handleClick: pt.func,
+}
+
+CartItem.defaultProps = {
+  product: {},
+  handleClick: () => {},
 }
 
 export default CartItem
