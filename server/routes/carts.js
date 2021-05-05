@@ -17,7 +17,7 @@ async function createCart(req, res) {
   try {
     await newCart.save()
 
-    res.cookie('cart_id', newCart._id.toString())
+    res.cookie('cart_id10', newCart._id.toString())
     res.status(201).json(newCart)
   } catch (error) {
     res.status(409).json({ message: error.message })
@@ -25,14 +25,20 @@ async function createCart(req, res) {
 }
 
 async function getCarts(req, res) {
-  try {
-    const carts = await Cart.find()
+  let authData = new Buffer(process.env.AUTH)
+  let base64data = authData.toString('base64')
+  const auth = 'Basic ' + base64data
 
-    console.log(carts)
+  if (auth === req.headers.authorization) {
+    try {
+      const carts = await Cart.find()
 
-    res.status(200).json(carts)
-  } catch (error) {
-    res.status(404).json({ message: error.message })
+      res.status(200).json(carts)
+    } catch (error) {
+      res.status(404).json({ message: error.message })
+    }
+  } else {
+    res.status(401).json()
   }
 }
 
@@ -119,10 +125,3 @@ async function deleteProduct(req, res) {
 }
 
 module.exports = router
-
-// fetch('http://localhost:8080/api/carts/608fa3c8638fb9232000d465/products',
-// { method: 'POST',
-//  headers: {'content-type':'application/json'},
-//  body: JSON.stringify(
-// {image: 'https://en.wikipedia.org/wiki/Bread#/media/File:Korb_mit_Br%C3%B6tchen.JPG',
-//  name: 'hleb', price: '14', productId: '95969032003032320', quantity: 1})}).then(res => console.log('res', res)).catch(console.error)

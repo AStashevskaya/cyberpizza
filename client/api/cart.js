@@ -4,7 +4,18 @@ const url = '/api/carts'
 const name = window.btoa('nastya:123')
 const auth = 'Basic ' + name
 
-export const createCart = (cart) => axios.post(url, cart)
+export const createCart = (cart) => {
+  console.log('name', name)
+  return axios.post(
+    url,
+    {
+      headers: {
+        Authorization: auth,
+      },
+    },
+    cart
+  )
+}
 
 export const getCarts = () =>
   axios.get(url, {
@@ -15,12 +26,7 @@ export const getCarts = () =>
 
 export const getCart = (cartId) => axios.get(`${url}/${cartId}`)
 
-export const addToCart = (product, cartId) =>
-  axios.post(`${url}/${cartId}/products`, product, {
-    headers: {
-      Authorization: auth,
-    },
-  })
+export const addToCart = (product, cartId) => axios.post(`${url}/${cartId}/products`, product)
 
 export const changeQuantity = (product, cartId) => axios.put(`${url}/${cartId}/products`, product)
 
