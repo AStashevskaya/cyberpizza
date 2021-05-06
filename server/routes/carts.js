@@ -55,18 +55,24 @@ async function getCart(req, res) {
 }
 
 async function addProduct(req, res) {
-  const newProduct = req.body
+  const { productId } = req.body
   const { id: _id } = req.params
 
   try {
     const cart = await Cart.findById(_id)
-    const product = await Product.findById(newProduct.productId)
+    const product = await Product.findById(productId)
 
-    cart.products = [...cart.products, newProduct]
-    cart.total = cart.total + +product.price
+    if (product) {
+      const { image, _id, price, name } = product
 
-    cart.save()
-    res.json(cart)
+      cart.products.push({ image, _id, price, name, quantity: 1 })
+      cart.total = cart.total + +product.price
+
+      cart.save()
+      res.json(cart)
+    } else {
+      throw new Error()
+    }
   } catch (error) {
     res.status(404).json({ message: error.message })
   }
@@ -81,7 +87,7 @@ async function changeQuantity(req, res) {
 
     const products = [
       ...cart.products.map((product) => {
-        if (product.productId === productId) {
+        if (product._id.toString() === productId) {
           return {
             ...product,
             quantity: quantity,
@@ -91,6 +97,8 @@ async function changeQuantity(req, res) {
         return product
       }),
     ]
+
+    console.log(products)
 
     const total = products.reduce((accum, item) => accum + item.quantity * item.price, 0)
 
@@ -108,7 +116,7 @@ async function deleteProduct(req, res) {
   try {
     const cart = await Cart.findById(_id)
 
-    const prodIdx = cart.products.findIndex((product) => product.productId === productId)
+    const prodIdx = cart.products.findIndex((product) => product._id.toString() === productId)
 
     cart.products.splice(prodIdx, 1)
     cart.total = cart.products.reduce(

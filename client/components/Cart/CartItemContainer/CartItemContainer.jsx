@@ -6,7 +6,7 @@ import CartItem from '../CartItem/CartItem'
 import { removeProduct } from '../../../redux/cart/actions'
 
 const CartItemContainer = ({ product }) => {
-  const { productId: id } = product
+  const { _id: id } = product
   const dispatch = useDispatch()
 
   const deleteProduct = useCallback(() => {

@@ -16,7 +16,9 @@ const Card = ({ item, loading, cartId }) => {
     (e) => {
       e.preventDefault()
 
-      if (loading) return
+      if (loading) {
+        return
+      }
 
       if (cartId) {
         dispatch(updateCartProducts(_id))

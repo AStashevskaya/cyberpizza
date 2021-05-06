@@ -5,7 +5,6 @@ const name = window.btoa('nastya:123')
 const auth = 'Basic ' + name
 
 export const createCart = (cart) => {
-  console.log('name', name)
   return axios.post(
     url,
     {
@@ -26,7 +25,7 @@ export const getCarts = () =>
 
 export const getCart = (cartId) => axios.get(`${url}/${cartId}`)
 
-export const addToCart = (product, cartId) => axios.post(`${url}/${cartId}/products`, product)
+export const addToCart = (productId, cartId) => axios.post(`${url}/${cartId}/products`, productId)
 
 export const changeQuantity = (product, cartId) => axios.put(`${url}/${cartId}/products`, product)
 

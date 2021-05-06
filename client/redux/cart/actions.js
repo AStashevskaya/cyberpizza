@@ -65,7 +65,7 @@ export const updateCartProducts = (productId) => async (dispatch, getState) => {
   dispatch(fetchCartProductsRequest())
   const { products, id: cartId } = getState().cart
 
-  const productInCart = products.find((product) => productId === product.productId)
+  const productInCart = products.find((product) => productId === product._id)
 
   if (productInCart) {
     try {
@@ -83,12 +83,11 @@ export const updateCartProducts = (productId) => async (dispatch, getState) => {
   } else {
     const { products: catalogProducts } = getState().catalog
     const currentProduct = catalogProducts.find((product) => productId === product._id)
-    const { image, name, price } = currentProduct
 
     try {
-      await api.addToCart({ productId, image, name, price, quantity: 1 }, cartId)
+      await api.addToCart({ productId }, cartId)
 
-      products.push({ productId, image, name, price, quantity: 1 })
+      products.push({ ...currentProduct, quantity: 1 })
 
       const total = products.reduce((accum, product) => accum + product.quantity * product.price, 0)
 
@@ -108,8 +107,7 @@ export const removeProduct = (productId) => async (dispatch, getState) => {
   try {
     await api.deleteProduct(productId, cartId)
 
-    const product = products.find((product) => product.productId === productId)
-    const prodIdx = products.indexOf(product)
+    const prodIdx = products.findIndex((product) => product._id === productId)
 
     products.splice(prodIdx, 1)
 
