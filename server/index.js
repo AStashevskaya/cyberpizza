@@ -6,6 +6,7 @@ const path = require('path')
 const cookieParser = require('cookie-parser')
 const productsRouts = require('./routes/products')
 const cartRouts = require('./routes/carts')
+// const registerRouts = require('./routes/register')
 
 require('dotenv').config()
 
@@ -28,6 +29,7 @@ async function start() {
     app.use(express.static('dist'))
     app.use('/files', express.static(path.join(__dirname, './files')))
     app.use(cookieParser())
+    // app.use('/register', registerRoutes)
     app.use(productsRouts)
     app.use(cartRouts)
     app.listen(port, () => {

@@ -1,0 +1,7 @@
+@import '../../styles/variables';
+
+.login {
+    @include colomnFlex;
+    width: 100%;
+    height: 100%;
+}
