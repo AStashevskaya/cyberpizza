@@ -6,6 +6,7 @@ const path = require('path')
 const cookieParser = require('cookie-parser')
 const productsRouts = require('./routes/products')
 const cartRouts = require('./routes/carts')
+const userRouts = require('./routes/users')
 // const registerRouts = require('./routes/register')
 
 require('dotenv').config()
@@ -29,9 +30,21 @@ async function start() {
     app.use(express.static('dist'))
     app.use('/files', express.static(path.join(__dirname, './files')))
     app.use(cookieParser())
+    // app.get('/register', (req, res) => {
+    //   res.send('register')
+    // })
+    app.get('/*', function (req, res) {
+      res.sendFile(path.join(__dirname, '../dist/index.html'), function (err) {
+        if (err) {
+          res.status(500).send(err)
+        }
+      })
+    })
+    app.use('/register', express.static('dist'))
     // app.use('/register', registerRoutes)
     app.use(productsRouts)
     app.use(cartRouts)
+    app.use(userRouts)
     app.listen(port, () => {
       console.log(`server is listing in ${port} - ${env} environment`)
     })

@@ -24,28 +24,8 @@ const Login = () => {
   return (
     <div className="login">
       <Formik initialValues={initValues} validationSchema={schema} onSubmit={handleFormSubmit}>
-        {({
-          errors,
-          touched,
-          isSubmitting,
-          handleSubmit,
-          validateForm,
-          handleChange,
-          initialValues,
-          values,
-        }) => (
-          <Form
-            onKeyPress={async (keyEvent) => {
-              console.log('isSubmitting', isSubmitting)
-              console.log('errors', errors)
-              console.log(initialValues, values)
-              if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
-                keyEvent.preventDefault()
-                await validateForm()
-                handleSubmit()
-              }
-            }}
-          >
+        {({ errors, touched, isSubmitting, handleSubmit, validateForm, handleChange, values }) => (
+          <Form>
             <Field
               component={Input}
               type="text"

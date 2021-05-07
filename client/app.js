@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { hot } from 'react-hot-loader/root'
 
@@ -17,6 +17,7 @@ const App = () => {
             <Route exact path="/" component={CatalogPage} />
             <Route exact path="/log-in" component={LoginPage} />
             <Route exact path="/register" component={SignInPage} />
+            <Redirect to="/" />
           </Switch>
         </Router>
       </div>

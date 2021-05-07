@@ -16,7 +16,10 @@ module.exports = (env, options) => {
       filename: '[name].bundle.js',
     },
     devServer: {
-      historyApiFallback: true,
+      // historyApiFallback: true,
+      historyApiFallback: {
+        index: 'index.html',
+      },
       contentBase: path.resolve(__dirname, './dist'),
       open: true,
       compress: true,

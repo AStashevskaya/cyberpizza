@@ -2,6 +2,7 @@ import React, { useCallback } from 'react'
 import { Formik, Form, Field } from 'formik'
 import * as yup from 'yup'
 import Input from '../Input'
+import { createUser } from '../../api/user'
 
 import './Register.scss'
 
@@ -18,34 +19,16 @@ const initValues = {
 }
 
 const Register = () => {
-  const handleFormSubmit = useCallback((values) => {
-    console.log(values)
+  const handleFormSubmit = useCallback(async (values) => {
+    console.log(values.password)
+    createUser(values)
   }, [])
 
   return (
     <div className="register">
       <Formik initialValues={initValues} validationSchema={schema} onSubmit={handleFormSubmit}>
-        {({
-          errors,
-          isSubmitting,
-          handleSubmit,
-          validateForm,
-          handleChange,
-          initialValues,
-          values,
-        }) => (
-          <Form
-            onKeyPress={async (keyEvent) => {
-              console.log('isSubmitting', isSubmitting)
-              console.log('errors', errors)
-              console.log(initialValues, values)
-              if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
-                keyEvent.preventDefault()
-                await validateForm()
-                handleSubmit()
-              }
-            }}
-          >
+        {({ errors, isSubmitting, handleSubmit, validateForm, handleChange, values }) => (
+          <Form>
             <Field
               component={Input}
               type="text"
