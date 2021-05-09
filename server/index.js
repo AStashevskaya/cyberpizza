@@ -33,6 +33,11 @@ async function start() {
     // app.get('/register', (req, res) => {
     //   res.send('register')
     // })
+    // app.use('/register', express.static('dist'))
+    // app.use('/register', registerRoutes)
+    app.use(productsRouts)
+    app.use(cartRouts)
+    app.use(userRouts)
     app.get('/*', function (req, res) {
       res.sendFile(path.join(__dirname, '../dist/index.html'), function (err) {
         if (err) {
@@ -40,11 +45,6 @@ async function start() {
         }
       })
     })
-    app.use('/register', express.static('dist'))
-    // app.use('/register', registerRoutes)
-    app.use(productsRouts)
-    app.use(cartRouts)
-    app.use(userRouts)
     app.listen(port, () => {
       console.log(`server is listing in ${port} - ${env} environment`)
     })
