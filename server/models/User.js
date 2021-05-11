@@ -5,7 +5,7 @@ const userSchema = new Schema({
   name: { type: String, isRequired: true },
   password: { type: String, isRequired: true },
   isAdmin: { type: Boolean, default: false },
-  isctive: { type: Boolean, default: true },
+  isActive: { type: Boolean, default: true },
 })
 
 module.exports = model('User', userSchema)

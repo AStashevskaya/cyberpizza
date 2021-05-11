@@ -6,10 +6,10 @@ import {
   UPDATE_CART,
   UPDATE_CART_ID,
 } from './constants'
-import getCookies from '../../utils/getCookie'
+import { getCookies } from '../../utils/getCookie'
 
 const initialState = {
-  id: getCookies(),
+  id: getCookies('cart_id'),
   isOpen: false,
   loading: false,
   products: [],
