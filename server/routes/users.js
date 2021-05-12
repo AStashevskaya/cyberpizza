@@ -9,11 +9,15 @@ router.post('/api/user/login', logUser)
 router.get('/api/user', authenticateToken, getUserData)
 router.post('/api/user/logout', logoutUser)
 
+const createToken = (id) => jwt.sign(id.toString(), process.env.ACCESS_TOKEN)
+
 async function createUser(req, res) {
   const { password, email, name } = req.body
-  console.log(req.body)
+
   try {
-    const hashedPassword = await bcrypt.hash(password, 10)
+    const salt = await bcrypt.genSalt()
+    const hashedPassword = await bcrypt.hash(password, salt)
+
     const users = await User.find()
     const user = {
       email,
@@ -29,18 +33,22 @@ async function createUser(req, res) {
     const isExist = users.find((person) => person.email === user.email)
 
     if (isExist) {
-      console.log('isExist', isExist)
-      res.status(400).json({ message: 'isExist' })
+      // res.status(400).json({ message: 'isExist' })
+      throw new Error('This email is already registered')
     } else {
       const newUser = new User(user)
       await newUser.save()
 
-      console.log(newUser)
-      res.status(201).json(newUser)
+      const accessToken = createToken(newUser._id.toString())
+
+      res.cookie('token', accessToken)
+      res.status(201).json({ user: newUser._id })
+      // res.status(201).json(newUser)
     }
-    console.log(user)
   } catch (error) {
-    res.status(409).json({ message: error.message })
+    console.log(error.message)
+    const { message } = error
+    res.status(409).json({ errors: { message } })
   }
 }
 
@@ -48,32 +56,32 @@ async function logUser(req, res) {
   const { email, password } = req.body
   const users = await User.find()
   const user = users.find((person) => person.email === email)
-  console.log('user', user)
+
   if (!user) {
-    return res.status(400).send('Cannot find user')
+    throw new Error('This email is not registered')
+    // return res.status(400).send('Cannot find user')
   }
 
   try {
     const isAllowed = await bcrypt.compare(password, user.password)
-    console.log(isAllowed)
 
     if (isAllowed) {
-      const accessToken = jwt.sign(user._id.toString(), process.env.ACCESS_TOKEN)
+      const accessToken = createToken(user._id.toString())
 
       res.cookie('token', accessToken)
-      res.json({ accessToken })
+      res.json({ user: user._id })
     } else {
-      return res.sendStatus(401)
+      throw new Error('Incorrect password')
+      // return res.sendStatus(401)
     }
   } catch (error) {
-    res.status(500).json({ message: error.message })
+    res.status(400).json({})
   }
 }
 
 async function authenticateToken(req, res, next) {
   const authHeader = req.headers['authorization']
   const token = authHeader && authHeader.split(' ')[1]
-  console.log('token', token)
 
   if (!token) {
     return res.sendStatus(401)
@@ -90,18 +98,18 @@ async function authenticateToken(req, res, next) {
   })
 }
 
-async function logoutUser(req, res) {
-  return res.clearCookie('token')
-}
-
 async function getUserData(req, res) {
-  console.log('from data', req.user)
   const users = await User.find()
 
   const userData = users.find((user) => user._id.toString() === req.user)
   const { name, isAdmin, isActive } = userData
-  console.log('userData', userData)
+
   res.json({ name, isAdmin, isActive })
+}
+
+async function logoutUser(req, res) {
+  console.log(req.headers.cookie)
+  return res.cookie('token', '', { maxAge: 1 })
 }
 
 module.exports = router

@@ -1,10 +1,12 @@
 import React, { useCallback } from 'react'
 // import pt from 'prop-types'
 import { Formik, Form, Field } from 'formik'
+import { useDispatch } from 'react-redux'
 import * as yup from 'yup'
 
 import Input from '../Input'
-import { loginUser } from '../../api/user'
+// import { loginUser } from '../../api/user'
+import { login } from '../../redux/user'
 import './Login.scss'
 
 const schema = yup.object().shape({
@@ -18,12 +20,12 @@ const initValues = {
 }
 
 const Login = () => {
+  const dispatch = useDispatch()
   const handleFormSubmit = useCallback((values) => {
     console.log(values)
 
     try {
-      loginUser(values)
-      document.location.replace('/')
+      dispatch(login(values))
     } catch (error) {
       console.log(error)
     }

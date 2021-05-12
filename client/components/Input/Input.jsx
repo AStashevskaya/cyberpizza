@@ -6,13 +6,6 @@ import ErrorField from '../ErrorFIeld'
 import './Input.scss'
 
 const Input = ({ placeholder, value, handleChange, type, name, id, error }) => {
-  // const [value, setValue] = useState(value)
-  // const handleChange = (e) => {
-  // console.log(e.target.value)
-  // setValue(e.target.value)
-  // }
-  console.log(error)
-
   return (
     <div className="input_row">
       <input

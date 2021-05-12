@@ -17,7 +17,7 @@ async function createCart(req, res) {
   try {
     await newCart.save()
 
-    res.cookie('cart_id10', newCart._id.toString())
+    res.cookie('cart_id', newCart._id.toString())
     res.status(201).json(newCart)
   } catch (error) {
     res.status(409).json({ message: error.message })

@@ -30,3 +30,9 @@ Content-Type: application/json
 ### 
 GET   http://localhost:8080/api/user
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.NjA5YWFlNTUxZTI5Y2IzMjYwODc0OWJm.cBACbg-ZHCLvOPoMYmNICAD18_WzVaKuGY8YBL1GElI
+
+###
+
+POST  http://localhost:8080/api/user/logout
+Content-Type: application/json
+
