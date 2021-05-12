@@ -1,15 +1,17 @@
 import React, { useState } from 'react'
 import pt from 'prop-types'
 
+import ErrorField from '../ErrorFIeld'
+
 import './Input.scss'
 
-const Input = ({ placeholder, value, handleChange, type, name, id }) => {
+const Input = ({ placeholder, value, handleChange, type, name, id, error }) => {
   // const [value, setValue] = useState(value)
   // const handleChange = (e) => {
   // console.log(e.target.value)
   // setValue(e.target.value)
   // }
-  console.log(handleChange, value, name)
+  console.log(error)
 
   return (
     <div className="input_row">
@@ -21,11 +23,13 @@ const Input = ({ placeholder, value, handleChange, type, name, id }) => {
         name={name}
         id={id}
       />
+      {error ? <ErrorField text={error} /> : ''}
     </div>
   )
 }
 
 Input.propTypes = {
+  error: pt.string,
   placeholder: pt.string,
   value: pt.string,
   name: pt.string,
@@ -35,6 +39,7 @@ Input.propTypes = {
 }
 
 Input.defaultProps = {
+  error: '',
   placeholder: '',
   value: '',
   name: '',

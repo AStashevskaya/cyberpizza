@@ -82,3 +82,17 @@ $screen-768: 768px;
     -o-transform: scale(1.2);
   }
 }
+
+@mixin logButton ($width, $height) {
+  color: #fff;
+  cursor: pointer;
+  background-color: $color-link;
+  width: $width;
+  height: $height;
+  opacity: 1;
+  border: none;
+
+  &:disabled {
+    opacity: 0.7;
+  }
+} 

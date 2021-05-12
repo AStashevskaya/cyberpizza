@@ -1,5 +1,16 @@
 @import '../../styles/variables';
 
 .register {
-    @include colomnFlex
+  @include colomnFlex;
+  width: 100%;
+  height: 100%;
+
+  & > form {
+    @include colomnFlex;
+
+    & > button {
+        @include logButton(140px, 30px);
+        margin-top: 10px;
+    }
+  }
 }
