@@ -19,6 +19,12 @@
     "type": "git",
     "url": "git+https://github.com/AStashevskaya/cyberpizza.git"
   },
+  "proxy": {
+    "/api/*":  {
+      "target": "http://localhost:3000",
+      "secure": false
+    }
+  },
   "author": "",
   "license": "ISC",
   "bugs": {

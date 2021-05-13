@@ -1,11 +1,11 @@
 import React, { useCallback } from 'react'
 // import pt from 'prop-types'
 import { Formik, Form, Field } from 'formik'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import * as yup from 'yup'
 
 import Input from '../Input'
-// import { loginUser } from '../../api/user'
+import ErrorField from '../ErrorFIeld'
 import { login } from '../../redux/user'
 import './Login.scss'
 
@@ -21,18 +21,19 @@ const initValues = {
 
 const Login = () => {
   const dispatch = useDispatch()
-  const handleFormSubmit = useCallback((values) => {
-    console.log(values)
+  const error = useSelector((state) => state.user.error)
 
-    try {
+  const handleFormSubmit = useCallback(
+    (values) => {
+      console.log(values)
       dispatch(login(values))
-    } catch (error) {
-      console.log(error)
-    }
-  }, [])
+    },
+    [dispatch]
+  )
 
   return (
     <div className="login">
+      {error ? <ErrorField text={error} /> : ''}
       <Formik initialValues={initValues} validationSchema={schema} onSubmit={handleFormSubmit}>
         {({ errors, touched, isSubmitting, handleSubmit, validateForm, handleChange, values }) => (
           <Form
@@ -65,7 +66,7 @@ const Login = () => {
               value={values.password}
               handleChange={handleChange}
             />
-            <button type="submit" disabled={isSubmitting}>
+            <button type="submit" disabled={!error && isSubmitting}>
               Login
             </button>
           </Form>

@@ -10,7 +10,7 @@ router.get('/api/user', authenticateToken, getUserData)
 router.delete('/api/user/logout', logoutUser)
 
 const createToken = (id) => jwt.sign(id.toString(), process.env.ACCESS_TOKEN)
-const maxAge = 24 * 60  * 60 * 1000
+const maxAge = 24 * 60 * 60 * 1000
 
 async function createUser(req, res) {
   const { password, email, name } = req.body
@@ -25,7 +25,6 @@ async function createUser(req, res) {
       name,
       password: hashedPassword,
     }
-    console.log(user)
 
     if (!users.length) {
       user.isAdmin = true
@@ -34,8 +33,7 @@ async function createUser(req, res) {
     const isExist = users.find((person) => person.email === user.email)
 
     if (isExist) {
-      // res.status(400).json({ message: 'isExist' })
-      throw new Error('This email is already registered')
+      res.status(400).send({ message: 'This email is already registered' })
     } else {
       const newUser = new User(user)
       await newUser.save()
@@ -44,12 +42,11 @@ async function createUser(req, res) {
 
       res.cookie('jwt', accessToken)
       res.status(201).json({ user: newUser._id })
-      // res.status(201).json(newUser)
     }
   } catch (error) {
     console.log(error.message)
     const { message } = error
-    res.status(409).json({ errors: { message } })
+    res.status(409).send({ message })
   }
 }
 
@@ -58,12 +55,11 @@ async function logUser(req, res) {
   const users = await User.find()
   const user = users.find((person) => person.email === email)
 
-  if (!user) {
-    throw new Error('This email is not registered')
-    // return res.status(400).send('Cannot find user')
-  }
-
   try {
+    if (!user) {
+      throw new Error('This email is not registered')
+    }
+
     const isAllowed = await bcrypt.compare(password, user.password)
 
     if (isAllowed) {
@@ -73,10 +69,9 @@ async function logUser(req, res) {
       res.json({ user: user._id })
     } else {
       throw new Error('Incorrect password')
-      // return res.sendStatus(401)
     }
   } catch (error) {
-    res.status(400).json({})
+    res.status(400).json({ message: error.message })
   }
 }
 

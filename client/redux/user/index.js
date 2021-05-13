@@ -43,7 +43,9 @@ export const signIn = (user) => async (dispatch) => {
     dispatch(getData(token))
     document.location.replace('/')
   } catch (error) {
-    dispatch(logUserFailure(error))
+    const { message } = error.response.data
+
+    dispatch(logUserFailure(message))
   }
 }
 
@@ -52,22 +54,22 @@ export const login = (user) => async (dispatch) => {
   try {
     await api.loginUser(user)
     const token = getCookies('jwt')
-    console.log(token)
+
     dispatch(getData(token))
     document.location.replace('/')
   } catch (error) {
-    console.log(error)
-    dispatch(logUserFailure(error))
+    const { message } = error.response.data
+
+    dispatch(logUserFailure(message))
   }
 }
 
 export const getData = (token) => async (dispatch) => {
   try {
     const { data } = await api.getUserData(token)
-    console.log('userdata', data)
+
     dispatch(logUserSuccess(data))
   } catch (error) {
-    console.log(error)
     dispatch(logUserFailure(error))
   }
 }
@@ -100,6 +102,7 @@ export const user = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
+        error: '',
       }
     case LOG_USER_FAILURE:
       return {

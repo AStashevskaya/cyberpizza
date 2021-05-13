@@ -4,10 +4,10 @@ import { Formik, Form, Field } from 'formik'
 import * as yup from 'yup'
 
 import Input from '../Input'
+import ErrorField from '../ErrorFIeld'
 import { signIn } from '../../redux/user'
 
 import './Register.scss'
-import ErrorField from '../ErrorFIeld'
 
 const schema = yup.object().shape({
   email: yup.string().email('Invalid email').required('Required'),
@@ -23,17 +23,20 @@ const initValues = {
 
 const Register = () => {
   const dispatch = useDispatch()
-  // const error = useSelector((state) => state.user.error)
+  const error = useSelector((state) => state.user.error)
   // console.log(error)
 
-  const handleFormSubmit = useCallback(async (values) => {
-    console.log(values.password)
-    dispatch(signIn(values))
-  }, [])
+  const handleFormSubmit = useCallback(
+    async (values) => {
+      console.log(values.password)
+      dispatch(signIn(values))
+    },
+    [dispatch]
+  )
 
   return (
     <div className="register">
-      {/* {error ? <ErrorField text={error} /> : ''} */}
+      {error ? <ErrorField text={error} /> : ''}
       <Formik initialValues={initValues} validationSchema={schema} onSubmit={handleFormSubmit}>
         {({ errors, isSubmitting, handleSubmit, validateForm, handleChange, values, touched }) => (
           <Form

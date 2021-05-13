@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser')
 const productsRouts = require('./routes/products')
 const cartRouts = require('./routes/carts')
 const userRouts = require('./routes/users')
-const { createProxyMiddleware } = require('http-proxy-middleware');
+const { createProxyMiddleware } = require('http-proxy-middleware')
 // const registerRouts = require('./routes/register')
 
 require('dotenv').config()
