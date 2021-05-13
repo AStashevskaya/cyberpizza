@@ -10,7 +10,7 @@ const LOG_USER_SUCCESS = 'LOG_USER_SUCCESS'
 export const logout = () => async (dispatch) => {
   try {
     await api.logoutUser()
-    const token = getCookies('token')
+    const token = getCookies('jwt')
     console.log('token from logout', token)
     dispatch({
       type: LOG_OUT,
@@ -38,7 +38,7 @@ export const signIn = (user) => async (dispatch) => {
   try {
     await api.createUser(user)
 
-    const token = getCookies('token')
+    const token = getCookies('jwt')
 
     dispatch(getData(token))
     document.location.replace('/')
@@ -51,7 +51,7 @@ export const login = (user) => async (dispatch) => {
   dispatch(logUserRequest(user))
   try {
     await api.loginUser(user)
-    const token = getCookies('token')
+    const token = getCookies('jwt')
     console.log(token)
     dispatch(getData(token))
     document.location.replace('/')
@@ -74,7 +74,7 @@ export const getData = (token) => async (dispatch) => {
 
 const initialState = {
   currentUser: {},
-  isAuth: getCookies('token') ? getCookies('token') : false,
+  isAuth: getCookies('jwt') ? getCookies('jwt') : false,
   loading: false,
   error: '',
 }

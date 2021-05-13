@@ -7,9 +7,10 @@ const jwt = require('jsonwebtoken')
 router.post('/api/users', createUser)
 router.post('/api/user/login', logUser)
 router.get('/api/user', authenticateToken, getUserData)
-router.post('/api/user/logout', logoutUser)
+router.delete('/api/user/logout', logoutUser)
 
 const createToken = (id) => jwt.sign(id.toString(), process.env.ACCESS_TOKEN)
+const maxAge = 24 * 60  * 60 * 1000
 
 async function createUser(req, res) {
   const { password, email, name } = req.body
@@ -41,7 +42,7 @@ async function createUser(req, res) {
 
       const accessToken = createToken(newUser._id.toString())
 
-      res.cookie('token', accessToken)
+      res.cookie('jwt', accessToken)
       res.status(201).json({ user: newUser._id })
       // res.status(201).json(newUser)
     }
@@ -68,7 +69,7 @@ async function logUser(req, res) {
     if (isAllowed) {
       const accessToken = createToken(user._id.toString())
 
-      res.cookie('token', accessToken)
+      res.cookie('jwt', accessToken, { maxAge })
       res.json({ user: user._id })
     } else {
       throw new Error('Incorrect password')
@@ -108,8 +109,11 @@ async function getUserData(req, res) {
 }
 
 async function logoutUser(req, res) {
-  console.log(req.headers.cookie)
-  return res.cookie('token', '', { maxAge: 1 })
+  try {
+    res.cookie('jwt', '', { maxAge: 1 })
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 module.exports = router

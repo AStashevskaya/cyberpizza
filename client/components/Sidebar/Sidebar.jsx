@@ -14,15 +14,6 @@ const SideBar = () => {
       title: 'drinks',
       path: '/',
     },
-    {
-      title: 'sign in',
-      path: '/register',
-    },
-
-    {
-      title: 'login',
-      path: '/log-in',
-    },
   ]
 
   return (

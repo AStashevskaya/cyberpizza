@@ -12,15 +12,18 @@ const AuthField = () => {
   const user = useSelector((state) => state.user.currentUser)
   const dispatch = useDispatch()
 
-  const handleClick = useCallback((e) => {
-    e.preventDefault()
-    console.log(e, 'from click')
-    dispatch(logout())
-  })
+  const handleClick = useCallback(
+    async (e) => {
+      e.preventDefault()
+      console.log(e, 'from click')
+      dispatch(logout())
+    },
+    [dispatch]
+  )
 
   useEffect(() => {
     if (isAuth) {
-      const token = getCookies('token')
+      const token = getCookies('jwt')
       console.log(token, 'from auth')
       dispatch(getData(token))
     }

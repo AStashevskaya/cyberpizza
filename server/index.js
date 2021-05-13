@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser')
 const productsRouts = require('./routes/products')
 const cartRouts = require('./routes/carts')
 const userRouts = require('./routes/users')
+const { createProxyMiddleware } = require('http-proxy-middleware');
 // const registerRouts = require('./routes/register')
 
 require('dotenv').config()
@@ -25,26 +26,36 @@ async function start() {
 
   try {
     app.use(cors(corsOptions))
+    app.use(cookieParser())
+    app.use(express.json())
     app.use(bodyParser.json({ extended: true }))
     app.use(bodyParser.urlencoded({ extended: true }))
     app.use(express.static('dist'))
+    // app.use(
+    //   '/api',
+    //   proxy({
+    //     target: 'http://localhost:8080',
+    //   })
+    // )
+    // app.use(
+    //   '/',
+    //   createProxyMiddleware({
+    //     target: 'http://localhost:8080',
+    //     changeOrigin: true,
+    //   })
+    // )
     app.use('/files', express.static(path.join(__dirname, './files')))
-    app.use(cookieParser())
-    // app.get('/register', (req, res) => {
-    //   res.send('register')
-    // })
-    // app.use('/register', express.static('dist'))
-    // app.use('/register', registerRoutes)
     app.use(productsRouts)
     app.use(cartRouts)
+
     app.use(userRouts)
-    app.get('/*', function (req, res) {
-      res.sendFile(path.join(__dirname, '../dist/index.html'), function (err) {
-        if (err) {
-          res.status(500).send(err)
-        }
-      })
-    })
+    // app.get('/*', function (req, res) {
+    //   res.sendFile(path.join(__dirname, '../dist/index.html'), function (err) {
+    //     if (err) {
+    //       res.status(500).send(err)
+    //     }
+    //   })
+    // })
     app.listen(port, () => {
       console.log(`server is listing in ${port} - ${env} environment`)
     })
