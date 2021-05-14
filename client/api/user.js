@@ -6,7 +6,7 @@ export const createUser = (user) => axios.post(`${url}s`, user)
 
 export const loginUser = (user) => axios.post(`${url}/login`, user)
 
-export const logoutUser = () => axios.delete(`${url}/logout`, { data: {} })
+export const logoutUser = (user = {}) => axios.post(`${url}/logout`, user)
 
 export const getUserData = (token) =>
   axios.get(`/api/user`, {

@@ -24,11 +24,9 @@ const initValues = {
 const Register = () => {
   const dispatch = useDispatch()
   const error = useSelector((state) => state.user.error)
-  // console.log(error)
 
   const handleFormSubmit = useCallback(
     async (values) => {
-      console.log(values.password)
       dispatch(signIn(values))
     },
     [dispatch]
@@ -41,7 +39,6 @@ const Register = () => {
         {({ errors, isSubmitting, handleSubmit, validateForm, handleChange, values, touched }) => (
           <Form
             onKeyPress={(keyEvent) => {
-              console.log(touched)
               if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
                 keyEvent.preventDefault()
                 validateForm()

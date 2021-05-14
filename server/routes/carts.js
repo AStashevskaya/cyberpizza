@@ -47,7 +47,6 @@ async function getCart(req, res) {
 
   try {
     const cart = await Cart.findById(_id)
-
     res.json(cart)
   } catch (error) {
     res.status(404).json({ message: error.message })
@@ -97,8 +96,6 @@ async function changeQuantity(req, res) {
         return product
       }),
     ]
-
-    console.log(products)
 
     const total = products.reduce((accum, item) => accum + item.quantity * item.price, 0)
 

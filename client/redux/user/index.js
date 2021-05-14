@@ -6,12 +6,14 @@ const LOG_OUT = 'LOG_OUT'
 const LOG_USER_REQUEST = 'LOG_USER_REQUEST'
 const LOG_USER_FAILURE = 'LOG_USER_FAILURE'
 const LOG_USER_SUCCESS = 'LOG_USER_SUCCESS'
+const SET_USER = 'SET_USER'
 
-export const logout = () => async (dispatch) => {
+export const logout = () => async (dispatch, getState) => {
+  const { userId } = getState().user
+
   try {
-    await api.logoutUser()
-    const token = getCookies('jwt')
-    console.log('token from logout', token)
+    await api.logoutUser({ userId })
+
     dispatch({
       type: LOG_OUT,
     })
@@ -34,13 +36,22 @@ export const logUserFailure = (error) => ({
   payload: error,
 })
 
+const setUser = (id) => ({
+  type: SET_USER,
+  payload: id,
+})
+
 export const signIn = (user) => async (dispatch) => {
+  dispatch(logUserRequest(user))
+
   try {
-    await api.createUser(user)
+    const { data } = await api.createUser(user)
 
     const token = getCookies('jwt')
 
+    dispatch(setUser(data.user))
     dispatch(getData(token))
+
     document.location.replace('/')
   } catch (error) {
     const { message } = error.response.data
@@ -51,11 +62,15 @@ export const signIn = (user) => async (dispatch) => {
 
 export const login = (user) => async (dispatch) => {
   dispatch(logUserRequest(user))
+
   try {
-    await api.loginUser(user)
+    const { data } = await api.loginUser(user)
+
     const token = getCookies('jwt')
 
+    dispatch(setUser(data.user))
     dispatch(getData(token))
+
     document.location.replace('/')
   } catch (error) {
     const { message } = error.response.data
@@ -77,6 +92,7 @@ export const getData = (token) => async (dispatch) => {
 const initialState = {
   currentUser: {},
   isAuth: getCookies('jwt') ? getCookies('jwt') : false,
+  userId: '',
   loading: false,
   error: '',
 }
@@ -109,6 +125,11 @@ export const user = (state = initialState, action) => {
         ...state,
         loading: false,
         error: payload,
+      }
+    case SET_USER:
+      return {
+        ...state,
+        userId: payload,
       }
     default:
       return state

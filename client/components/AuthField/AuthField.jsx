@@ -15,7 +15,7 @@ const AuthField = () => {
   const handleClick = useCallback(
     async (e) => {
       e.preventDefault()
-      console.log(e, 'from click')
+
       dispatch(logout())
     },
     [dispatch]
@@ -24,7 +24,6 @@ const AuthField = () => {
   useEffect(() => {
     if (isAuth) {
       const token = getCookies('jwt')
-      console.log(token, 'from auth')
       dispatch(getData(token))
     }
   }, [])

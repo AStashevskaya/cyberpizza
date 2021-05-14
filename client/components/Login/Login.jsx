@@ -25,7 +25,6 @@ const Login = () => {
 
   const handleFormSubmit = useCallback(
     (values) => {
-      console.log(values)
       dispatch(login(values))
     },
     [dispatch]
@@ -38,7 +37,6 @@ const Login = () => {
         {({ errors, touched, isSubmitting, handleSubmit, validateForm, handleChange, values }) => (
           <Form
             onKeyPress={(keyEvent) => {
-              console.log(touched)
               if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
                 keyEvent.preventDefault()
                 validateForm()
