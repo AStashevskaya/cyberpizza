@@ -1,5 +1,6 @@
 module.exports = {
-  parser: '@babel/eslint-parser',
+  // parser: '@babel/eslint-parser',
+  parser: 'babel-eslint',
   env: {
     browser: true,
     node: true,
@@ -26,6 +27,7 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module',
   },
+  // babelOptions: { "configFile": "./.babelrc", },
   plugins: ['react'],
   settings: {
     'import/resolver': 'webpack',

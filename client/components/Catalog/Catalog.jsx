@@ -1,22 +1,19 @@
 import React from 'react'
-import pt from 'prop-types'
+import { useSelector } from 'react-redux'
 
 import Category from '../Category'
 import Cards from '../Cards'
 
 import './Catalog.scss'
 
-const Catalog = ({ data }) => {
+const Catalog = () => {
+  const products = useSelector((state) => state.catalog.products)
   return (
     <div className="catalog">
       <Category text="pizza" />
-      <Cards cards={data} />
+      <Cards cards={products} />
     </div>
   )
-}
-
-Catalog.propTypes = {
-  data: pt.array,
 }
 
 export default Catalog

@@ -22,20 +22,25 @@
     position: relative;
     margin-bottom: 30px;
 
-    & > button {
-      @include roundLink($plusBtn-size);
+    img {
+      @include equalSides(100%);
+      object-fit: cover;
+    }
+  }
+
+  &__button {
+    @include roundLink($plusBtn-size);
       @include activeLink;
       position: absolute;
       font-size: 20px;
       border: 0;
       bottom: -$plusBtn-size / 2;
       left: calc(200px / 2 - #{$plusBtn-size / 2});
-    }
 
-    img {
-      @include equalSides(100%);
-      object-fit: cover;
-    }
+      &.disabled {
+        opacity: 0.8;
+        cursor: default;
+      }
   }
 
   &__title {
