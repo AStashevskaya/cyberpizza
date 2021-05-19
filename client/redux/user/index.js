@@ -10,9 +10,10 @@ const SET_USER = 'SET_USER'
 
 export const logout = () => async (dispatch, getState) => {
   const { userId } = getState().user
+  const token = getCookies('jwt')
 
   try {
-    await api.logoutUser({ userId })
+    await api.logoutUser({ userId }, token)
 
     dispatch({
       type: LOG_OUT,

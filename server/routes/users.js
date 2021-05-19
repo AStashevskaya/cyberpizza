@@ -77,7 +77,9 @@ async function logUser(req, res) {
 
 async function authenticateToken(req, res, next) {
   const authHeader = req.headers['authorization']
+  console.log('from auth headers', req.headers)
   const token = authHeader && authHeader.split(' ')[1]
+  console.log('token', token)
 
   if (!token) {
     return res.sendStatus(401)
@@ -87,7 +89,7 @@ async function authenticateToken(req, res, next) {
     if (error) {
       return res.sendStatus(403)
     }
-
+    console.log('user', user)
     req.user = user
 
     next()
@@ -104,7 +106,14 @@ async function getUserData(req, res) {
 }
 
 async function logoutUser(req, res) {
+  console.log('user', req.headers)
+  const authHeader = req.headers['authorization']
+  console.log('from auth headers', req.headers)
+  const token = authHeader && authHeader.split(' ')[1]
+  console.log('token', token)
+
   try {
+    await jwt.decode(token)
     res.cookie('jwt', '', { maxAge: 1 })
   } catch (error) {
     res.status(400).json({ message: error.message })

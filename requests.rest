@@ -33,6 +33,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.NjA5YWFlNTUxZTI5Y2IzMjYwODc0OWJm.cBAC
 
 ###
 
-DELETE  http://localhost:8080/api/user/logout
-Content-Type: application/json
+Post  http://localhost:8080/api/user/logout
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.NjA5YWFlNTUxZTI5Y2IzMjYwODc0OWJm.cBACbg-ZHCLvOPoMYmNICAD18_WzVaKuGY8YBL1GElI
 
