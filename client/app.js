@@ -4,6 +4,7 @@ import { Provider } from 'react-redux'
 import { hot } from 'react-hot-loader/root'
 
 import store from './redux/store'
+
 import CatalogPage from './pages/catalog'
 import LoginPage from './pages/LoginPage'
 import SignInPage from './pages/SigninPage'

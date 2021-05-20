@@ -1,14 +1,11 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const bodyParser = require('body-parser')
 const cors = require('cors')
 const path = require('path')
 const cookieParser = require('cookie-parser')
-const productsRouts = require('./routes/products')
-const cartRouts = require('./routes/carts')
-const userRouts = require('./routes/users')
-const { createProxyMiddleware } = require('http-proxy-middleware')
-// const registerRouts = require('./routes/register')
+const productsRoutes = require('./routes/products')
+const cartRoutes = require('./routes/carts')
+const userRoutes = require('./routes/users')
 
 require('dotenv').config()
 
@@ -28,34 +25,12 @@ async function start() {
     app.use(cors(corsOptions))
     app.use(cookieParser())
     app.use(express.json())
-    app.use(bodyParser.json({ extended: true }))
-    app.use(bodyParser.urlencoded({ extended: true }))
     app.use(express.static('dist'))
-    // app.use(
-    //   '/api',
-    //   proxy({
-    //     target: 'http://localhost:8080',
-    //   })
-    // )
-    // app.use(
-    //   '/',
-    //   createProxyMiddleware({
-    //     target: 'http://localhost:8080',
-    //     changeOrigin: true,
-    //   })
-    // )
     app.use('/files', express.static(path.join(__dirname, './files')))
-    app.use(productsRouts)
-    app.use(cartRouts)
 
-    app.use(userRouts)
-    // app.get('/*', function (req, res) {
-    //   res.sendFile(path.join(__dirname, '../dist/index.html'), function (err) {
-    //     if (err) {
-    //       res.status(500).send(err)
-    //     }
-    //   })
-    // })
+    app.use(productsRoutes)
+    app.use(cartRoutes)
+    app.use(userRoutes)
     app.listen(port, () => {
       console.log(`server is listing in ${port} - ${env} environment`)
     })

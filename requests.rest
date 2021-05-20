@@ -12,8 +12,8 @@ POST  http://localhost:8080/api/users
 Content-Type: application/json
 
 {
-    "name": "nas",
-    "email": "test1@mail.ru",
+    "name": "ross",
+    "email": "test22@mail.ru",
     "password": "1234"
 }
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import pt from 'prop-types'
 
 import ErrorField from '../ErrorFIeld'
