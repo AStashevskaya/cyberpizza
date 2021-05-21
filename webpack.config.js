@@ -69,6 +69,7 @@ module.exports = (env, options) => {
         title: 'CyberPizza',
         template: path.resolve(__dirname, './client/index.html'),
         filename: 'index.html',
+        publicPath: '/',
       }),
       new MiniCssExtractPlugin({
         filename: 'styles.css',

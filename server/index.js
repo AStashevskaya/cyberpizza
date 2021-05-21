@@ -31,6 +31,7 @@ async function start() {
     app.use(productsRoutes)
     app.use(cartRoutes)
     app.use(userRoutes)
+    app.get('*', (req, res) => res.sendFile(path.resolve('dist/index.html')))
     app.listen(port, () => {
       console.log(`server is listing in ${port} - ${env} environment`)
     })

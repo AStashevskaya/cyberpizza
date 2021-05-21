@@ -41,8 +41,6 @@ export const signIn = (user) => async (dispatch) => {
     const token = getCookies('jwt')
 
     dispatch(getData(token))
-
-    document.location.replace('/')
   } catch (error) {
     const { message } = error.response.data
 
@@ -59,8 +57,6 @@ export const login = (user) => async (dispatch) => {
     const token = getCookies('jwt')
 
     dispatch(getData(token))
-
-    document.location.replace('/')
   } catch (error) {
     const { message } = error.response.data
 

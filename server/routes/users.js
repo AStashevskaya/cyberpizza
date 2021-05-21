@@ -29,7 +29,6 @@ async function createUser(req, res) {
     const hashedPassword = await bcrypt.hash(password, salt)
 
     const length = await User.count()
-    console.log(length)
 
     const user = {
       email,
