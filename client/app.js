@@ -8,6 +8,7 @@ import store from './redux/store'
 import CatalogPage from './pages/catalog'
 import LoginPage from './pages/LoginPage'
 import SignInPage from './pages/SigninPage'
+import AdminPage from './pages/AdminPage'
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
             <Route exact path="/" component={CatalogPage} />
             <Route exact path="/log-in" component={LoginPage} />
             <Route exact path="/register" component={SignInPage} />
+            <Route path="/admin/:title" component={AdminPage} />
             <Redirect to="/" />
           </Switch>
         </Router>

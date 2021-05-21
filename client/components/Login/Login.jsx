@@ -28,9 +28,8 @@ const Login = () => {
   const handleFormSubmit = useCallback(
     (values) => {
       dispatch(login(values))
-      history.push('/')
     },
-    [dispatch, history]
+    [dispatch]
   )
 
   return (

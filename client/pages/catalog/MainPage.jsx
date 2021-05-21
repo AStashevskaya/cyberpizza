@@ -14,7 +14,21 @@ const MainPage = () => {
   const [loading, setLoading] = useState(true)
   const dispatch = useDispatch()
 
+  // eslint-disable-next-line react-redux/useSelector-prefer-selectors
   const catalogLoading = useSelector((state) => state.catalog.loading)
+
+  // eslint-disable-next-line react-perf/jsx-no-new-array-as-prop
+  const categories = [
+    {
+      title: 'pizza',
+      path: '/',
+    },
+
+    {
+      title: 'drinks',
+      path: '/',
+    },
+  ]
 
   useEffect(() => {
     if (catalogLoading) {
@@ -34,7 +48,7 @@ const MainPage = () => {
             <Header />
             <Catalog />
           </div>
-          <Sidebar />
+          <Sidebar categories={categories} />
           <Cart />
         </>
       )}

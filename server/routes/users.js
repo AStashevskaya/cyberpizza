@@ -3,6 +3,7 @@ const User = require('../models/User')
 const router = new Router()
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const authenticateToken = require('../middleware/auth')
 
 router.post('/api/users', createUser)
 router.post('/api/user/login', logUser)
@@ -13,13 +14,13 @@ const createToken = (id) => jwt.sign(id.toString(), process.env.ACCESS_TOKEN)
 
 const maxAge = 24 * 60 * 60 * 1000
 
-const getToken = (cookie) => {
-  const cookies = cookie.split('; ')
-  const tokenCookie = cookies.find((el) => el.startsWith('jwt='))
-  const [tokenName, tokenValue] = tokenCookie.split('=')
+// const getToken = (cookie) => {
+//   const cookies = cookie.split('; ')
+//   const tokenCookie = cookies.find((el) => el.startsWith('jwt='))
+//   const [tokenName, tokenValue] = tokenCookie.split('=')
 
-  return tokenValue
-}
+//   return tokenValue
+// }
 
 async function createUser(req, res) {
   const { password, email, name } = req.body
@@ -84,23 +85,23 @@ async function logUser(req, res) {
   }
 }
 
-async function authenticateToken(req, res, next) {
-  const { cookie } = req.headers
-  const token = getToken(cookie)
+// async function authenticateToken(req, res, next) {
+//   const { cookie } = req.headers
+//   const token = getToken(cookie)
 
-  if (!token) {
-    return res.sendStatus(401)
-  }
+//   if (!token) {
+//     return res.sendStatus(401)
+//   }
 
-  jwt.verify(token, process.env.ACCESS_TOKEN, (error, user) => {
-    if (error) {
-      return res.sendStatus(403)
-    }
-    req.user = user
+//   jwt.verify(token, process.env.ACCESS_TOKEN, (error, user) => {
+//     if (error) {
+//       return res.sendStatus(403)
+//     }
+//     req.user = user
 
-    next()
-  })
-}
+//     next()
+//   })
+// }
 
 async function getUserData(req, res) {
   const user = await User.findOne({ _id: req.user })

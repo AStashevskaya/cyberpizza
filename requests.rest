@@ -36,3 +36,18 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.NjA5YWFlNTUxZTI5Y2IzMjYwODc0OWJm.cBAC
 Post  http://localhost:8080/api/user/logout
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.NjA5YWFlNTUxZTI5Y2IzMjYwODc0OWJm.cBACbg-ZHCLvOPoMYmNICAD18_WzVaKuGY8YBL1GElI
 
+###
+Get  http://localhost:8080/api/products/6074568952b7892bb84ca10b
+Content-Type: application/json
+
+###
+Post  http://localhost:8080/api/products
+Content-Type: application/json
+
+{
+  "name": "Marinara",
+  "image": "files/img",
+  "price": "14.88",
+  "description": "pizza with seafood",
+  "enabled": []
+}
