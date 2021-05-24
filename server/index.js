@@ -41,7 +41,7 @@ async function start() {
   }
 }
 
-function prepareApp(url) {
+export function prepareApp(url) {
   const app = express()
 
   mongoose.connect(url, {
