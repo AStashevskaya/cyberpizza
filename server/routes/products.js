@@ -5,9 +5,21 @@ const authenticateToken = require('../middleware/auth')
 const router = new Router()
 
 router.get('/api/products', getProducts)
-router.post('/api/products', authenticateToken, createProduct)
+router.post('/api/products', authenticateToken, checkRole, createProduct)
+router.delete('/api/products', authenticateToken, checkRole, deleteProduct)
 router.get('/api/products/:id', getProduct)
-router.put('/api/products/:id', updateProduct)
+router.put('/api/products/:id', authenticateToken, checkRole, updateProduct)
+
+async function checkRole(req, res, next) {
+  const user = await User.findById(req.user)
+
+  const { isAdmin } = user
+
+  if (!isAdmin) {
+    return res.sendStatus(401)
+  }
+  next()
+}
 
 async function getProducts(req, res) {
   try {
@@ -21,7 +33,6 @@ async function getProducts(req, res) {
 
 async function getProduct(req, res) {
   const { id: _id } = req.params
-  console.log(_id)
 
   try {
     const product = await Product.findById(_id)
@@ -32,17 +43,35 @@ async function getProduct(req, res) {
 }
 
 async function createProduct(req, res) {
-  console.log(req.user)
   try {
-    const user = await User.findById(req.user)
-    console.log(user)
+    const product = new Product(req.body)
+    product.save()
   } catch (error) {
-    res.status(404).json({ message: error.message })
+    res.status(409).json({ message: error.message })
+  }
+}
+
+async function deleteProduct(req, res) {
+  try {
+    const { productId } = req.body
+
+    await Product.deleteOne({ _id: productId })
+
+    res.sendStatus(201)
+  } catch (error) {
+    res.status(409).json({ message: error.message })
   }
 }
 
 async function updateProduct(req, res) {
-console.log(req.user)
+  const { id } = req.params
+  try {
+    await Product.findOneAndUpdate({ _id: id }, { ...req.body })
+
+    res.sendStatus(201)
+  } catch (error) {
+    res.status(409).json({ message: error.message })
+  }
 }
 
 module.exports = router

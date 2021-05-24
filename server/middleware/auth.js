@@ -18,7 +18,6 @@ async function authenticateToken(req, res, next) {
 
   jwt.verify(token, process.env.ACCESS_TOKEN, (error, user) => {
     if (error) {
-        console.log('error')
       return res.sendStatus(403)
     }
     req.user = user
