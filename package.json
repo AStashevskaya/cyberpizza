@@ -19,7 +19,7 @@
     "db:seed": "node server/scripts/seed.js",
     "client:watch": "webpack serve --hot --mode development",
     "server:watch": "nodemon server --watch server --exec babel-node",
-    "test": "jest"
+    "test": "jest --watch --detectOpenHandles"
   },
   "heroku-run-build-script": true,
   "repository": {
@@ -60,18 +60,19 @@
     "redux": "^4.1.0",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.3.0",
+    "save-dev": "0.0.1-security",
     "yup": "^0.32.9"
   },
   "devDependencies": {
-    "@babel/core": "^7.14.2",
+    "@babel/core": "^7.14.3",
     "@babel/eslint-parser": "^7.14.2",
+    "@babel/node": "^7.14.2",
     "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@babel/preset-env": "^7.14.2",
     "@babel/preset-react": "^7.12.10",
     "babel-core": "^6.26.3",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.2.2",
-    "babel-node": "0.0.1-security",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",

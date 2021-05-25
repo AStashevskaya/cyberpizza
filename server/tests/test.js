@@ -1,59 +1,93 @@
-const MongoMemoryServer = require('mongodb-memory-server')
-const { prepareApp } = require('../')
-const request = require('supertest')
 import 'babel-polyfill'
-// const Products = require('../models/Products')
-// const User = require('../models/User')
+const { MongoMemoryServer } = require('mongodb-memory-server')
+const prepareApp = require('../app')
+const request = require('supertest')
+
 const mongoose = require('mongoose')
 
-describe('Test', function () {
-  let mongod, app
+const userData = {
+  name: 'Anastasiya',
+  email: 'test@mail.ru',
+  password: '123',
+}
 
-  beforeEach(async () => {
-    mongod = new MongoMemoryServer()
-    const mongoUrl = await mongod.getUri()
-    // console.log(mongoUrl)
-    // await main(mongoUrl);
-    const server = await prepareApp(mongoUrl)
+describe('Test', function () {
+  let mongoServer, app
+
+  beforeAll(async () => {
+    mongoServer = new MongoMemoryServer()
+    const mongoUri = await mongoServer.getUri()
+
+    const server = await prepareApp(mongoUri)
     app = request(server)
   })
 
-  test('Create new user', async function (done) {
-    const res = await app.post('/api/users').send({
-      name: 'Nastya',
-      email: 'test123@mail.ru',
+  test('Create new user', async () => {
+    const result = await app.post('/api/users').send(userData)
+    const userCount = await mongoose.model('User').count()
+
+    expect(result.statusCode).toEqual(201)
+    expect(userCount).toEqual(1)
+  }, 10000)
+
+  test('Create already existed user', async () => {
+    const result = await app.post('/api/users').send(userData)
+
+    const { message } = JSON.parse(result.text)
+
+    expect(result.statusCode).toEqual(400)
+    expect(message).toEqual('This email is already registered')
+  }, 10000)
+
+  test('Log with incorrect password', async () => {
+    const result = await app.post('/api/user/login').send({
+      ...userData,
+      password: '1234',
+    })
+
+    const { message } = JSON.parse(result.text)
+
+    expect(result.statusCode).toEqual(400)
+    expect(message).toEqual('Incorrect password')
+  }, 10000)
+
+  test('Log with not regestered email', async () => {
+    const result = await app.post('/api/user/login').send({
+      email: 'test3@mail.ru',
       password: '123',
     })
-    expect(res.statusCode).toEqual(200)
-    const userCount = await mongoose.model('User').countDocuments()
-    // console.log(userCount)
-    expect(userCount).toEqual(1)
-    done()
-  }, 30000)
 
-  afterEach(async () => {
-    await mongod.stop()
-  })
-})
+    const { message } = JSON.parse(result.text)
 
-// const mongod = new MongoMemoryServer()
+    expect(result.statusCode).toEqual(400)
+    expect(message).toEqual('This email is not registered')
+  }, 10000)
 
-// async function prepareApp(mongoUrl) {
-//   require('./models')
+  test('Success login', async () => {
+    const result = await app.post('/api/user/login').send(userData)
 
-//   await mongoose.connect(mongoUrl, { useNewUrlParser: true })
+    expect(result.statusCode).toEqual(200)
+  }, 10000)
 
-//   const app = express()
+  test('Success logout', async () => {
+    const result = await app.post('/api/user/logout')
+    expect(result.statusCode).toEqual(200)
+  }, 10000)
 
-//   app.use(cors('*'))
-//   app.use(cookieParser())
-//   app.use(require('./lib/session'))
-//   app.use('/api', require('./api'))
+  // test('Add not exested product to cart', async () => {
+  //   const result = await app.post('/api/carts/60acc9a5eeab7c1964471e02/products').send({
+  //     productId: '123456789',
+  //   })
 
-//   return app
-// }
-describe('Sample Test', () => {
-  it('should test that true === true', () => {
-    expect(true).toBe(true)
+  //   const { message } = JSON.parse(result.text)
+  //   console.log(message)
+
+  //   expect(result.statusCode).toEqual(404)
+  //   expect(message).toEqual('Such product is not exist')
+  // }, 10000)
+
+  afterAll(async () => {
+    await mongoose.disconnect()
+    await mongoServer.stop()
   })
 })

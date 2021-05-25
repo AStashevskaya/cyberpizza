@@ -48,9 +48,11 @@ async function getCart(req, res) {
 async function addProduct(req, res) {
   const { productId } = req.body
   const { id: _id } = req.params
+  console.log(_id, productId)
 
   try {
     const cart = await Cart.findById(_id)
+    console.log(cart)
     const product = await Product.findById(productId)
 
     if (product) {
@@ -62,7 +64,7 @@ async function addProduct(req, res) {
       cart.save()
       res.json(cart)
     } else {
-      throw new Error()
+      throw new Error('Such product is not exist')
     }
   } catch (error) {
     res.status(404).json({ message: error.message })

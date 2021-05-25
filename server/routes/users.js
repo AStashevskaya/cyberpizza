@@ -9,7 +9,7 @@ router.post('/api/user/login', logUser)
 router.get('/api/user', authenticateToken, getUserData)
 router.post('/api/user/logout', logoutUser)
 
-const createToken = (id) => jwt.sign(id.toString(), process.env.ACCESS_TOKEN)
+const createToken = (id) => jwt.sign(id.toString(), process.env.ACCESS_TOKEN || '123')
 
 const maxAge = 24 * 60 * 60 * 1000
 
