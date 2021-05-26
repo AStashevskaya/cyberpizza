@@ -1,10 +1,12 @@
 const Router = require('express')
 const Cart = require('../models/Cart')
+const User = require('../models/User')
 const Product = require('../models/Product')
 const router = new Router()
+const authenticateToken = require('../middleWare/auth')
 
 router.post('/api/carts', createCart)
-router.get('/api/carts', getCarts)
+router.get('/api/carts', authenticateToken, getCarts)
 router.get('/api/carts/:id', getCart)
 router.post('/api/carts/:id/products', addProduct)
 router.put('/api/carts/:id/products', changeQuantity)
@@ -26,6 +28,12 @@ async function createCart(req, res) {
 
 async function getCarts(req, res) {
   try {
+    const { isAdmin } = await User.findOne({ _id: req.user })
+
+    if (!isAdmin) {
+      return res.sendStatus(401)
+    }
+
     const carts = await Cart.find()
 
     res.status(200).json(carts)
@@ -48,11 +56,9 @@ async function getCart(req, res) {
 async function addProduct(req, res) {
   const { productId } = req.body
   const { id: _id } = req.params
-  console.log(_id, productId)
 
   try {
     const cart = await Cart.findById(_id)
-    console.log(cart)
     const product = await Product.findById(productId)
 
     if (product) {

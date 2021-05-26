@@ -1,25 +1,20 @@
+import { TEST_ACCESS_TOKEN } from '../tests/constants'
+
 const Router = require('express')
 const User = require('../models/User')
 const router = new Router()
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const authenticateToken = require('../middleWare/auth')
 
 router.post('/api/users', createUser)
 router.post('/api/user/login', logUser)
 router.get('/api/user', authenticateToken, getUserData)
 router.post('/api/user/logout', logoutUser)
 
-const createToken = (id) => jwt.sign(id.toString(), process.env.ACCESS_TOKEN || '123')
+const createToken = (id) => jwt.sign(id.toString(), process.env.ACCESS_TOKEN || TEST_ACCESS_TOKEN)
 
 const maxAge = 24 * 60 * 60 * 1000
-
-const getToken = (cookie) => {
-  const cookies = cookie.split('; ')
-  const tokenCookie = cookies.find((el) => el.startsWith('jwt='))
-  const [tokenName, tokenValue] = tokenCookie.split('=')
-
-  return tokenValue
-}
 
 async function createUser(req, res) {
   const { password, email, name } = req.body
@@ -28,7 +23,7 @@ async function createUser(req, res) {
     const salt = await bcrypt.genSalt()
     const hashedPassword = await bcrypt.hash(password, salt)
 
-    const length = await User.count()
+    const length = await User.countDocuments()
 
     const user = {
       email,
@@ -51,7 +46,7 @@ async function createUser(req, res) {
       const accessToken = createToken(newUser._id.toString())
 
       res.cookie('jwt', accessToken)
-      res.status(201).json({ user: newUser._id.toString() })
+      res.status(201).json({ token: accessToken })
     }
   } catch (error) {
     const { message } = error
@@ -75,31 +70,14 @@ async function logUser(req, res) {
       const accessToken = createToken(user._id.toString())
 
       res.cookie('jwt', accessToken, { maxAge })
-      res.json({ user: user._id.toString() })
+      // res.json({ user: user._id.toString() })
+      res.json({ token: accessToken })
     } else {
       throw new Error('Incorrect password')
     }
   } catch (error) {
     res.status(400).json({ message: error.message })
   }
-}
-
-async function authenticateToken(req, res, next) {
-  const { cookie } = req.headers
-  const token = getToken(cookie)
-
-  if (!token) {
-    return res.sendStatus(401)
-  }
-
-  jwt.verify(token, process.env.ACCESS_TOKEN, (error, user) => {
-    if (error) {
-      return res.sendStatus(403)
-    }
-    req.user = user
-
-    next()
-  })
 }
 
 async function getUserData(req, res) {

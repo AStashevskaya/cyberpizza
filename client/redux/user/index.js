@@ -36,9 +36,8 @@ export const signIn = (user) => async (dispatch) => {
   dispatch(logUserRequest(user))
 
   try {
-    await api.createUser(user)
-
-    const token = getCookies('jwt')
+    const { data } = await api.createUser(user)
+    const { token } = data
 
     dispatch(getData(token))
     document.location.replace('/')
@@ -53,11 +52,10 @@ export const login = (user) => async (dispatch) => {
   dispatch(logUserRequest(user))
 
   try {
-    await api.loginUser(user)
+    const { data } = await api.loginUser(user)
+    const { token } = data
 
-    const token = getCookies('jwt')
-
-    dispatch(getData(token))
+    dispatch(getData({ token }))
     document.location.replace('/')
   } catch (error) {
     const { message } = error.response.data
