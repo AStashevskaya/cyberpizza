@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
 import { Formik, Form, Field } from 'formik'
 import * as yup from 'yup'
 
@@ -24,15 +23,13 @@ const initValues = {
 
 const Register = () => {
   const dispatch = useDispatch()
-  const history = useHistory()
   const error = useSelector((state) => state.user.error)
 
   const handleFormSubmit = useCallback(
     async (values) => {
       dispatch(signIn(values))
-      history.push('/')
     },
-    [dispatch, history]
+    [dispatch]
   )
 
   return (

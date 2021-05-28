@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react'
 // import pt from 'prop-types'
-import { useHistory } from 'react-router-dom'
 import { Formik, Form, Field } from 'formik'
 import { useDispatch, useSelector } from 'react-redux'
 import * as yup from 'yup'
@@ -22,7 +21,6 @@ const initValues = {
 
 const Login = () => {
   const dispatch = useDispatch()
-  const history = useHistory()
   const error = useSelector((state) => state.user.error)
 
   const handleFormSubmit = useCallback(
