@@ -8,6 +8,7 @@
   background-color: $color-sideBar;
   padding-left: 35px;
   padding-top: 160px;
+  box-sizing: border-box;
 
   @media (min-width: $screen-1280) {
     width: calc((100% - #{$screen-1280}) / 2 + #{$sidebar-width-768});

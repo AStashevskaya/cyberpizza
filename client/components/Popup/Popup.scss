@@ -1,0 +1,42 @@
+@import '../../styles/variables';
+
+.modal {
+  &__overlay {
+    @include fixed(fixed);
+    @include colomnFlex;
+    right: 0;
+    left: 0;
+    background-color: rgba($color: #000000, $alpha: 0);
+    z-index: -1;
+    transition: all 0.5s ease-in-out;
+  }
+
+  &__window {
+    @include colomnFlex;
+    width: 600px;
+    z-index: 1001;
+    background-color: white;
+    padding: 10 25px;
+    box-sizing: border-box;
+    transition: all 0.5s ease-in-out;
+    height: 400px;
+  }
+
+  &__header {
+    cursor: pointer;
+    font-size: 20px;
+  }
+}
+
+.modal.active .modal {
+  &__overlay {
+    background-color: rgba($color: #000000, $alpha: 0.2);
+    z-index: 1000;
+    transition: all 0.5s ease-in-out;
+  }
+
+  // &__wrapper {
+  //   top: 0;
+  //   transition: all 0.5s ease-in-out;
+  // }
+}

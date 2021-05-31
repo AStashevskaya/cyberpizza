@@ -15,7 +15,7 @@ const SideBar = ({ categories }) => {
               className={`sidebar__nav-link ${category.title === 'pizza' ? 'active' : ''}`}
               key={category.title}
             >
-              <Link to={category.path}>{category.title}</Link>
+              <Link to={category.path || `/admin/${category.title}`}>{category.title}</Link>
             </li>
           ))}
         </ul>

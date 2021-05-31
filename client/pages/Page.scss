@@ -1,0 +1,23 @@
+@import '../styles/variables';
+
+.page {
+  display: flex;
+  justify-content: flex-end;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  @media (max-width: $screen-768) {
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+}
+
+.loading {
+  @include equalSides(100%);
+  @include colomnFlex(center, center);
+  background-color: $color-sideBar;
+  font-size: 30px;
+  font-weight: bold;
+}

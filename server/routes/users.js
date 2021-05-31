@@ -5,15 +5,12 @@ const User = require('../models/User')
 const router = new Router()
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-<<<<<<< HEAD
-const authenticateToken = require('../middleware/auth')
-=======
 const authenticateToken = require('../middleWare/auth')
->>>>>>> tests
 
 router.post('/api/users', createUser)
 router.post('/api/user/login', logUser)
 router.get('/api/user', authenticateToken, getUserData)
+router.get('/api/users', authenticateToken, getAllUsers)
 router.post('/api/user/logout', logoutUser)
 
 const createToken = (id) => jwt.sign(id.toString(), process.env.ACCESS_TOKEN || TEST_ACCESS_TOKEN)
@@ -95,6 +92,24 @@ async function getUserData(req, res) {
 async function logoutUser(req, res) {
   try {
     res.cookie('jwt', '', { maxAge: 1 }).end()
+  } catch (error) {
+    res.status(400).json({ message: error.message })
+  }
+}
+
+async function getAllUsers(req, res) {
+  const user = await User.findOne({ _id: req.user })
+
+  const { isAdmin } = user
+
+  try {
+    if (!isAdmin) {
+      return res.status(401).json({ message: 'You have no rights' })
+    }
+
+    const users = await User.find()
+
+    res.status(200).json(users)
   } catch (error) {
     res.status(400).json({ message: error.message })
   }

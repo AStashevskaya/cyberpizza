@@ -1,32 +1,31 @@
-import React from 'react'
+import React, { useMemo } from 'react'
+import pt from 'prop-types'
 import { useParams } from 'react-router-dom'
 import Sidebar from '../../components/Sidebar'
 
 import { deleteProduct, updateProduct, createProduct } from '../../api/catalog'
-import './AdminPage.scss'
+import '../Page.scss'
+import AdminComponent from '../../components/AdminComponent'
+import { ADMIN_LIST } from '../../constants/adminRoutes'
 
 const AdminPage = () => {
-  const title = useParams()
-  console.log(title)
-  const categories = [
-    {
-      title: 'products',
-      path: '/admin/products',
-    },
+  const { title } = useParams()
 
-    {
-      title: 'categories',
-      path: '/admin/categories',
-    },
-  ]
+  const getPageContent = useMemo(() => {
+    const category = ADMIN_LIST.find((category) => category.title === title)
 
-  const product = {
-    name: 'Marinara',
-    image: 'files/img',
-    price: '14.88',
-    description: 'pizza with seafood',
-    enabled: [],
-  }
+    if (category) {
+      return category.component
+    }
+  }, [title])
+
+  // const product = {
+  //   name: 'Marinara',
+  //   image: 'files/img',
+  //   price: '14.88',
+  //   description: 'pizza with seafood',
+  //   enabled: [],
+  // }
 
   const handleCLick = () => {
     console.log('from click')
@@ -36,11 +35,9 @@ const AdminPage = () => {
   }
 
   return (
-    <div className="page_admin">
-      <div className="container_main">
-        <button onClick={handleCLick}>post</button>
-      </div>
-      <Sidebar categories={categories} />
+    <div className="page">
+      <AdminComponent title={title} Component={getPageContent} />
+      <Sidebar categories={ADMIN_LIST} />
     </div>
   )
 }

@@ -36,7 +36,7 @@ const AuthField = () => {
           <button className="auth__logout" onClick={handleClick}>
             Log out
           </button>
-          {user.isAdmin ? <Link to="/admin/:title">admin</Link> : ''}
+          {user.isAdmin ? <Link to="/admin">admin</Link> : ''}
         </>
       ) : (
         <>

@@ -13,6 +13,8 @@ router.put('/api/products/:id', authenticateToken, checkRole, updateProduct)
 async function checkRole(req, res, next) {
   const user = await User.findById(req.user)
 
+  console.log(user)
+
   const { isAdmin } = user
 
   if (!isAdmin) {
@@ -54,6 +56,7 @@ async function createProduct(req, res) {
 async function deleteProduct(req, res) {
   try {
     const { productId } = req.body
+    console.log(productId)
 
     await Product.deleteOne({ _id: productId })
 

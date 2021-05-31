@@ -7,7 +7,7 @@ import Cart from '../../components/Cart'
 
 import { fetchProducts } from '../../redux/catalog'
 
-import './MainPage.scss'
+import '../Page.scss'
 import { useSelector, useDispatch } from 'react-redux'
 
 const MainPage = () => {
@@ -39,7 +39,7 @@ const MainPage = () => {
   }, [catalogLoading, dispatch])
 
   return (
-    <div className="page_main">
+    <div className="page">
       {loading ? (
         <div className="loading">loading</div>
       ) : (
