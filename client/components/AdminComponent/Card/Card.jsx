@@ -4,7 +4,6 @@ import pt from 'prop-types'
 
 const Card = ({ item, updateItem }) => {
   const { name, _id: id } = item
-  console.log(id)
 
   const deleteItem = useCallback(
     (e) => {

@@ -10,9 +10,11 @@ const AdminProducts = ({ data, deleteItem }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [toCreate, setToCreate] = useState(true)
   const [activeProduct, setActiveProduct] = useState({})
+  const [formMessage, setFormMessage] = useState('')
 
   const createItem = useCallback(() => {
     setIsOpen(true)
+    setFormMessage('')
     setToCreate(true)
     setActiveProduct({})
   }, [])
@@ -20,6 +22,7 @@ const AdminProducts = ({ data, deleteItem }) => {
   const updateItem = useCallback(
     (id) => {
       setIsOpen(true)
+      setFormMessage('')
       setToCreate(false)
       const product = data.find((el) => el._id === id)
       setActiveProduct(product)
@@ -33,22 +36,50 @@ const AdminProducts = ({ data, deleteItem }) => {
 
   const handleSubmitForm = useCallback(
     async (values) => {
+      let data = new FormData()
+      let message, response
+      console.log(values)
+
       try {
         if (toCreate) {
-          await createProduct(values)
+          for (let key in values) {
+            data.set(key, values[key])
+
+            if (key === 'image') {
+              data.set(key, values[key], values.image.name)
+            }
+          }
+
+          response = await createProduct(data)
         } else {
           const { _id } = activeProduct
-          await updateProduct({ _id, values })
+
+          for (let key in values) {
+            if (activeProduct[key] !== values[key] && key !== 'enabled') {
+              data.set(key, values[key])
+              console.log(key)
+
+              if (key === 'image') {
+                data.set(key, values[key], values.image.name)
+              }
+            }
+          }
+
+          data.append('_id', _id)
+          data.append('enabled', values.enabled)
+
+          response = await updateProduct(data, _id)
         }
-        console.log('finally')
+        message = response.data.message
       } catch (error) {
-        console.log(error)
+        message = error.response.data.message
+      } finally {
+        setFormMessage(message)
       }
     },
     [toCreate, activeProduct]
   )
 
-  console.log(handleSubmitForm)
   return (
     <div className="admin__wrapper">
       <button onClick={createItem}>create item</button>
@@ -62,6 +93,7 @@ const AdminProducts = ({ data, deleteItem }) => {
         isOpen={isOpen}
         handleClose={handleClose}
         toCreate={toCreate}
+        message={formMessage}
       />
     </div>
   )

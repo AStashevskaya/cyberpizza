@@ -3,7 +3,7 @@ import pt from 'prop-types'
 
 import './Popup.scss'
 
-const Popup = ({ Component, isOpen, handleSubmitForm, product, handleClose, toCreate }) => {
+const Popup = ({ Component, isOpen, handleSubmitForm, product, handleClose, toCreate, message }) => {
   return isOpen ? (
     <div className={isOpen ? 'modal active' : 'modal'}>
       <div className="modal__overlay">
@@ -12,7 +12,7 @@ const Popup = ({ Component, isOpen, handleSubmitForm, product, handleClose, toCr
             <span onClick={handleClose}>&times;</span>
           </div>
           <div className="modal__content">
-            <Component handleSubmitForm={handleSubmitForm} product={product} toCreate={toCreate}/>
+            <Component handleSubmitForm={handleSubmitForm} product={product} toCreate={toCreate} message={message} />
           </div>
         </div>
       </div>
@@ -29,6 +29,7 @@ Popup.propTypes = {
   product: pt.object,
   handleClose: pt.func,
   toCreate: pt.bool,
+  message: pt.string,
 }
 
 Popup.defaultProps = {
@@ -38,6 +39,7 @@ Popup.defaultProps = {
   product: {},
   handleClose: () => {},
   toCreate: true,
+  message: '',
 }
 
 export default Popup

@@ -54,6 +54,7 @@
     }
 
     @media (min-width: $screen-1400) {
+      width: calc(100% - 400px);
       align-items: center;
     }
 

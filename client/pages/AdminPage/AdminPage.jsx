@@ -1,12 +1,11 @@
 import React, { useMemo } from 'react'
-import pt from 'prop-types'
 import { useParams } from 'react-router-dom'
 import Sidebar from '../../components/Sidebar'
 
-import { deleteProduct, updateProduct, createProduct } from '../../api/catalog'
+import { deleteProduct } from '../../api/catalog'
 import '../Page.scss'
 import AdminComponent from '../../components/AdminComponent'
-import { ADMIN_LIST } from '../../constants/adminRoutes'
+import { ADMIN_LIST } from '../../constants/admin'
 
 const AdminPage = () => {
   const { title } = useParams()

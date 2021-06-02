@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useCallback } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import pt from 'prop-types'
 
 import { getData } from '../../api/admin'
@@ -21,21 +21,12 @@ const AdminComponent = ({ title, Component }) => {
     setLoading(false)
   }, [newData])
 
-
-  const deleteItem = useCallback((e) => {
-    console.log(e, 'delete')
-  })
-
-  const updateItem = useCallback((e) => {
-    console.log(e, 'update')
-  })
-
   return (
     <div className="container_admin">
       {loading ? (
         <div className="loading">loading</div>
       ) : (
-        <Component data={data} deleteItem={deleteItem} updateItem={updateItem} />
+        <Component data={data} />
         // <Popup />
       )}
     </div>
