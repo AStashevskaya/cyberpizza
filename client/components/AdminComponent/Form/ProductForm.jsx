@@ -66,8 +66,6 @@ const ProductForm = ({ handleSubmitForm, product, toCreate, message }) => {
         }) => (
           <Form
             onKeyPress={(keyEvent) => {
-              console.log(errors)
-              console.log('values', values)
               if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
                 console.log(errors)
                 keyEvent.preventDefault()

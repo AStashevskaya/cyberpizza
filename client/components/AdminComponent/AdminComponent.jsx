@@ -10,9 +10,9 @@ const AdminComponent = ({ title, Component }) => {
   const [data, setData] = useState([])
 
   const newData = useMemo(async () => {
-    console.log('title from usememo', title)
     setLoading(true)
     setData([])
+
     const { data: newData } = await getData(title)
     setData(newData)
   }, [title])
@@ -26,8 +26,7 @@ const AdminComponent = ({ title, Component }) => {
       {loading ? (
         <div className="loading">loading</div>
       ) : (
-        <Component data={data} />
-        // <Popup />
+        <Component data={data} setData={setData} />
       )}
     </div>
   )

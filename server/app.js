@@ -28,18 +28,6 @@ function prepareApp(url) {
   app.use(express.json())
   app.use(express.static('dist'))
   app.use('/files', express.static(path.join(__dirname, './files')))
-  // app.use((req, res, next) => {
-  //   res.header('Access-Control-Allow-Origin', '*')
-  //   res.header(
-  //     'Access-Control-Allow-Headers',
-  //     'Origin, X-Requested-With, Content-Type, Accept, Authorization'
-  //   )
-  //   if (req.method === 'OPTIONS') {
-  //     res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET')
-  //     return res.status(200).json({})
-  //   }
-  //   next()
-  // })
 
   app.use(productsRoutes)
   app.use(cartRoutes)

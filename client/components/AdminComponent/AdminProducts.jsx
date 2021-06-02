@@ -4,9 +4,9 @@ import Popup from '../Popup'
 import ProductForm from './Form/ProductForm'
 
 import Card from './Card/Card'
-import { updateProduct, createProduct } from '../../api/admin'
+import { updateProduct, createProduct, deleteProduct } from '../../api/admin'
 
-const AdminProducts = ({ data, deleteItem }) => {
+const AdminProducts = ({ data, setData }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [toCreate, setToCreate] = useState(true)
   const [activeProduct, setActiveProduct] = useState({})
@@ -30,54 +30,72 @@ const AdminProducts = ({ data, deleteItem }) => {
     [data]
   )
 
+  const deleteItem = useCallback(
+    async (id) => {
+      console.log(id, data)
+      try {
+        await deleteProduct(id)
+
+        const newData = data.filter((item) => item._id.toString() !== id.toString())
+        setData(newData)
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    [data, setData]
+  )
+
   const handleClose = useCallback(() => {
     setIsOpen(false)
   }, [])
 
   const handleSubmitForm = useCallback(
     async (values) => {
-      let data = new FormData()
+      let formData = new FormData()
       let message, response
-      console.log(values)
 
       try {
         if (toCreate) {
           for (let key in values) {
-            data.set(key, values[key])
+            formData.set(key, values[key])
 
             if (key === 'image') {
-              data.set(key, values[key], values.image.name)
+              formData.set(key, values[key], values.image.name)
             }
           }
 
-          response = await createProduct(data)
+          response = await createProduct(formData)
+
+          const product = response.data.product
+          message = response.data.message
+
+          setData([...data, product])
         } else {
           const { _id } = activeProduct
 
           for (let key in values) {
             if (activeProduct[key] !== values[key] && key !== 'enabled') {
-              data.set(key, values[key])
-              console.log(key)
+              formData.set(key, values[key])
 
               if (key === 'image') {
-                data.set(key, values[key], values.image.name)
+                formData.set(key, values[key], values.image.name)
               }
             }
           }
 
-          data.append('_id', _id)
-          data.append('enabled', values.enabled)
+          formData.append('_id', _id)
+          formData.append('enabled', values.enabled)
 
-          response = await updateProduct(data, _id)
+          response = await updateProduct(formData, _id)
+          message = 'Product is successfuly updated'
         }
-        message = response.data.message
       } catch (error) {
         message = error.response.data.message
       } finally {
         setFormMessage(message)
       }
     },
-    [toCreate, activeProduct]
+    [toCreate, activeProduct, data]
   )
 
   return (
@@ -101,7 +119,6 @@ const AdminProducts = ({ data, deleteItem }) => {
 
 AdminProducts.propTypes = {
   data: pt.array,
-  deleteItem: pt.func,
 }
 
 AdminProducts.defaultProps = {

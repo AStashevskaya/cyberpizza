@@ -17,11 +17,9 @@ const storage = multer.diskStorage({
 const upload = multer({ storage })
 
 router.get('/api/products', getProducts)
-// router.post('/api/products', upload.single('image'), createProduct)
 router.post('/api/products', authenticateToken, checkRole, upload.single('image'), createProduct)
 router.delete('/api/products', authenticateToken, checkRole, deleteProduct)
 router.get('/api/products/:id', getProduct)
-// router.put('/api/products/:id', authenticateToken, checkRole, updateProduct)
 router.put('/api/products/:id', authenticateToken, checkRole, upload.single('image'), updateProduct)
 
 async function checkRole(req, res, next) {
@@ -59,15 +57,12 @@ async function getProduct(req, res) {
 }
 
 async function createProduct(req, res) {
-  // console.log('body', req.body)
-  // console.log('file', req.file)
-
   const { destination, filename } = req.file
 
   if (destination === 'server/files/') {
     // -7 = length('/files/')
     const path = destination.slice(-7) + filename
-    console.log(path)
+
     try {
       const notUnique = await Product.findOne({ name: req.body.name })
 
@@ -75,10 +70,12 @@ async function createProduct(req, res) {
         throw new Error('Such product is alreade exist')
       }
 
-      const product = new Product({ ...req.body, image: path })
+      const enabled = req.body.enabled.split(',')
+
+      const product = new Product({ ...req.body, image: path, enabled })
 
       product.save()
-      res.status(201).json({ message: 'Product is created' })
+      res.status(201).json({ message: 'Product is created', product })
     } catch (error) {
       res.status(409).json({ message: error.message })
     }
@@ -90,30 +87,41 @@ async function createProduct(req, res) {
 async function deleteProduct(req, res) {
   try {
     const { productId } = req.body
-    console.log(productId)
 
     const product = await Product.findOne({ _id: productId })
-    fs.unlinkSync('server/files/' + product.image)
+
+    fs.unlinkSync('server' + product.image)
 
     await Product.deleteOne({ _id: productId })
 
-    res.sendStatus(201)
+    res.sendStatus(200)
   } catch (error) {
     res.status(409).json({ message: error.message })
   }
 }
 
 async function updateProduct(req, res) {
+  let path
   const { id } = req.params
 
-  console.log(req.file)
-  console.log(req.body)
   try {
-    await Product.findOneAndUpdate({ _id: id }, { ...req.body, image: req.file ?  })
+    const product = await Product.findOne({ _id: id })
 
-    res.sendStatus(201).json({ message: 'Product is updated' })
+    if (req.file) {
+      const { destination, filename } = req.file
+      path = destination.slice(-7) + filename
+
+      fs.unlinkSync('server' + product.image)
+    }
+
+    const enabled = req.body.enabled.split(',')
+
+    Object.assign(product, { ...req.body, image: req.file ? path : product.image, enabled })
+    product.save()
+
+    res.sendStatus(200)
   } catch (error) {
-    res.status(409).json({ message: error.message })
+    res.status(409).json({ message: 'Something goes wrong' })
   }
 }
 
