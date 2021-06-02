@@ -17,6 +17,9 @@ module.exports = (env, options) => {
     },
     devServer: {
       historyApiFallback: true,
+      // historyApiFallback: {
+      //   index: 'index.html',
+      // },
       contentBase: path.resolve(__dirname, './dist'),
       open: true,
       compress: true,
@@ -66,6 +69,7 @@ module.exports = (env, options) => {
         title: 'CyberPizza',
         template: path.resolve(__dirname, './client/index.html'),
         filename: 'index.html',
+        publicPath: '/',
       }),
       new MiniCssExtractPlugin({
         filename: 'styles.css',

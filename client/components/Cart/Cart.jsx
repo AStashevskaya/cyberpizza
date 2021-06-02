@@ -29,7 +29,6 @@ const Cart = () => {
 
   useEffect(() => {
     if (cartId) {
-      console.log(cartId)
       dispatch(getCartProducts())
     }
   }, [])

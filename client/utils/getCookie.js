@@ -1,9 +1,10 @@
-const getCookies = () => {
+export const getCookies = (cookie) => {
   const arr = document.cookie.split('; ')
-  const cart_id = arr.find((el) => el.startsWith('cart_id10'))
-  let arr1 = cart_id ? cart_id.split('=') : []
-  const id = arr1.find((el) => !el.startsWith('cart_id10'))
-  return id
-}
+  const currentCookie = arr.find((el) => el.startsWith(cookie + '='))
 
-export default getCookies
+  if (currentCookie) {
+    const [cookieName, cookieValue] = currentCookie.split('=')
+
+    return cookieValue
+  }
+}

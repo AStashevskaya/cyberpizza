@@ -1,11 +1,11 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const bodyParser = require('body-parser')
 const cors = require('cors')
 const path = require('path')
 const cookieParser = require('cookie-parser')
-const productsRouts = require('./routes/products')
-const cartRouts = require('./routes/carts')
+const productsRoutes = require('./routes/products')
+const cartRoutes = require('./routes/carts')
+const userRoutes = require('./routes/users')
 
 require('dotenv').config()
 
@@ -23,13 +23,15 @@ async function start() {
 
   try {
     app.use(cors(corsOptions))
-    app.use(bodyParser.json({ extended: true }))
-    app.use(bodyParser.urlencoded({ extended: true }))
+    app.use(cookieParser())
+    app.use(express.json())
     app.use(express.static('dist'))
     app.use('/files', express.static(path.join(__dirname, './files')))
-    app.use(cookieParser())
-    app.use(productsRouts)
-    app.use(cartRouts)
+
+    app.use(productsRoutes)
+    app.use(cartRoutes)
+    app.use(userRoutes)
+    app.get('*', (req, res) => res.sendFile(path.resolve('dist/index.html')))
     app.listen(port, () => {
       console.log(`server is listing in ${port} - ${env} environment`)
     })

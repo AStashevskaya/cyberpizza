@@ -1,0 +1,20 @@
+@import '../../styles/variables';
+
+.input {
+  &_row {
+    padding: 5px;
+    position: relative;
+
+    & > input {
+      width: 100%;
+      padding: 10px;
+      height: 30px;
+      border: 1px solid $color-text-text;
+      box-sizing: border-box;
+
+      &:focus {
+        border: 1px solid $color-primary;
+      }
+    }
+  }
+}

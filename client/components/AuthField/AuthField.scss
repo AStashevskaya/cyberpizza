@@ -1,0 +1,17 @@
+@import '../../styles/variables';
+
+.auth {
+  &__container {
+    @include rowFlex(space-around);
+    position: absolute;
+    right: 40px;
+    top: 40px;
+    width: 140px;
+  }
+
+  &__logout {
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+}

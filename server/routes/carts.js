@@ -17,7 +17,7 @@ async function createCart(req, res) {
   try {
     await newCart.save()
 
-    res.cookie('cart_id10', newCart._id.toString())
+    res.cookie('cart_id', newCart._id.toString())
     res.status(201).json(newCart)
   } catch (error) {
     res.status(409).json({ message: error.message })
@@ -25,20 +25,12 @@ async function createCart(req, res) {
 }
 
 async function getCarts(req, res) {
-  let authData = new Buffer(process.env.AUTH)
-  let base64data = authData.toString('base64')
-  const auth = 'Basic ' + base64data
+  try {
+    const carts = await Cart.find()
 
-  if (auth === req.headers.authorization) {
-    try {
-      const carts = await Cart.find()
-
-      res.status(200).json(carts)
-    } catch (error) {
-      res.status(404).json({ message: error.message })
-    }
-  } else {
-    res.status(401).json()
+    res.status(200).json(carts)
+  } catch (error) {
+    res.status(404).json({ message: error.message })
   }
 }
 
@@ -47,7 +39,6 @@ async function getCart(req, res) {
 
   try {
     const cart = await Cart.findById(_id)
-
     res.json(cart)
   } catch (error) {
     res.status(404).json({ message: error.message })
@@ -97,8 +88,6 @@ async function changeQuantity(req, res) {
         return product
       }),
     ]
-
-    console.log(products)
 
     const total = products.reduce((accum, item) => accum + item.quantity * item.price, 0)
 
