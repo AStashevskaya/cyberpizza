@@ -14,6 +14,7 @@ const AdminComponent = ({ title, Component }) => {
     setData([])
 
     const { data: newData } = await getData(title)
+    console.log(newData)
     setData(newData)
   }, [title])
 
@@ -23,7 +24,7 @@ const AdminComponent = ({ title, Component }) => {
 
   return (
     <div className="container_admin">
-      {loading ? (
+      {data.length ? (
         <div className="loading">loading</div>
       ) : (
         <Component data={data} setData={setData} />

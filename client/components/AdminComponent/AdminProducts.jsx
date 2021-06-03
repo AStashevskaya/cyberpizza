@@ -97,13 +97,21 @@ const AdminProducts = ({ data, setData }) => {
     },
     [toCreate, activeProduct, data]
   )
+  console.log(data)
 
   return (
     <div className="admin__wrapper">
       <button onClick={createItem}>create item</button>
-      {data.map((el) => (
-        <Card item={el} deleteItem={deleteItem} updateItem={updateItem} key={el._id.toString()} />
-      ))}
+      {data.length !== 0
+        ? data.map((el) => (
+            <Card
+              item={el}
+              deleteItem={deleteItem}
+              updateItem={updateItem}
+              key={el._id.toString()}
+            />
+          ))
+        : ''}
       <Popup
         Component={ProductForm}
         handleSubmitForm={handleSubmitForm}
