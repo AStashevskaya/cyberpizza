@@ -1,4 +1,3 @@
-export const TEST_ACCESS_TOKEN = '123'
 export const product = {
   name: 'Margarita',
   image: '/files/margarita.png',

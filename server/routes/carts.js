@@ -1,6 +1,5 @@
 const Router = require('express')
 const Cart = require('../models/Cart')
-const User = require('../models/User')
 const Product = require('../models/Product')
 const router = new Router()
 const authenticateToken = require('../middleWare/auth')
@@ -27,18 +26,18 @@ async function createCart(req, res) {
 }
 
 async function getCarts(req, res) {
-  try {
-    const { isAdmin } = await User.findOne({ _id: req.user })
+  const { isAdmin } = req.user
 
-    if (!isAdmin) {
-      return res.sendStatus(401)
+  try {
+    if (isAdmin) {
+      const carts = await Cart.find()
+
+      return res.status(200).json(carts)
     }
 
-    const carts = await Cart.find()
-
-    res.status(200).json(carts)
+    throw new Error('You have no rights to get data')
   } catch (error) {
-    res.status(404).json({ message: error.message })
+    res.status(403).json({ message: error.message })
   }
 }
 

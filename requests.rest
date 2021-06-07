@@ -8,12 +8,12 @@
 #     user:
 # }
 
-POST  http://localhost:8080/api/users
+POST  http://localhost:3000/api/users
 Content-Type: application/json
 
 {
     "name": "ross",
-    "email": "ross@mail.ru",
+    "email": "ros1ss@",
     "password": "1234"
 }
 
@@ -32,7 +32,7 @@ GET   http://localhost:8080/api/user
 Content-Type: application/json
 
 {
-    "token": "eyJhbGciOiJIUzI1NiJ9.NjBhZTQxOTJmY2NmNjkzNjNjZTFmMTg5.CweTEnftjIrRZJuYovpeQFmVLHeQnLC4MoM3SoT_l7U"
+    "token": "eyJhbGciOiJIUzI1NiJ9.ewogIGlzQWRtaW46IGZhbHNlLAogIGlzQWN0aXZlOiB0cnVlLAogIF9pZDogNjBiOGEzYTZlODU2YjMxZmYwZmIwNDUzLAogIGVtYWlsOiAncm9zczExMTExMTExQG1haWwucnUnLAogIG5hbWU6ICdyb3NzJywKICBwYXNzd29yZDogJyQyYSQxMCQ4R1JsTEx3dDBPREFQQVN2TU1RN2xlVlpXYTltVGNTY2dETjRqc3EybklZVWp2Sk9FSzlQRycKfQ.YHhqLIqaxTDGy-r4JKiSG-dmjmX34dPRzkYgm6imdmE"
 }
 ###
 

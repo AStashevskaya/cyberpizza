@@ -1,5 +1,5 @@
 import * as api from '../../api/user'
-import { getCookies } from '../../utils/getCookie'
+import { getCookies } from '../../../shared/utils/getCookie'
 
 const LOG_OUT = 'LOG_OUT'
 const LOG_USER_REQUEST = 'LOG_USER_REQUEST'
@@ -55,7 +55,7 @@ export const login = (user) => async (dispatch) => {
     const { data } = await api.loginUser(user)
     const { token } = data
 
-    dispatch(getData({ token }))
+    dispatch(getData(token))
     document.location.replace('/')
   } catch (error) {
     const { message } = error.response.data
