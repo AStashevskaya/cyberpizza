@@ -14,7 +14,7 @@
     ]
   },
   "scripts": {
-    "start": "babel server",
+    "start": "babel-node server",
     "build": "webpack --mode production",
     "db:seed": "node server/scripts/seed.js",
     "client:watch": "webpack serve --hot --mode development",
