@@ -14,7 +14,7 @@
     ]
   },
   "scripts": {
-    "start": "node server",
+    "start": "babel server",
     "build": "webpack --mode production",
     "db:seed": "node server/scripts/seed.js",
     "client:watch": "webpack serve --hot --mode development",
@@ -40,7 +40,6 @@
   "homepage": "https://github.com/AStashevskaya/cyberpizza#readme",
   "dependencies": {
     "axios": "^0.21.1",
-    "babel-cli": "^6.26.0",
     "babel-jest": "^26.6.3",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.5",
@@ -65,13 +64,13 @@
     "yup": "^0.32.9"
   },
   "devDependencies": {
+    "@babel/cli": "^7.14.3",
     "@babel/core": "^7.14.3",
     "@babel/eslint-parser": "^7.14.2",
     "@babel/node": "^7.14.2",
     "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@babel/preset-env": "^7.14.2",
     "@babel/preset-react": "^7.12.10",
-    "babel-core": "^6.26.3",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.2.2",
     "babel-polyfill": "^6.26.0",
