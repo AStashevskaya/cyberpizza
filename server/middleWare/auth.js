@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken'
+const jwt = require('jsonwebtoken')
 
 import User from '../models/User'
 import { getCookies } from '../../shared/utils/getCookie'

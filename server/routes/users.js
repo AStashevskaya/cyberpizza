@@ -1,12 +1,12 @@
 import * as yup from 'yup'
 import bcrypt from 'bcryptjs'
-import jwt from 'jsonwebtoken'
 import { Router } from 'express'
 
 import User from '../models/User'
 import { ACCESS_TOKEN } from '../config'
 
 const router = new Router()
+const jwt = require('jsonwebtoken')
 const authenticateToken = require('../middleWare/auth')
 
 router.post('/api/users', createUser)
