@@ -1,8 +1,10 @@
 const jwt = require('jsonwebtoken')
 
 const User = require('../models/User')
-import { getCookies } from '../../shared/utils/getCookie'
-import { ACCESS_TOKEN } from '../config'
+const getCookies = require('../../shared/utils/getCookie')
+// import { getCookies } from '../../shared/utils/getCookie'
+const ACCESS_TOKEN = require('../config')
+// import { ACCESS_TOKEN } from '../config'
 
 async function authenticateToken(req, res, next) {
   let token
