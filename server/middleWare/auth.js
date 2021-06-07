@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 
-import User from '../models/User'
+const User = require('../models/User')
 import { getCookies } from '../../shared/utils/getCookie'
 import { ACCESS_TOKEN } from '../config'
 

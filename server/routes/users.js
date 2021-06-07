@@ -1,10 +1,11 @@
 import * as yup from 'yup'
 import bcrypt from 'bcryptjs'
-import { Router } from 'express'
+// import { Router } from 'express'
 
-import User from '../models/User'
+// import User from '../models/User'
 import { ACCESS_TOKEN } from '../config'
-
+const Router = require('express')
+const User = require('../models/User')
 const router = new Router()
 const jwt = require('jsonwebtoken')
 const authenticateToken = require('../middleWare/auth')
