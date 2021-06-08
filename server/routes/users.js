@@ -1,9 +1,11 @@
-import { TEST_ACCESS_TOKEN } from '../tests/constants'
+import * as yup from 'yup'
+import bcrypt from 'bcryptjs'
+import { Router } from 'express'
 
-const Router = require('express')
-const User = require('../models/User')
+import User from '../models/User'
+import { ACCESS_TOKEN } from '../config'
+
 const router = new Router()
-const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const authenticateToken = require('../middleWare/auth')
 
@@ -13,9 +15,15 @@ router.get('/api/user', authenticateToken, getUserData)
 router.get('/api/users', authenticateToken, getAllUsers)
 router.post('/api/user/logout', logoutUser)
 
-const createToken = (id) => jwt.sign(id.toString(), process.env.ACCESS_TOKEN || TEST_ACCESS_TOKEN)
+const createToken = (id) => jwt.sign(id, ACCESS_TOKEN)
 
 const maxAge = 24 * 60 * 60 * 1000
+
+const schema = yup.object({
+  email: yup.string().email().required(),
+  password: yup.string().required(),
+  name: yup.string().required(),
+})
 
 async function createUser(req, res) {
   const { password, email, name } = req.body
@@ -32,6 +40,8 @@ async function createUser(req, res) {
       password: hashedPassword,
     }
 
+    await schema.validate(user)
+
     if (!length) {
       user.isAdmin = true
     }
@@ -42,7 +52,7 @@ async function createUser(req, res) {
       res.status(400).send({ message: 'This email is already registered' })
     } else {
       const newUser = new User(user)
-      await newUser.save()
+      newUser.save()
 
       const accessToken = createToken(newUser._id.toString())
 
@@ -71,7 +81,6 @@ async function logUser(req, res) {
       const accessToken = createToken(user._id.toString())
 
       res.cookie('jwt', accessToken, { maxAge })
-      // res.json({ user: user._id.toString() })
       res.json({ token: accessToken })
     } else {
       throw new Error('Incorrect password')
@@ -82,11 +91,11 @@ async function logUser(req, res) {
 }
 
 async function getUserData(req, res) {
-  const user = await User.findOne({ _id: req.user })
-
-  const { name, isAdmin, isActive } = user
-
-  res.json({ name, isAdmin, isActive })
+  if (req.user) {
+    res.status(200).json(req.user)
+  } else {
+    res.status(404).json({ message: 'User not found' })
+  }
 }
 
 async function logoutUser(req, res) {

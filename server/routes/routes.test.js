@@ -1,5 +1,5 @@
 import 'babel-polyfill'
-import { product, adminData, userData } from '../tests/constants'
+import { product, adminData, userData } from '../constants'
 
 const { MongoMemoryServer } = require('mongodb-memory-server')
 const prepareApp = require('../app')
@@ -15,12 +15,13 @@ describe('Test', function () {
     mongoServer = new MongoMemoryServer()
     const mongoUri = await mongoServer.getUri()
 
-    const server = await prepareApp(mongoUri)
+    const server = prepareApp(mongoUri)
     app = request(server)
   })
 
   test('Create new user, admin', async () => {
     const result = await app.post('/api/users').send(adminData)
+
     const userCount = await mongoose.model('User').countDocuments()
 
     expect(result.statusCode).toEqual(201)
@@ -33,6 +34,12 @@ describe('Test', function () {
 
     expect(userCount).toEqual(2)
     expect(result.statusCode).toEqual(201)
+  })
+
+  test('Create new user with not valid email', async () => {
+    const result = await app.post('/api/users').send({ ...userData, email: 'test@' } )
+
+    expect(result.statusCode).toEqual(409)
   })
 
   test('Create already existed user', async () => {
@@ -56,7 +63,7 @@ describe('Test', function () {
     expect(message).toEqual('Incorrect password')
   })
 
-  test('Log with not regestered email', async () => {
+  test('Log with not registered email', async () => {
     const result = await app.post('/api/user/login').send({
       email: 'test3@mail.ru',
       password: '123',
@@ -94,7 +101,7 @@ describe('Test', function () {
 
     const get_result = await app.get('/api/carts').send({ token })
 
-    expect(get_result.statusCode).toEqual(401)
+    expect(get_result.statusCode).toEqual(403)
   })
 
   test('Add not exested product to cart', async () => {

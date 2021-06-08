@@ -1,8 +1,6 @@
 const path = require('path')
 const prepareApp = require('./app')
 
-require('dotenv').config()
-
 async function start() {
   const app = prepareApp(process.env.DB_CONNECTION)
 

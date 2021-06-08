@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import { getData, logout } from '../../redux/user'
-import { getCookies } from '../../utils/getCookie'
+import { getCookies } from '../../../shared/utils/getCookie'
 
 import './AuthField.scss'
 
