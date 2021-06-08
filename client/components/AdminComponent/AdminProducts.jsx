@@ -97,7 +97,6 @@ const AdminProducts = ({ data, setData }) => {
     },
     [toCreate, activeProduct, data]
   )
-  console.log(data)
 
   return (
     <div className="admin__wrapper">
@@ -127,10 +126,12 @@ const AdminProducts = ({ data, setData }) => {
 
 AdminProducts.propTypes = {
   data: pt.array,
+  setData: pt.func,
 }
 
 AdminProducts.defaultProps = {
   data: [],
+  setData: () => {},
 }
 
 export default AdminProducts

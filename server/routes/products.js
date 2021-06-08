@@ -24,6 +24,7 @@ router.put('/api/products/:id', authenticateToken, upload.single('image'), updat
 async function getProducts(req, res) {
   try {
     const products = await Product.find()
+    console.log(products)
 
     res.status(200).json(products)
   } catch (error) {
@@ -43,12 +44,13 @@ async function getProduct(req, res) {
 }
 
 async function createProduct(req, res) {
+  const { isAdmin } = req.user
+
   if (!isAdmin) {
     return res.status(403)
   }
 
   const { destination, filename } = req.file
-  const { isAdmin } = req.user
 
   if (destination === 'server/files/') {
     // -7 = length('/files/')

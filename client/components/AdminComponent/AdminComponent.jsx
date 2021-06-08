@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import pt from 'prop-types'
 
 import { getData } from '../../api/admin'
@@ -9,22 +9,29 @@ const AdminComponent = ({ title, Component }) => {
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState([])
 
-  const newData = useMemo(async () => {
+  const getNewData = useCallback(async () => {
     setLoading(true)
     setData([])
 
-    const { data: newData } = await getData(title)
-    console.log(newData)
-    setData(newData)
+    const response = await getData(title)
+
+    console.log('responsse', response)
+    if (response && response.data) {
+      console.log('from call', response.data)
+      setData([...response.data])
+      setLoading(false)
+    }
   }, [title])
 
   useEffect(() => {
-    setLoading(false)
-  }, [newData])
+    if (loading) {
+      getNewData()
+    }
+  }, [getNewData, loading])
 
   return (
     <div className="container_admin">
-      {data.length ? (
+      {loading ? (
         <div className="loading">loading</div>
       ) : (
         <Component data={data} setData={setData} />
