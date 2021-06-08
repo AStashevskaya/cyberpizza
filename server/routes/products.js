@@ -1,6 +1,5 @@
 const Router = require('express')
 const Product = require('../models/Product')
-const User = require('../models/User')
 const authenticateToken = require('../middleware/auth')
 const multer = require('multer')
 const fs = require('fs')
@@ -17,23 +16,10 @@ const storage = multer.diskStorage({
 const upload = multer({ storage })
 
 router.get('/api/products', getProducts)
-router.post('/api/products', authenticateToken, checkRole, upload.single('image'), createProduct)
-router.delete('/api/products', authenticateToken, checkRole, deleteProduct)
+router.post('/api/products', authenticateToken, upload.single('image'), createProduct)
+router.delete('/api/products', authenticateToken, deleteProduct)
 router.get('/api/products/:id', getProduct)
-router.put('/api/products/:id', authenticateToken, checkRole, upload.single('image'), updateProduct)
-
-async function checkRole(req, res, next) {
-  const user = await User.findById(req.user)
-
-  console.log(user)
-
-  const { isAdmin } = user
-
-  if (!isAdmin) {
-    return res.sendStatus(401)
-  }
-  next()
-}
+router.put('/api/products/:id', authenticateToken, upload.single('image'), updateProduct)
 
 async function getProducts(req, res) {
   try {
@@ -57,7 +43,12 @@ async function getProduct(req, res) {
 }
 
 async function createProduct(req, res) {
+  if (!isAdmin) {
+    return res.status(403)
+  }
+
   const { destination, filename } = req.file
+  const { isAdmin } = req.user
 
   if (destination === 'server/files/') {
     // -7 = length('/files/')
@@ -80,11 +71,17 @@ async function createProduct(req, res) {
       res.status(409).json({ message: error.message })
     }
   } else {
-    res.status(400).send({ message: 'Please, write correct derection' })
+    return res.status(400).send({ message: 'Please, write correct derection' })
   }
 }
 
 async function deleteProduct(req, res) {
+  const { isAdmin } = req.user
+
+  if (!isAdmin) {
+    return res.status(403)
+  }
+
   try {
     const { productId } = req.body
 
@@ -101,6 +98,12 @@ async function deleteProduct(req, res) {
 }
 
 async function updateProduct(req, res) {
+  const { isAdmin } = req.user
+
+  if (!isAdmin) {
+    return res.status(403)
+  }
+
   let path
   const { id } = req.params
 
