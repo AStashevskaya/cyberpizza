@@ -37,7 +37,7 @@ describe('Test', function () {
   })
 
   test('Create new user with not valid email', async () => {
-    const result = await app.post('/api/users').send({ ...userData, email: 'test@' } )
+    const result = await app.post('/api/users').send({ ...userData, email: 'test@' })
 
     expect(result.statusCode).toEqual(409)
   })
@@ -49,6 +49,12 @@ describe('Test', function () {
 
     expect(result.statusCode).toEqual(400)
     expect(message).toEqual('This email is already registered')
+  })
+
+  test('Create new user with not confirmed password', async () => {
+    const result = await app.post('/api/users').send({ ...userData, confirmedPassword: '' })
+
+    expect(result.statusCode).toEqual(400)
   })
 
   test('Log with incorrect password', async () => {
