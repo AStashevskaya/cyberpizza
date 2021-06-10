@@ -12,12 +12,17 @@ import './Register.scss'
 const schema = yup.object().shape({
   email: yup.string().email('Invalid email').required('Required'),
   password: yup.string().required('Required'),
+  confirmedPassword: yup.string().test('passwords-match', 'Passwords must match', function(value){
+    console.log('value', value)
+    return this.parent.password === value
+  }),
   name: yup.string().required('Required'),
 })
 
 const initValues = {
   email: '',
   password: '',
+  confirmedPassword: '',
   name: '',
 }
 
@@ -76,8 +81,18 @@ const Register = () => {
               handleChange={handleChange}
               error={touched.password ? errors.password : ''}
             />
+            <Field
+              component={Input}
+              type="password"
+              name="confirmedPassword"
+              id="confirmedPassword"
+              placeholder="Confirm your password"
+              value={values.confirmedPassword}
+              handleChange={handleChange}
+              error={touched.confirmedPassword ? errors.confirmedPassword : ''}
+            />
             <button type="submit" disabled={isSubmitting}>
-              Sign in
+              Sign up
             </button>
           </Form>
         )}

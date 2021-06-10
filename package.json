@@ -18,7 +18,7 @@
     "build": "webpack --mode production",
     "db:seed": "node server/scripts/seed.js",
     "client:watch": "webpack serve --hot --mode development",
-    "server:watch": "nodemon server --watch server --exec babel-node",
+    "server:watch": "nodemon --exec babel-node server --watch server ",
     "test": "jest --watch --detectOpenHandles"
   },
   "heroku-run-build-script": true,

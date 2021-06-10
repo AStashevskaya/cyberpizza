@@ -10,6 +10,7 @@ export const adminData = {
   name: 'Anastasiya',
   email: 'test@mail.ru',
   password: '123',
+  confirmedPassword: '123',
 }
 
 export const userData = {

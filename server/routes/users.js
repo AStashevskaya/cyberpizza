@@ -26,7 +26,11 @@ const schema = yup.object({
 })
 
 async function createUser(req, res) {
-  const { password, email, name } = req.body
+  const { password, email, name, confirmedPassword } = req.body
+
+  if (password !== confirmedPassword) {
+    return res.status(400).send({ message: 'Passwords must match' })
+  }
 
   try {
     const salt = await bcrypt.genSalt()
@@ -49,7 +53,7 @@ async function createUser(req, res) {
     const isExist = await User.findOne({ email })
 
     if (isExist) {
-      res.status(400).send({ message: 'This email is already registered' })
+      return res.status(400).send({ message: 'This email is already registered' })
     } else {
       const newUser = new User(user)
       newUser.save()
@@ -61,6 +65,7 @@ async function createUser(req, res) {
     }
   } catch (error) {
     const { message } = error
+    console.log(message)
 
     res.status(409).send({ message })
   }
