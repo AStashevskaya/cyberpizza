@@ -2,9 +2,10 @@ const Router = require('express')
 const Cart = require('../models/Cart')
 const Product = require('../models/Product')
 const router = new Router()
+const authenticateToken = require('../middleWare/auth')
 
 router.post('/api/carts', createCart)
-router.get('/api/carts', getCarts)
+router.get('/api/carts', authenticateToken, getCarts)
 router.get('/api/carts/:id', getCart)
 router.post('/api/carts/:id/products', addProduct)
 router.put('/api/carts/:id/products', changeQuantity)
@@ -25,12 +26,18 @@ async function createCart(req, res) {
 }
 
 async function getCarts(req, res) {
-  try {
-    const carts = await Cart.find()
+  const { isAdmin } = req.user
 
-    res.status(200).json(carts)
+  try {
+    if (isAdmin) {
+      const carts = await Cart.find()
+
+      return res.status(200).json(carts)
+    }
+
+    throw new Error('You have no rights to get data')
   } catch (error) {
-    res.status(404).json({ message: error.message })
+    res.status(403).json({ message: error.message })
   }
 }
 
@@ -62,7 +69,7 @@ async function addProduct(req, res) {
       cart.save()
       res.json(cart)
     } else {
-      throw new Error()
+      throw new Error('Such product is not exist')
     }
   } catch (error) {
     res.status(404).json({ message: error.message })

@@ -8,18 +8,18 @@
 #     user:
 # }
 
-POST  http://localhost:8080/api/users
+POST  http://localhost:3000/api/users
 Content-Type: application/json
 
 {
     "name": "ross",
-    "email": "test22@mail.ru",
+    "email": "ros1ss@",
     "password": "1234"
 }
 
 ###
 
-POST  http://localhost:8080/api/user/login
+POST  http://localhost:3000/api/user/login
 Content-Type: application/json
 
 {
@@ -29,8 +29,11 @@ Content-Type: application/json
 
 ### 
 GET   http://localhost:8080/api/user
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.NjA5YWFlNTUxZTI5Y2IzMjYwODc0OWJm.cBACbg-ZHCLvOPoMYmNICAD18_WzVaKuGY8YBL1GElI
+Content-Type: application/json
 
+{
+    "token": "eyJhbGciOiJIUzI1NiJ9.ewogIGlzQWRtaW46IGZhbHNlLAogIGlzQWN0aXZlOiB0cnVlLAogIF9pZDogNjBiOGEzYTZlODU2YjMxZmYwZmIwNDUzLAogIGVtYWlsOiAncm9zczExMTExMTExQG1haWwucnUnLAogIG5hbWU6ICdyb3NzJywKICBwYXNzd29yZDogJyQyYSQxMCQ4R1JsTEx3dDBPREFQQVN2TU1RN2xlVlpXYTltVGNTY2dETjRqc3EybklZVWp2Sk9FSzlQRycKfQ.YHhqLIqaxTDGy-r4JKiSG-dmjmX34dPRzkYgm6imdmE"
+}
 ###
 
 Post  http://localhost:8080/api/user/logout

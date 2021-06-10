@@ -1,5 +1,5 @@
 import * as api from '../../api/user'
-import { getCookies } from '../../utils/getCookie'
+import { getCookies } from '../../../shared/utils/getCookie'
 
 const LOG_OUT = 'LOG_OUT'
 const LOG_USER_REQUEST = 'LOG_USER_REQUEST'
@@ -36,9 +36,8 @@ export const signIn = (user) => async (dispatch) => {
   dispatch(logUserRequest(user))
 
   try {
-    await api.createUser(user)
-
-    const token = getCookies('jwt')
+    const { data } = await api.createUser(user)
+    const { token } = data
 
     dispatch(getData(token))
     document.location.replace('/')
@@ -53,9 +52,8 @@ export const login = (user) => async (dispatch) => {
   dispatch(logUserRequest(user))
 
   try {
-    await api.loginUser(user)
-
-    const token = getCookies('jwt')
+    const { data } = await api.loginUser(user)
+    const { token } = data
 
     dispatch(getData(token))
     document.location.replace('/')

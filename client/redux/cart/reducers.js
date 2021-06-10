@@ -6,7 +6,7 @@ import {
   UPDATE_CART,
   UPDATE_CART_ID,
 } from './constants'
-import { getCookies } from '../../utils/getCookie'
+import { getCookies } from '../../../shared/utils/getCookie'
 
 const initialState = {
   id: getCookies('cart_id'),
