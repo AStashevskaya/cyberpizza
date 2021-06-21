@@ -3,7 +3,16 @@ import pt from 'prop-types'
 
 import './Popup.scss'
 
-const Popup = ({ Component, isOpen, handleSubmitForm, product, handleClose, toCreate, message }) => {
+const Popup = ({
+  Component,
+  isOpen,
+  handleSubmitForm,
+  product,
+  handleClose,
+  toCreate,
+  message,
+  user,
+}) => {
   return isOpen ? (
     <div className={isOpen ? 'modal active' : 'modal'}>
       <div className="modal__overlay">
@@ -12,7 +21,13 @@ const Popup = ({ Component, isOpen, handleSubmitForm, product, handleClose, toCr
             <span onClick={handleClose}>&times;</span>
           </div>
           <div className="modal__content">
-            <Component handleSubmitForm={handleSubmitForm} product={product} toCreate={toCreate} message={message} />
+            <Component
+              handleSubmitForm={handleSubmitForm}
+              product={product}
+              user={user}
+              toCreate={toCreate}
+              message={message}
+            />
           </div>
         </div>
       </div>
