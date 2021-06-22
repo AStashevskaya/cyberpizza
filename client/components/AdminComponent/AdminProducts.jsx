@@ -45,9 +45,9 @@ const AdminProducts = ({ data, setData }) => {
     [data, setData]
   )
 
-  const handleClose = useCallback(() => {
-    setIsOpen(false)
-  }, [])
+  // const handleClose = useCallback(() => {
+  //   setIsOpen(false)
+  // }, [])
 
   const handleSubmitForm = useCallback(
     async (values) => {
@@ -116,7 +116,7 @@ const AdminProducts = ({ data, setData }) => {
         handleSubmitForm={handleSubmitForm}
         product={activeProduct}
         isOpen={isOpen}
-        handleClose={handleClose}
+        setIsOpen={setIsOpen}
         toCreate={toCreate}
         message={formMessage}
       />

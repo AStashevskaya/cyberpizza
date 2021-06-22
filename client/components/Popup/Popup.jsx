@@ -1,6 +1,8 @@
 import React, { useCallback } from 'react'
 import pt from 'prop-types'
 
+import PopupContent from './PopupContent/PopupContent'
+
 import './Popup.scss'
 
 const Popup = ({
@@ -8,11 +10,15 @@ const Popup = ({
   isOpen,
   handleSubmitForm,
   product,
-  handleClose,
+  setIsOpen,
   toCreate,
   message,
   user,
 }) => {
+  const handleClose = useCallback(() => {
+    setIsOpen(false)
+  }, [])
+
   return isOpen ? (
     <div className={isOpen ? 'modal active' : 'modal'}>
       <div className="modal__overlay">
@@ -42,17 +48,19 @@ Popup.propTypes = {
   isOpen: pt.bool.isRequired,
   handleSubmitForm: pt.func,
   product: pt.object,
-  handleClose: pt.func,
+  user: pt.object,
+  setIsOpen: pt.func,
   toCreate: pt.bool,
   message: pt.string,
 }
 
 Popup.defaultProps = {
-  Component: () => '',
+  Component: PopupContent,
+  user: {},
   isOpen: false,
   handleSubmitForm: () => {},
   product: {},
-  handleClose: () => {},
+  close: () => {},
   toCreate: true,
   message: '',
 }

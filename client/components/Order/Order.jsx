@@ -9,6 +9,8 @@ import './Order.scss'
 const OrderDisplay = () => {
   const dispatch = useDispatch()
   const quantity = useSelector((state) => state.cart.quantity)
+  const status = useSelector((state) => state.order.status)
+  console.log('status', status)
 
   const handleClick = useCallback(() => {
     dispatch(toggleCart())
@@ -18,7 +20,7 @@ const OrderDisplay = () => {
     <div className="order">
       <div className="order__status" onClick={handleClick}>
         <img src={dish} alt="dish" />
-        <span>Cart</span>
+        <span>{status ? status : 'Cart'}</span>
       </div>
 
       <span className="order__counter">{quantity}</span>

@@ -40,6 +40,7 @@ const initialState = {
 
 export const catalog = (state = initialState, action) => {
   const { type, payload } = action
+  console.log('payload prod', payload)
 
   switch (type) {
     case FETCH_PRODUCTS_REQUEST:

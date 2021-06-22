@@ -14,3 +14,5 @@ export const changeQuantity = (product, cartId) => axios.put(`${url}/${cartId}/p
 
 export const deleteProduct = (productId, cartId) =>
   axios.delete(`${url}/${cartId}/products`, { data: { productId } })
+
+export const clearCart = (cartId) => axios.put(`${url}/${cartId}`)

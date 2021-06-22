@@ -24,7 +24,6 @@ router.put('/api/products/:id', authenticateToken, upload.single('image'), updat
 async function getProducts(req, res) {
   try {
     const products = await Product.find()
-    console.log(products)
 
     res.status(200).json(products)
   } catch (error) {

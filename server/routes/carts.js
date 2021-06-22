@@ -10,6 +10,7 @@ router.get('/api/carts/:id', getCart)
 router.post('/api/carts/:id/products', addProduct)
 router.put('/api/carts/:id/products', changeQuantity)
 router.delete('/api/carts/:id/products', deleteProduct)
+router.put('/api/carts/:id', clearCart)
 
 async function createCart(req, res) {
   const cart = req.body
@@ -123,6 +124,25 @@ async function deleteProduct(req, res) {
     cart.save()
 
     res.json(cart)
+  } catch (error) {
+    res.status(404).json({ message: error.message })
+  }
+}
+
+async function clearCart(req, res) {
+  const { id: _id } = req.params
+
+  try {
+    const cart = await Cart.findById(_id)
+
+    const products = []
+
+    const total = 0
+
+    Object.assign(cart, { products, total })
+    await cart.save()
+
+    res.sendStatus(200)
   } catch (error) {
     res.status(404).json({ message: error.message })
   }
