@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from 'react'
 import pt from 'prop-types'
-import Card from './Card/Card'
+import Card from './Item/Item'
 import Popup from '../Popup'
 import { updateUser, deleteUser } from '../../api/admin'
-import UserForm from './Form/UsersForm'
+import UserForm from './Form/UserForm'
 
 const AdminUsers = ({ data, setData }) => {
   console.log(data)
@@ -16,7 +16,7 @@ const AdminUsers = ({ data, setData }) => {
   //   setIsOpen(true)
   //   setFormMessage('')
   //   setToCreate(true)
-  //   setActiveProduct({})
+  //   setactiveAdminDataItem({})
   // }, [])
 
   const updateItem = useCallback(

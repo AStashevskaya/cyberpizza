@@ -4,8 +4,9 @@ import { Formik, Form, Field } from 'formik'
 import * as yup from 'yup'
 
 import Input from '../../Input'
-
 import { FILE_SIZE, IMAGES_FORMATES } from '../../../constants/'
+
+import './Form.scss'
 
 const schema = yup.object().shape({
   name: yup.string().required('Required'),
@@ -37,8 +38,9 @@ const schema = yup.object().shape({
     ),
 })
 
-const ProductForm = ({ handleSubmitForm, product, toCreate, message }) => {
+const ProductForm = ({ handleSubmitForm, toCreate, message, item }) => {
   const initialValues = useMemo(() => {
+    const product = item
     const enabled = product.enabled ? product.enabled.join(', ') : ''
     return {
       name: product.name || '',
@@ -47,12 +49,12 @@ const ProductForm = ({ handleSubmitForm, product, toCreate, message }) => {
       description: product.description || '',
       enabled: enabled,
     }
-  }, [product])
+  }, [item])
   console.log(handleSubmitForm)
 
   return (
     <div className="form_product">
-      <div className="form__message">{message}</div>
+      <div className="form">{message}</div>
       <Formik initialValues={initialValues} validationSchema={schema} onSubmit={handleSubmitForm}>
         {({
           errors,
@@ -132,14 +134,14 @@ const ProductForm = ({ handleSubmitForm, product, toCreate, message }) => {
 }
 
 ProductForm.propTypes = {
-  product: pt.object,
+  item: pt.object,
   handleSubmitForm: pt.func,
   toCreate: pt.bool,
   message: pt.string,
 }
 
 ProductForm.defaultProps = {
-  product: {},
+  item: {},
   handleSubmitForm: () => {},
   toCreate: true,
   message: '',

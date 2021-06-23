@@ -1,12 +1,14 @@
-import React, { useCallback } from 'react'
+import React from 'react'
 import pt from 'prop-types'
 
 const Card = ({ item, updateItem, deleteItem }) => {
-  const { name, _id: id } = item
+  const { name, _id: id, createdAt, status } = item
+
+  const date = createdAt ? new Date(createdAt).toLocaleString() : null
 
   return (
     <div className="admin__card">
-      <div>{name}</div>
+      <div>{name || `${date}: ${status}`}</div>
       <div>
         <button onClick={() => updateItem(id)}>update</button>
         <button onClick={() => deleteItem(id)}>delete</button>

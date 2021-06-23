@@ -3,47 +3,47 @@ import pt from 'prop-types'
 import Popup from '../Popup'
 import ProductForm from './Form/ProductForm'
 
-import Card from './Card/Card'
+import Card from './Item/Item'
 import { updateProduct, createProduct, deleteProduct } from '../../api/admin'
 
 const AdminProducts = ({ data, setData }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [toCreate, setToCreate] = useState(true)
-  const [activeProduct, setActiveProduct] = useState({})
+  const [activeAdminDataItem, setactiveAdminDataItem] = useState({})
   const [formMessage, setFormMessage] = useState('')
 
-  const createItem = useCallback(() => {
-    setIsOpen(true)
-    setFormMessage('')
-    setToCreate(true)
-    setActiveProduct({})
-  }, [])
+  // const createItem = useCallback(() => {
+  //   setIsOpen(true)
+  //   setFormMessage('')
+  //   setToCreate(true)
+  //   setactiveAdminDataItem({})
+  // }, [])
 
-  const updateItem = useCallback(
-    (id) => {
-      setIsOpen(true)
-      setFormMessage('')
-      setToCreate(false)
-      const product = data.find((el) => el._id === id)
-      setActiveProduct(product)
-    },
-    [data]
-  )
+  // const updateItem = useCallback(
+  //   (id) => {
+  //     setIsOpen(true)
+  //     setFormMessage('')
+  //     setToCreate(false)
+  //     const product = data.find((el) => el._id === id)
+  //     setactiveAdminDataItem(product)
+  //   },
+  //   [data]
+  // )
 
-  const deleteItem = useCallback(
-    async (id) => {
-      console.log(id, data)
-      try {
-        await deleteProduct(id)
+  // const deleteItem = useCallback(
+  //   async (id) => {
+  //     console.log(id, data)
+  //     try {
+  //       await deleteProduct(id)
 
-        const newData = data.filter((item) => item._id.toString() !== id.toString())
-        setData(newData)
-      } catch (error) {
-        console.log(error)
-      }
-    },
-    [data, setData]
-  )
+  //       const newData = data.filter((item) => item._id.toString() !== id.toString())
+  //       setData(newData)
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  //   },
+  //   [data, setData]
+  // )
 
   // const handleClose = useCallback(() => {
   //   setIsOpen(false)
@@ -71,10 +71,10 @@ const AdminProducts = ({ data, setData }) => {
 
           setData([...data, product])
         } else {
-          const { _id } = activeProduct
+          const { _id } = activeAdminDataItem
 
           for (let key in values) {
-            if (activeProduct[key] !== values[key] && key !== 'enabled') {
+            if (activeAdminDataItem[key] !== values[key] && key !== 'enabled') {
               formData.set(key, values[key])
 
               if (key === 'image') {
@@ -95,7 +95,7 @@ const AdminProducts = ({ data, setData }) => {
         setFormMessage(message)
       }
     },
-    [toCreate, activeProduct, data]
+    [toCreate, activeAdminDataItem, data]
   )
 
   return (
@@ -114,7 +114,7 @@ const AdminProducts = ({ data, setData }) => {
       <Popup
         Component={ProductForm}
         handleSubmitForm={handleSubmitForm}
-        product={activeProduct}
+        product={activeAdminDataItem}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         toCreate={toCreate}

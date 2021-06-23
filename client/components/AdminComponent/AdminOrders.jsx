@@ -2,11 +2,11 @@ import React, { useState, useCallback } from 'react'
 import pt from 'prop-types'
 
 import Popup from '../Popup'
-import OrderForm from './Form/OrdersFrom'
+import OrderForm from './Form/OrderFrom'
 
 import { updateOrder, deleteOrder } from '../../api/admin'
 
-import Card from './Card/Card'
+import Card from './Item/Item'
 
 const AdminOrders = ({ data, setData }) => {
   console.log(data)

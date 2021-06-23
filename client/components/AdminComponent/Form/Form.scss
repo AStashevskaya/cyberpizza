@@ -1,0 +1,31 @@
+@import '../../../styles/variables';
+
+.form {
+  width: 80%;
+  @include colomnFlex;
+
+  & > form {
+    @include colomnFlex;
+  }
+
+  &__message {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  &__row {
+    display: flex;
+    width: 160px;
+    padding-bottom: 13px;
+
+    & > span {
+        width: 70px;
+    }
+  }
+
+  &__radio-group {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+  }
+}

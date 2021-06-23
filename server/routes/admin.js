@@ -1,6 +1,7 @@
 const Router = require('express')
 const Product = require('../models/Product')
 const User = require('../models/User')
+const Order = require('../models/Order')
 const authenticateToken = require('../middleware/auth')
 const multer = require('multer')
 const fs = require('fs')
@@ -26,6 +27,8 @@ router.put('/api/users/:id', authenticateToken, updateUser)
 router.delete('/api/users', authenticateToken, deleteUser)
 
 //orders
+router.put('/api/orders/:id', authenticateToken, updateOrder)
+router.delete('/api/orders', authenticateToken, deleteOrder)
 
 async function createProduct(req, res) {
   const { isAdmin } = req.user
@@ -69,13 +72,13 @@ async function deleteProduct(req, res) {
   }
 
   try {
-    const { productId } = req.body
+    const { id } = req.body
 
-    const product = await Product.findOne({ _id: productId })
+    const product = await Product.findOne({ _id: id })
 
     fs.unlinkSync('server' + product.image)
 
-    await Product.deleteOne({ _id: productId })
+    await Product.deleteOne({ _id: id })
 
     res.sendStatus(200)
   } catch (error) {
@@ -136,6 +139,27 @@ async function updateUser(req, res) {
   }
 }
 
+async function updateOrder(req, res) {
+  const { isAdmin } = req.user
+
+  if (!isAdmin) {
+    return res.status(403)
+  }
+
+  const { id } = req.params
+
+  try {
+    const order = await Order.findOne({ _id: id })
+
+    Object.assign(order, { ...req.body })
+    order.save()
+
+    res.sendStatus(200)
+  } catch (error) {
+    res.status(409).json({ message: 'Something goes wrong' })
+  }
+}
+
 async function deleteUser(req, res) {
   const { isAdmin } = req.user
 
@@ -143,10 +167,30 @@ async function deleteUser(req, res) {
     return res.status(403)
   }
 
-  const { userId } = req.body
+  const { id } = req.body
+
+  console.log(id)
 
   try {
-    await User.deleteOne({ _id: userId })
+    await User.deleteOne({ _id: id })
+
+    res.sendStatus(200)
+  } catch (error) {
+    res.status(409).json({ message: 'Something goes wrong' })
+  }
+}
+
+async function deleteOrder(req, res) {
+  const { isAdmin } = req.user
+
+  if (!isAdmin) {
+    return res.status(403)
+  }
+
+  const { id } = req.body
+
+  try {
+    await Order.deleteOne({ _id: id })
 
     res.sendStatus(200)
   } catch (error) {

@@ -12,11 +12,11 @@
   }
 
   &__window {
-    @include colomnFlex;
+    @include colomnFlex(flex-start);
     width: 600px;
     z-index: 1001;
     background-color: white;
-    padding: 10 25px;
+    padding: 10px 25px;
     box-sizing: border-box;
     transition: all 0.5s ease-in-out;
     height: 400px;
@@ -25,11 +25,16 @@
   &__header {
     cursor: pointer;
     font-size: 20px;
+    display: flex;
+    width: 100%;
+    justify-content: flex-end
   }
 
-  // &__content {
-  //   font-size: 25px;
-  // }
+  &__content {
+    height: 100%;
+    width: 100%;
+    @include rowFlex
+  }
 }
 
 .modal.active .modal {
@@ -38,9 +43,4 @@
     z-index: 1000;
     transition: all 0.5s ease-in-out;
   }
-
-  // &__wrapper {
-  //   top: 0;
-  //   transition: all 0.5s ease-in-out;
-  // }
 }

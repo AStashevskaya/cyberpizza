@@ -14,6 +14,7 @@ const Popup = ({
   toCreate,
   message,
   user,
+  item,
 }) => {
   const handleClose = useCallback(() => {
     setIsOpen(false)
@@ -31,6 +32,7 @@ const Popup = ({
               handleSubmitForm={handleSubmitForm}
               product={product}
               user={user}
+              item={item}
               toCreate={toCreate}
               message={message}
             />
@@ -49,6 +51,7 @@ Popup.propTypes = {
   handleSubmitForm: pt.func,
   product: pt.object,
   user: pt.object,
+  item: pt.object,
   setIsOpen: pt.func,
   toCreate: pt.bool,
   message: pt.string,
@@ -60,6 +63,7 @@ Popup.defaultProps = {
   isOpen: false,
   handleSubmitForm: () => {},
   product: {},
+  item: {},
   close: () => {},
   toCreate: true,
   message: '',

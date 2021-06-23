@@ -9,7 +9,7 @@ PopupContent.propTypes = {
   message: pt.string,
 }
 
-PopupContent.propTypes = {
+PopupContent.defaultProps = {
   message: '',
 }
 

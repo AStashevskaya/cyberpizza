@@ -20,9 +20,18 @@ const AdminPage = () => {
     }
   }, [title])
 
+  const getForm = useMemo(() => {
+    const category = ADMIN_LIST.find((category) => category.title === title)
+    console.log('categoryfrom memo', category)
+
+    if (category) {
+      return category.form
+    }
+  }, [title])
+
   return user && user.isAdmin ? (
     <div className="page">
-      <AdminComponent title={title} Component={getPageContent} />
+      <AdminComponent title={title} Component={getPageContent} Form={getForm} />
       <Sidebar categories={ADMIN_LIST} />
     </div>
   ) : (

@@ -20,7 +20,6 @@ const Cart = () => {
   const cartId = useSelector((state) => state.cart.id)
   const orderId = useSelector((state) => state.order.id)
   const message = useSelector((state) => state.order.message)
-  console.log('id', orderId)
 
   const dispatch = useDispatch()
 
@@ -31,7 +30,6 @@ const Cart = () => {
   const sendOrder = useCallback(() => {
     dispatch(createOrder())
     setShowPopup(true)
-    console.log('order is created')
   }, [dispatch])
 
   useEffect(() => {
@@ -48,7 +46,6 @@ const Cart = () => {
     }
 
     if (orderId) {
-      console.log('orderId', orderId)
       dispatch(getOrderStatus())
     }
   }, [])

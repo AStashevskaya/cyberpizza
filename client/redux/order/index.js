@@ -32,12 +32,8 @@ const fetchOrderFailure = (error) => ({
 
 export const createOrder = () => async (dispatch, getState) => {
   const { products, total, id } = getState().cart
-  console.log(getState().cart)
-  //   fetchOrderRequest()
 
   try {
-    console.log(products, total)
-
     const { data } = await api.postOrder({ products, total })
     const { order, message } = data
 
@@ -68,7 +64,6 @@ export const getOrderStatus = () => async (dispatch, getState) => {
 
 export const order = (state = initialState, action) => {
   const { type, payload } = action
-  console.log('paylodad', payload)
 
   switch (type) {
     case FETCH_ORDER_REQUEST:
