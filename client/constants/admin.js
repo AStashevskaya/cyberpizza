@@ -1,5 +1,6 @@
 import AdminProducts from '../components/AdminComponent/AdminProducts'
 import AdminUsers from '../components/AdminComponent/AdminUsers'
+import AdminOrders from '../components/AdminComponent/AdminOrders'
 
 export const ADMIN_LIST = [
   {
@@ -7,8 +8,8 @@ export const ADMIN_LIST = [
     component: AdminProducts,
   },
   {
-    title: 'categories',
-    component: AdminUsers,
+    title: 'orders',
+    component: AdminOrders,
   },
   {
     title: 'users',

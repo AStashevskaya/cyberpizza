@@ -13,6 +13,7 @@ const AdminPage = () => {
 
   const getPageContent = useMemo(() => {
     const category = ADMIN_LIST.find((category) => category.title === title)
+    console.log('categoryfrom memo', category)
 
     if (category) {
       return category.component

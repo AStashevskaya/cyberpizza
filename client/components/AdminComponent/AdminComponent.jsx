@@ -15,19 +15,15 @@ const AdminComponent = ({ title, Component }) => {
 
     const response = await getData(title)
 
-    console.log('responsse', response)
     if (response && response.data) {
-      console.log('from call', response.data)
       setData([...response.data])
       setLoading(false)
     }
   }, [title])
 
   useEffect(() => {
-    if (loading) {
-      getNewData()
-    }
-  }, [getNewData, loading])
+    getNewData()
+  }, [getNewData])
 
   return (
     <div className="container_admin">
