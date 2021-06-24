@@ -48,6 +48,11 @@ export const createOrder = () => async (dispatch, getState) => {
 
 export const getOrderStatus = () => async (dispatch, getState) => {
   const { id: orderId } = getState().order
+
+  if (!order.id) {
+    return
+  }
+
   dispatch(fetchOrderRequest())
 
   try {

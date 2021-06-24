@@ -34,6 +34,11 @@ export const fetchCartProductsSuccess = (products) => ({
 
 export const getCartProducts = () => async (dispatch, getState) => {
   const { id: cartId } = getState().cart
+
+  if (!cartId) {
+    return
+  }
+
   dispatch(fetchCartProductsRequest())
 
   try {
