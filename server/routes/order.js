@@ -1,10 +1,12 @@
+import { maxAge } from '../constants'
+
 const Router = require('express')
 const Order = require('../models/Order')
 const authenticateToken = require('../middleware/auth')
 const router = new Router()
 
 router.get('/api/orders', authenticateToken, getOrders)
-router.get('/api/orders/:id', authenticateToken, getOrder)
+router.get('/api/orders/:id', getOrder)
 router.post('/api/orders', createOrder)
 router.put('/api/orders/:id', authenticateToken, updateOrder)
 
@@ -37,15 +39,12 @@ async function getOrder(req, res) {
 }
 
 async function createOrder(req, res) {
-  console.log(req.body)
   try {
     const order = new Order({ ...req.body })
-    console.log(order)
 
     await order.save()
 
-    console.log(order)
-    res.cookie('order', order._id.toString())
+    res.cookie('order', order._id.toString(), { maxAge })
     res.status(201).json({ message: 'Thank you for your order!', order })
   } catch (error) {
     res.status(409).json({ message: error.message })
@@ -63,8 +62,6 @@ async function updateOrder(req, res) {
 
   try {
     const order = await Order.findOne({ _id: id })
-
-    console.log(req.body)
 
     Object.assign(order, { ...req.body })
     order.save()

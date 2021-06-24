@@ -17,8 +17,8 @@ const Cart = () => {
 
   const isOpen = useSelector((state) => state.cart.isOpen)
   const totalSum = useSelector((state) => state.cart.total)
-  const cartId = useSelector((state) => state.cart.id)
-  const orderId = useSelector((state) => state.order.id)
+  // const cartId = useSelector((state) => state.cart.id)
+  // const orderId = useSelector((state) => state.order.id)
   const message = useSelector((state) => state.order.message)
 
   const dispatch = useDispatch()
@@ -40,15 +40,15 @@ const Cart = () => {
     }
   }, [isOpen])
 
-  useEffect(() => {
-    if (cartId) {
-      dispatch(getCartProducts())
-    }
+  // useEffect(() => {
+  //   if (cartId) {
+  //     dispatch(getCartProducts())
+  //   }
 
-    if (orderId) {
-      dispatch(getOrderStatus())
-    }
-  }, [])
+  //   if (orderId) {
+  //     dispatch(getOrderStatus())
+  //   }
+  // }, [])
 
   return (
     <div className={showCart ? 'cart active' : 'cart'}>

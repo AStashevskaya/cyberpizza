@@ -101,12 +101,13 @@ async function updateProduct(req, res) {
 
     if (req.file) {
       const { destination, filename } = req.file
+
       path = destination.slice(-7) + filename
 
       fs.unlinkSync('server' + product.image)
     }
 
-    const enabled = req.body.enabled.split(',')
+    const enabled = req.body.enabled.split(',').map((el) => el.trim())
 
     Object.assign(product, { ...req.body, image: req.file ? path : product.image, enabled })
     product.save()
@@ -128,7 +129,6 @@ async function updateUser(req, res) {
 
   try {
     const user = await User.findOne({ _id: id })
-    console.log(req.body)
 
     Object.assign(user, { ...req.body })
     user.save()
@@ -168,8 +168,6 @@ async function deleteUser(req, res) {
   }
 
   const { id } = req.body
-
-  console.log(id)
 
   try {
     await User.deleteOne({ _id: id })

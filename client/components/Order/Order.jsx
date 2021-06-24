@@ -10,7 +10,6 @@ const OrderDisplay = () => {
   const dispatch = useDispatch()
   const quantity = useSelector((state) => state.cart.quantity)
   const status = useSelector((state) => state.order.status)
-  console.log('status', status)
 
   const handleClick = useCallback(() => {
     dispatch(toggleCart())

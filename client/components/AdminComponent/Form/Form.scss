@@ -6,6 +6,18 @@
 
   & > form {
     @include colomnFlex;
+
+    input[type=file] {
+      width: 200px;
+
+      & + .error {
+        top: 445px
+      }
+    }
+
+    & > button {
+      margin-top: 20px;
+    }
   }
 
   &__message {

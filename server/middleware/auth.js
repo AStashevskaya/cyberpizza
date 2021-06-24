@@ -26,6 +26,10 @@ async function authenticateToken(req, res, next) {
     try {
       const currentUser = await User.findById(user)
 
+      if (!currentUser.isActive) {
+        return res.sendStatus(403)
+      }
+
       if (currentUser) {
         req.user = currentUser
 

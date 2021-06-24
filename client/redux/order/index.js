@@ -52,7 +52,6 @@ export const getOrderStatus = () => async (dispatch, getState) => {
 
   try {
     const data = await api.getOrder(orderId)
-    console.log(data)
 
     const { status } = data.data
 

@@ -89,7 +89,8 @@ const AdminComponent = ({ title, Form }) => {
 
           response = await createProduct(formData)
 
-          const product = response.data.product
+          const { product } = response.data
+ 
           message = response.data.message
 
           setData([...data, product])
@@ -111,27 +112,29 @@ const AdminComponent = ({ title, Form }) => {
             formData.append('enabled', values.enabled)
 
             response = await updateProduct(formData, _id)
+            const enabled = values.enabled ? values.enabled.split(',').map((el) => el.trim()) : []
+
+            const updatedData = data.map((item) =>
+              item._id === activeAdminDataItem._id ? { ...item, ...values, enabled } : item
+            )
+
+            setData(updatedData)
           } else {
             response = await updateAdminDataItem(title, values, _id)
+
+            const updatedData = data.map((item) =>
+              item._id === activeAdminDataItem._id ? { ...item, ...values } : item
+            )
+            setData(updatedData)
           }
           const itemName = title.slice(0, -1)
 
           message = `${itemName} is successfuly updated`
-
-          const updatedData = data.map((el) => {
-            if (el._id === activeAdminDataItem._id) {
-              return { ...el, ...values }
-            }
-
-            return el
-          })
-          setData(updatedData)
         }
       } catch (error) {
         message = error.response.data.message
       } finally {
         setFormMessage(message)
-        // setactiveAdminDataItem({})
       }
     },
     [toCreate, activeAdminDataItem, data, title]
@@ -171,13 +174,11 @@ const AdminComponent = ({ title, Form }) => {
 
 AdminComponent.propTypes = {
   title: pt.string,
-  // Component: pt.func,
   Form: pt.func,
 }
 
 AdminComponent.defaultProps = {
   title: 'products',
-  // Component: AdminProducts,
   Form: ProductForm,
 }
 export default AdminComponent

@@ -1,9 +1,8 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import { getData, logout } from '../../redux/user'
-import { getCookies } from '../../../shared/utils/getCookie'
+import { logout } from '../../redux/user'
 
 import './AuthField.scss'
 
@@ -20,13 +19,6 @@ const AuthField = () => {
     },
     [dispatch]
   )
-
-  useEffect(() => {
-    if (isAuth) {
-      const token = getCookies('jwt')
-      dispatch(getData(token))
-    }
-  }, [])
 
   return (
     <div className="auth__container">

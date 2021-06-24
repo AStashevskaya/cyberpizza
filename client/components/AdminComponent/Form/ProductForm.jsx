@@ -2,6 +2,7 @@ import React, { useMemo } from 'react'
 import pt from 'prop-types'
 import { Formik, Form, Field } from 'formik'
 import * as yup from 'yup'
+import ErrorField from '../../ErrorFIeld'
 
 import Input from '../../Input'
 import { FILE_SIZE, IMAGES_FORMATES } from '../../../constants/'
@@ -20,28 +21,22 @@ const schema = yup.object().shape({
   image: yup
     .mixed()
     .test('fileSize', 'File too large', (value) => {
+      return value === null || (value && value.size <= FILE_SIZE) || typeof value === 'string'
+    })
+    .test('fileFormat', 'Unsupported file type', (value) => {
       return (
         value === null ||
-        (value && value.size <= FILE_SIZE) ||
-        typeof value !== 'string' ||
-        typeof value !== 'object'
-      )
-    })
-    .test(
-      'fileFormat',
-      'Unsupported file type',
-      (value) =>
-        value === null ||
         (value && IMAGES_FORMATES.includes(value.type)) ||
-        typeof value !== 'string' ||
-        typeof value !== 'object'
-    ),
+        typeof value === 'string'
+      )
+    }),
 })
 
 const ProductForm = ({ handleSubmitForm, toCreate, message, item }) => {
   const initialValues = useMemo(() => {
     const product = item
     const enabled = product.enabled ? product.enabled.join(', ') : ''
+
     return {
       name: product.name || '',
       price: product.price || '',
@@ -50,11 +45,10 @@ const ProductForm = ({ handleSubmitForm, toCreate, message, item }) => {
       enabled: enabled,
     }
   }, [item])
-  console.log(handleSubmitForm)
 
   return (
-    <div className="form_product">
-      <div className="form">{message}</div>
+    <div className="form">
+      {message}
       <Formik initialValues={initialValues} validationSchema={schema} onSubmit={handleSubmitForm}>
         {({
           errors,
@@ -69,7 +63,6 @@ const ProductForm = ({ handleSubmitForm, toCreate, message, item }) => {
           <Form
             onKeyPress={(keyEvent) => {
               if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
-                console.log(errors)
                 keyEvent.preventDefault()
                 validateForm()
                 handleSubmit()
@@ -121,8 +114,9 @@ const ProductForm = ({ handleSubmitForm, toCreate, message, item }) => {
               id="image"
               name="image"
               onChange={(event) => setFieldValue('image', event.target.files[0])}
-              error={values.image ? values.image : ''}
+              error={touched.image ? errors.image : ''}
             />
+            <ErrorField text={touched.image ? errors.image : ''} />
             <button type="submit" disabled={isSubmitting}>
               {toCreate ? 'Create' : 'Update'}
             </button>

@@ -65,7 +65,6 @@ async function createUser(req, res) {
     }
   } catch (error) {
     const { message } = error
-    console.log(message)
 
     res.status(409).send({ message })
   }
@@ -78,6 +77,10 @@ async function logUser(req, res) {
   try {
     if (!user) {
       throw new Error('This email is not registered')
+    }
+
+    if (!user.isActive) {
+      throw new Error('User is not active')
     }
 
     const isAllowed = await bcrypt.compare(password, user.password)
