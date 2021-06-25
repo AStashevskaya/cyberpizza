@@ -122,7 +122,7 @@ async function updateUser(req, res) {
   const { isAdmin } = req.user
 
   if (!isAdmin) {
-    return res.status(403)
+    return res.sendStatus(403)
   }
 
   const { id } = req.params
@@ -143,7 +143,7 @@ async function updateOrder(req, res) {
   const { isAdmin } = req.user
 
   if (!isAdmin) {
-    return res.status(403)
+    return res.sendStatus(403)
   }
 
   const { id } = req.params
@@ -182,7 +182,7 @@ async function deleteOrder(req, res) {
   const { isAdmin } = req.user
 
   if (!isAdmin) {
-    return res.status(403)
+    return res.sendStatus(403)
   }
 
   const { id } = req.body

@@ -15,7 +15,7 @@
 }
 
 .loading {
-  @include equalSides(100%);
+  @include equalSides(120%);
   @include colomnFlex(center, center);
   background-color: $color-sideBar;
   font-size: 30px;

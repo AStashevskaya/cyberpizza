@@ -121,7 +121,7 @@ async function getAllUsers(req, res) {
 
   try {
     if (!isAdmin) {
-      return res.status(401).json({ message: 'You have no rights' })
+      return res.status(403).json({ message: 'You have no rights' })
     }
 
     const users = await User.find()

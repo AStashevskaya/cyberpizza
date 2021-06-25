@@ -5,8 +5,8 @@ import CartListContainer from './CartListContainer/CartListContainer'
 import Total from './Total/Total'
 import Popup from '../Popup/'
 
-import { toggleCart, getCartProducts } from '../../redux/cart/actions'
-import { createOrder, getOrderStatus } from '../../redux/order'
+import { toggleCart } from '../../redux/cart/actions'
+import { createOrder } from '../../redux/order'
 import arrow from '../../assets/icons/right-arrow.svg'
 
 import './Cart.scss'
@@ -17,8 +17,6 @@ const Cart = () => {
 
   const isOpen = useSelector((state) => state.cart.isOpen)
   const totalSum = useSelector((state) => state.cart.total)
-  // const cartId = useSelector((state) => state.cart.id)
-  // const orderId = useSelector((state) => state.order.id)
   const message = useSelector((state) => state.order.message)
 
   const dispatch = useDispatch()
@@ -40,16 +38,6 @@ const Cart = () => {
     }
   }, [isOpen])
 
-  // useEffect(() => {
-  //   if (cartId) {
-  //     dispatch(getCartProducts())
-  //   }
-
-  //   if (orderId) {
-  //     dispatch(getOrderStatus())
-  //   }
-  // }, [])
-
   return (
     <div className={showCart ? 'cart active' : 'cart'}>
       <div className="cart__overlay">
@@ -62,7 +50,9 @@ const Cart = () => {
             <span className="cart__order">Orders:</span>
             <CartListContainer />
             <Total sum={totalSum} />
-            <button onClick={sendOrder}>Order</button>
+            <button onClick={sendOrder} className="cart__button">
+              Submit order
+            </button>
           </div>
         </div>
       </div>

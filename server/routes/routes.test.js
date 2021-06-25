@@ -85,7 +85,7 @@ describe('Test', function () {
     const result = await app.post('/api/user/login').send(userData)
 
     expect(result.statusCode).toEqual(200)
-  }, 10000)
+  })
 
   test('Success logout', async () => {
     const result = await app.post('/api/user/logout')
@@ -134,6 +134,188 @@ describe('Test', function () {
     const result = await app.post(`/api/carts/${_id}/products`).send({ productId })
 
     expect(result.statusCode).toEqual(200)
+  })
+
+  // TESTING ADMIN ROUTES ORDERS
+  test('Get orders if not admin', async () => {
+    const result = await app.post('/api/user/login').send(userData)
+    const { token } = JSON.parse(result.text)
+
+    const get_result = await app.get('/api/orders').send({ token })
+
+    expect(get_result.statusCode).toEqual(403)
+  })
+
+  test('Get orders if admin', async () => {
+    const result = await app.post('/api/user/login').send(adminData)
+    const { token } = JSON.parse(result.text)
+
+    const get_result = await app.get('/api/orders').send({ token })
+
+    expect(get_result.statusCode).toEqual(200)
+  })
+
+  test('Create order', async () => {
+    const { body: products } = await app.get('/api/products')
+    const productFromDB = products[0]
+
+    const result = await app.post('/api/orders').send({ products: [productFromDB] })
+
+    expect(result.statusCode).toEqual(201)
+  })
+
+  test('Create order with not existed product', async () => {
+    const result = await app.post('/api/orders').send({ products: [{ ...product, _id: '' }] })
+
+    expect(result.statusCode).toEqual(404)
+  })
+
+  test('Update order if admin', async () => {
+    const result = await app.post('/api/user/login').send(adminData)
+    const { token } = JSON.parse(result.text)
+
+    const { body: orders } = await app.get('/api/orders').send({ token })
+    const { _id } = orders[0]
+
+    const updatingResult = await app.put(`/api/orders/${_id}`).send({ token, status: 'delivered' })
+
+    expect(updatingResult.statusCode).toEqual(200)
+  })
+
+  test('Update order if not admin', async () => {
+    const result = await app.post('/api/user/login').send(adminData)
+    const { token } = JSON.parse(result.text)
+
+    const { body: orders } = await app.get('/api/orders').send({ token })
+    const { _id } = orders[0]
+
+    const userResult = await app.post('/api/user/login').send(userData)
+    const { token: userToken } = JSON.parse(userResult.text)
+
+    const updatingResult = await app
+      .put(`/api/orders/${_id}`)
+      .send({ token: userToken, status: 'cancelled' })
+
+    expect(updatingResult.statusCode).toEqual(403)
+  })
+
+  test('Delete order if admin', async () => {
+    const result = await app.post('/api/user/login').send(adminData)
+    const { token } = JSON.parse(result.text)
+
+    const { body: orders } = await app.get('/api/orders').send({ token })
+    const { _id } = orders[0]
+
+    const deletingResult = await app.delete('/api/orders').send({ token, data: { id: _id } })
+
+    expect(deletingResult.statusCode).toEqual(200)
+  })
+
+  test('Delete order if not admin', async () => {
+    const result = await app.post('/api/user/login').send(adminData)
+    const { token } = JSON.parse(result.text)
+
+    const { body: orders } = await app.get('/api/orders').send({ token })
+    const { _id } = orders[0]
+
+    const userResult = await app.post('/api/user/login').send(userData)
+    const { token: userToken } = JSON.parse(userResult.text)
+
+    const deletingResult = await app
+      .delete('/api/orders')
+      .send({ token: userToken, data: { id: _id } })
+
+    expect(deletingResult.statusCode).toEqual(403)
+  })
+
+  // TESTING ADMIN ROUTES USERS
+  test('Get users if not admin', async () => {
+    const result = await app.post('/api/user/login').send(userData)
+    const { token } = JSON.parse(result.text)
+
+    const get_result = await app.get('/api/users').send({ token })
+
+    expect(get_result.statusCode).toEqual(403)
+  })
+
+  test('Get users if admin', async () => {
+    const result = await app.post('/api/user/login').send(adminData)
+    const { token } = JSON.parse(result.text)
+
+    const get_result = await app.get('/api/users').send({ token })
+
+    expect(get_result.statusCode).toEqual(200)
+  })
+
+  test('Update user if not admin', async () => {
+    const result = await app.post('/api/user/login').send(adminData)
+    const { token } = JSON.parse(result.text)
+
+    const { body: users } = await app.get('/api/users').send({ token })
+    const user = users[0]
+
+    const userResult = await app.post('/api/user/login').send(userData)
+    const { token: userToken } = JSON.parse(userResult.text)
+
+    const updatingResult = await app
+      .put(`/api/orders/${user._id}`)
+      .send({ token: userToken, isActive: false })
+
+    expect(updatingResult.statusCode).toEqual(403)
+  })
+
+  test('Update user if admin', async () => {
+    const result = await app.post('/api/user/login').send(adminData)
+    const { token } = JSON.parse(result.text)
+
+    const { body: users } = await app.get('/api/users').send({ token })
+    const user = users.find((user) => user.isAdmin === false)
+
+    const updatingResult = await app.put(`/api/users/${user._id}`).send({ token, isActive: false })
+
+    expect(updatingResult.statusCode).toEqual(200)
+  })
+
+  test('Login if user is inactive', async () => {
+    const result = await app.post('/api/user/login').send(adminData)
+    const { token } = JSON.parse(result.text)
+
+    const { body: users } = await app.get('/api/users').send({ token })
+    const user = users.find((user) => user.isAdmin === false)
+
+    const resultOfLogin = await app.post('/api/user/login').send(userData)
+    await app.put(`/api/users/${user._id}`).send({ token, isActive: true })
+
+    expect(resultOfLogin.statusCode).toEqual(400)
+  })
+
+  test('Delete user if admin', async () => {
+    const result = await app.post('/api/user/login').send(adminData)
+    const { token } = JSON.parse(result.text)
+
+    const { body: users } = await app.get('/api/users').send({ token })
+    const user = users.find((user) => user.isAdmin === false)
+
+    const deletingResult = await app.delete('/api/users').send({ token, data: { id: user._id } })
+
+    expect(deletingResult.statusCode).toEqual(200)
+  })
+
+  test('Delete user if not admin', async () => {
+    const result = await app.post('/api/user/login').send(adminData)
+    const { token } = JSON.parse(result.text)
+
+    const { body: users } = await app.get('/api/users').send({ token })
+    const user = users[0]
+
+    const userResult = await app.post('/api/user/login').send(userData)
+    const { token: userToken } = JSON.parse(userResult.text)
+
+    const deletingResult = await app
+      .delete('/api/orders')
+      .send({ token: userToken, data: { id: user._id } })
+
+    expect(deletingResult.statusCode).toEqual(403)
   })
 
   afterAll(async () => {

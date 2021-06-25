@@ -75,6 +75,15 @@
     justify-content: flex-end;
     margin-top: 25px;
   }
+
+  &__button {
+    @include activeLink;
+    margin-left: 20px;
+    padding: 9px;
+    border-radius: 5px;
+    font-size: 20px;
+    border: 0;
+  }
 }
 
 .cart.active .cart {
