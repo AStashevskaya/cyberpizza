@@ -6,7 +6,7 @@ import Total from './Total/Total'
 import Popup from '../Popup/'
 
 import { toggleCart } from '../../redux/cart/actions'
-import { createOrder } from '../../redux/order'
+import { createOrder, order } from '../../redux/order'
 import arrow from '../../assets/icons/right-arrow.svg'
 
 import './Cart.scss'
@@ -28,6 +28,7 @@ const Cart = () => {
   const sendOrder = useCallback(() => {
     dispatch(createOrder())
     setShowPopup(true)
+    setShowCart(false)
   }, [dispatch])
 
   useEffect(() => {
@@ -56,7 +57,7 @@ const Cart = () => {
           </div>
         </div>
       </div>
-      <Popup isOpen={showPopup} setIsOpen={setShowPopup} message={message} />
+      <Popup isOpen={message && showPopup} setIsOpen={setShowPopup} message={message} />
     </div>
   )
 }

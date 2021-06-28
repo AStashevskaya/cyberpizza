@@ -13,6 +13,7 @@ const initialState = {
   message: '',
   loading: false,
   status: null,
+  order: {},
   error: '',
 }
 
@@ -37,7 +38,7 @@ export const createOrder = () => async (dispatch, getState) => {
     const { data } = await api.postOrder({ products, total })
     const { order, message } = data
 
-    dispatch(fetchOrderSuccess({ status: order.status, message }))
+    dispatch(fetchOrderSuccess({ status: order.status, message, order }))
     await clearCart(id)
 
     dispatch(fetchCartProductsSuccess({ products: [], total: 0, quantity: 0 }))
@@ -80,6 +81,7 @@ export const order = (state = initialState, action) => {
         loading: false,
         status: payload.status ? payload.status : state.status,
         message: payload.message ? payload.message : '',
+        order: payload.order,
         error: '',
       }
     case FETCH_ORDER_FAILURE:
