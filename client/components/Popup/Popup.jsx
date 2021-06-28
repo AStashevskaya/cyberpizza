@@ -5,17 +5,7 @@ import PopupContent from './PopupContent/PopupContent'
 
 import './Popup.scss'
 
-const Popup = ({
-  Component,
-  isOpen,
-  handleSubmitForm,
-  product,
-  setIsOpen,
-  toCreate,
-  message,
-  user,
-  item,
-}) => {
+const Popup = ({ Component, isOpen, handleSubmitForm, setIsOpen, toCreate, message, item }) => {
   const handleClose = useCallback(() => {
     setIsOpen(false)
   }, [])
@@ -30,8 +20,6 @@ const Popup = ({
           <div className="modal__content">
             <Component
               handleSubmitForm={handleSubmitForm}
-              product={product}
-              user={user}
               item={item}
               toCreate={toCreate}
               message={message}
@@ -49,8 +37,6 @@ Popup.propTypes = {
   Component: pt.func.isRequired,
   isOpen: pt.bool.isRequired,
   handleSubmitForm: pt.func,
-  product: pt.object,
-  user: pt.object,
   item: pt.object,
   setIsOpen: pt.func,
   toCreate: pt.bool,
@@ -59,10 +45,8 @@ Popup.propTypes = {
 
 Popup.defaultProps = {
   Component: PopupContent,
-  user: {},
   isOpen: false,
   handleSubmitForm: () => {},
-  product: {},
   item: {},
   close: () => {},
   toCreate: true,
