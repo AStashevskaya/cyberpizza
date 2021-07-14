@@ -23,10 +23,12 @@ const Card = ({ item, loading, cartId }) => {
 
       if (cartId) {
         dispatch(updateCartProducts(_id))
-        event({
-          category: 'UPDATING CART',
-          action: 'Add Product From Cart',
-          label: `Product ${_id} was added`,
+        event('addProduct', {
+          id: _id,
+          name,
+          price,
+          description,
+          quantity: 1,
         })
       } else {
         dispatch(createCart(_id))
