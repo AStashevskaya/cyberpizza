@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
+import ReactGA from 'react-ga'
 
 import Header from '../../components/Header'
 import Catalog from '../../components/Catalog'
@@ -33,6 +34,9 @@ const MainPage = () => {
   ]
 
   useEffect(() => {
+    // ReactGA.initialize('UA-202046657-1')
+    // ReactGA.pageview('/')
+
     const fetchData = async () => {
       await Promise.all([
         dispatch(fetchProducts()),

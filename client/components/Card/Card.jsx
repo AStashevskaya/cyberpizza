@@ -2,6 +2,7 @@ import React, { useCallback } from 'react'
 import pt from 'prop-types'
 
 import { useDispatch } from 'react-redux'
+import { event } from 'react-ga'
 
 import { updateCartProducts, createCart } from '../../redux/cart/actions'
 
@@ -22,6 +23,11 @@ const Card = ({ item, loading, cartId }) => {
 
       if (cartId) {
         dispatch(updateCartProducts(_id))
+        event({
+          category: 'UPDATING CART',
+          action: 'Add Product From Cart',
+          label: `Product ${_id} was added`,
+        })
       } else {
         dispatch(createCart(_id))
       }
