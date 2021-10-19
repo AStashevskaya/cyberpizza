@@ -40,6 +40,41 @@
     }
   }
 
+  &_admin {
+    @include colomnFlex(center, center);
+    height: 100%;
+    margin: 0;
+
+    @media (max-width: $screen-1024) {
+      width: calc(100% - #{$sidebar-width-768});
+    }
+
+    @media (max-width: $screen-768) {
+      width: 100%;
+    }
+
+    @media (min-width: $screen-1400) {
+      width: calc(100% - 400px);
+      align-items: center;
+    }
+
+    @media (max-width: $screen-1400) {
+      width: calc(100% - #{$sidebar-width-1024});
+      margin: 0;
+    }
+
+
+    @media (max-width: $screen-768) {
+      width: 100%;
+    }
+
+    @media (min-width: $screen-1600) {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+  }
+
+
   &_cards {
     @include rowFlex(space-between, flex-start);
     flex-wrap: wrap;

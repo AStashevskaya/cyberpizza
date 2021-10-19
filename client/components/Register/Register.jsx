@@ -12,8 +12,7 @@ import './Register.scss'
 const schema = yup.object().shape({
   email: yup.string().email('Invalid email').required('Required'),
   password: yup.string().required('Required'),
-  confirmedPassword: yup.string().test('passwords-match', 'Passwords must match', function(value){
-    console.log('value', value)
+  confirmedPassword: yup.string().test('passwords-match', 'Passwords must match', function (value) {
     return this.parent.password === value
   }),
   name: yup.string().required('Required'),

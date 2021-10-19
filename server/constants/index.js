@@ -17,3 +17,5 @@ export const userData = {
   ...adminData,
   email: 'newUSer@test.com',
 }
+
+export const maxAge = 24 * 60 * 60 * 1000

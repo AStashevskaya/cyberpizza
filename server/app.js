@@ -6,9 +6,12 @@ const cookieParser = require('cookie-parser')
 const productsRoutes = require('./routes/products')
 const cartRoutes = require('./routes/carts')
 const userRoutes = require('./routes/users')
+const adminRoutes = require('./routes/admin')
+const orderRoutes = require('./routes/order')
 
 const corsOptions = {
   credentials: true,
+  methods: ['GET', 'POST'],
   origin(origin, callback) {
     callback(null, true)
   },
@@ -31,6 +34,8 @@ function prepareApp(url) {
   app.use(productsRoutes)
   app.use(cartRoutes)
   app.use(userRoutes)
+  app.use(adminRoutes)
+  app.use(orderRoutes)
 
   return app
 }

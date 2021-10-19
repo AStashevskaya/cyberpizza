@@ -12,6 +12,7 @@ const authenticateToken = require('../middleWare/auth')
 router.post('/api/users', createUser)
 router.post('/api/user/login', logUser)
 router.get('/api/user', authenticateToken, getUserData)
+router.get('/api/users', authenticateToken, getAllUsers)
 router.post('/api/user/logout', logoutUser)
 
 const createToken = (id) => jwt.sign(id, ACCESS_TOKEN)
@@ -64,7 +65,6 @@ async function createUser(req, res) {
     }
   } catch (error) {
     const { message } = error
-    console.log(message)
 
     res.status(409).send({ message })
   }
@@ -77,6 +77,10 @@ async function logUser(req, res) {
   try {
     if (!user) {
       throw new Error('This email is not registered')
+    }
+
+    if (!user.isActive) {
+      throw new Error('User is not active')
     }
 
     const isAllowed = await bcrypt.compare(password, user.password)
@@ -105,6 +109,24 @@ async function getUserData(req, res) {
 async function logoutUser(req, res) {
   try {
     res.cookie('jwt', '', { maxAge: 1 }).end()
+  } catch (error) {
+    res.status(400).json({ message: error.message })
+  }
+}
+
+async function getAllUsers(req, res) {
+  const user = await User.findOne({ _id: req.user })
+
+  const { isAdmin } = user
+
+  try {
+    if (!isAdmin) {
+      return res.status(403).json({ message: 'You have no rights' })
+    }
+
+    const users = await User.find()
+
+    res.status(200).json(users)
   } catch (error) {
     res.status(400).json({ message: error.message })
   }

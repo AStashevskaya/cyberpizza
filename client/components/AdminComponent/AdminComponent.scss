@@ -1,0 +1,20 @@
+@import '../../styles/variables';
+
+.admin {
+  &__wrapper {
+    width: 100%;
+    padding: 0 40px;
+    box-sizing: border-box;
+    @include colomnFlex;
+  }
+
+  &__card {
+    @include rowFlex(space-between);
+    width: 100%;
+    padding-top: 10px;
+
+    & > div > button {
+      cursor: pointer;
+    }
+  }
+}

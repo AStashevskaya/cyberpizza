@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 
 import Header from '../../components/Header'
 import Catalog from '../../components/Catalog'
@@ -6,26 +7,47 @@ import Sidebar from '../../components/Sidebar'
 import Cart from '../../components/Cart'
 
 import { fetchProducts } from '../../redux/catalog'
+import { getData } from '../../redux/user'
+import { getCookies } from '../../../shared/utils/getCookie'
+import { getOrderStatus } from '../../redux/order'
+import { getCartProducts } from '../../redux/cart/actions'
 
-import './MainPage.scss'
-import { useSelector, useDispatch } from 'react-redux'
+import '../Page.scss'
 
 const MainPage = () => {
   const [loading, setLoading] = useState(true)
   const dispatch = useDispatch()
+  const token = getCookies('jwt')
 
-  const catalogLoading = useSelector((state) => state.catalog.loading)
+  // eslint-disable-next-line react-perf/jsx-no-new-array-as-prop
+  const categories = [
+    {
+      title: 'pizza',
+      path: '/',
+    },
+
+    {
+      title: 'drinks',
+      path: '/',
+    },
+  ]
 
   useEffect(() => {
-    if (catalogLoading) {
-      dispatch(fetchProducts())
-    } else {
-      setLoading(catalogLoading)
+    const fetchData = async () => {
+      await Promise.all([
+        dispatch(fetchProducts()),
+        dispatch(getCartProducts()),
+        dispatch(getOrderStatus()),
+        token ? dispatch(getData(token)) : () => {},
+      ])
+      setLoading(false)
     }
-  }, [catalogLoading, dispatch])
+
+    fetchData()
+  }, [])
 
   return (
-    <div className="page_main">
+    <div className="page">
       {loading ? (
         <div className="loading">loading</div>
       ) : (
@@ -34,7 +56,7 @@ const MainPage = () => {
             <Header />
             <Catalog />
           </div>
-          <Sidebar />
+          <Sidebar categories={categories} />
           <Cart />
         </>
       )}
