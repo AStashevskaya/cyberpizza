@@ -4,7 +4,7 @@ const prepareApp = require('./app')
 async function start() {
   const app = prepareApp(process.env.DB_CONNECTION)
 
-  const port = process.env.PORT || 3000
+  const port = process.env.PORT || 4000
   const env = process.env.NODE_ENV || 'Development'
 
   try {

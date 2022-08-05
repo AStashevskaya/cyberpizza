@@ -7,8 +7,10 @@ import { updateCartProducts, createCart } from '../../redux/cart/actions'
 
 import './Card.scss'
 
-const Card = ({ item, loading, cartId }) => {
-  const { name, image, price, description, _id } = item
+const Card = ({ item, loading, cartId, product }) => {
+  // const { name, image, price, description, _id } = item
+  const currentProduct = product || item
+  console.log('product', product)
 
   const dispatch = useDispatch()
 
@@ -21,18 +23,18 @@ const Card = ({ item, loading, cartId }) => {
       }
 
       if (cartId) {
-        dispatch(updateCartProducts(_id))
+        dispatch(updateCartProducts(currentProduct._id))
       } else {
-        dispatch(createCart(_id))
+        dispatch(createCart(currentProduct._id))
       }
     },
-    [dispatch, cartId, loading, _id]
+    [dispatch, cartId, loading, currentProduct._id]
   )
 
   return (
     <div className="card">
       <div className="card__image">
-        <img src={image} alt={name} />
+        <img src={currentProduct.image} alt={currentProduct.name} />
         <button
           onClick={handleClick}
           className={loading ? 'card__button disabled' : 'card__button'}
@@ -41,9 +43,9 @@ const Card = ({ item, loading, cartId }) => {
         </button>
       </div>
 
-      <div className="card__price">{`${price}$`}</div>
-      <div className="card__title">{name}</div>
-      <div className="card__description">{description}</div>
+      <div className="card__price">{`${currentProduct.price}$`}</div>
+      <div className="card__title">{currentProduct.name}</div>
+      <div className="card__description">{currentProduct.description}</div>
     </div>
   )
 }

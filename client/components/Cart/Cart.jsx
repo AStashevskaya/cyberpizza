@@ -57,7 +57,7 @@ const Cart = () => {
           </div>
         </div>
       </div>
-      <Popup isOpen={message && showPopup} setIsOpen={setShowPopup} message={message} />
+      <Popup isOpen={!!message && showPopup} setIsOpen={setShowPopup} message={message} />
     </div>
   )
 }

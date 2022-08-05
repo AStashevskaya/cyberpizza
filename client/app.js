@@ -1,24 +1,32 @@
 import React from 'react'
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { hot } from 'react-hot-loader/root'
+import { builder, Builder, BuilderContent } from '@builder.io/react'
+import CatchallPage from './pages/[...page]'
 
 import store from './redux/store'
 import ROUTES from './routes'
+import config from '../config'
 
-const App = () => {
+builder.init(config.apiKey)
+
+import './components/Card/Card.builder'
+
+const App = ({ Component, pageProps }) => {
   return (
     <Provider store={store}>
-      <div>
-        <Router>
-          <Switch>
-            {ROUTES.map((route) => (
-              <Route exact {...route} key={route.path} />
-            ))}
-            {/* <Redirect to="/" /> */}
-          </Switch>
-        </Router>
-      </div>
+      <Router>
+        <Switch>
+          {ROUTES.map((route) => (
+            <Route exact {...route} key={route.path} />
+          ))}
+          <Route
+            render={({ location }) => <CatchallPage key={location.key} location={location} />}
+          />
+          {/* <Redirect to="/" /> */}
+        </Switch>
+      </Router>
     </Provider>
   )
 }

@@ -3,6 +3,10 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const dotenv = require('dotenv')
+
+// this will update the process.env with environment variables in .env file
+dotenv.config()
 
 module.exports = (env, options) => {
   const isProd = options.mode === 'production'
@@ -26,7 +30,7 @@ module.exports = (env, options) => {
       hot: true,
       port: 8080,
       proxy: {
-        '/': 'http://localhost:3000',
+        '/': 'http://localhost:4000',
       },
     },
     resolve: {
@@ -63,6 +67,12 @@ module.exports = (env, options) => {
       ],
     },
     plugins: [
+      // new webpack.ProvidePlugin({
+      //   process: 'process/browser',
+      // }),
+      new webpack.DefinePlugin({
+        'process.env': JSON.stringify(process.env),
+      }),
       new webpack.HotModuleReplacementPlugin(),
       new CleanWebpackPlugin(),
       new HtmlWebpackPlugin({

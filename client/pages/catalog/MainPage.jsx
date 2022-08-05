@@ -23,12 +23,24 @@ const MainPage = () => {
   const categories = [
     {
       title: 'pizza',
-      path: '/',
+      path: '/products/pizza',
     },
 
     {
       title: 'drinks',
-      path: '/',
+      path: '/products/drinks',
+    },
+    {
+      title: 'about',
+      path: '/about',
+    },
+    {
+      title: 'faq',
+      path: '/faq',
+    },
+    {
+      title: 'not found',
+      path: '/sldsldsld',
     },
   ]
 
