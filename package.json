@@ -67,6 +67,8 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.3.0",
     "save-dev": "0.0.1-security",
+    "swell-js": "^3.17.4",
+    "swell-node": "^4.0.10",
     "yup": "^0.32.9"
   },
   "devDependencies": {

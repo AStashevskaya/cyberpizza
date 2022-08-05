@@ -3,12 +3,17 @@ import { BuilderComponent, builder } from '@builder.io/react'
 
 import config from '../../config'
 import NotFound from './NotFoundPage/NotFound'
+import ProductCollection from '../components/Collection/ProductCollection'
 
 builder.init(config.apiKey)
+
+const PRODACTS_PATH = '/products/'
 
 const CatchallPage = ({ location }) => {
   const [content, setContent] = useState(null)
   const [notFound, setNotFound] = useState(false)
+
+  const isProductCollection = location.pathname.includes(PRODACTS_PATH)
 
   useEffect(() => {
     const fetchContent = async () => {
@@ -32,11 +37,14 @@ const CatchallPage = ({ location }) => {
         console.log('rrr', error)
       }
     }
-    fetchContent()
+    if (!isProductCollection) {
+      fetchContent()
+    }
   }, [location.pathname])
 
-  console.log('not found', notFound)
-  return !notFound ? (
+  return isProductCollection ? (
+    <ProductCollection location={location} />
+  ) : !notFound ? (
     <BuilderComponent model="page" content={content}>
       <div className="loading">Loading...</div>
     </BuilderComponent>

@@ -7,4 +7,7 @@ export default {
   productsModel: 'swell-product',
   collectionsModel: 'swell-collection',
   isDemo: Boolean(process.env.IS_DEMO),
+  storeId: process.env.SWELL_STORE_ID,
+  publicKey: process.env.SWELL_PUBLIC_KEY,
+  secretKey: process.env.SWELL_SECRET_KEY,
 }
