@@ -1,67 +1,48 @@
-import React from 'react'
-// import { useRouter } from 'next/router'
-import { BuilderComponent, builder, useIsPreviewing } from '@builder.io/react'
-// import DefaultErrorPage from 'next/error'
-// import Head from 'next/head'
+import React, { useState, useEffect } from 'react'
+import { BuilderComponent, builder } from '@builder.io/react'
+
 import config from '../../config'
-import { useRouter } from '../hooks'
-// Replace with your Public API Key
+import NotFound from './NotFoundPage/NotFound'
+
 builder.init(config.apiKey)
 
-export async function getStaticProps({ params }) {
-  // Fetch the builder content
-  const page = await builder
-    .get('page', {
-      userAttributes: {
-        urlPath: '/' + (params?.page?.join('/') || ''),
-      },
-    })
-    .toPromise()
+const CatchallPage = ({ location }) => {
+  const [content, setContent] = useState(null)
+  const [notFound, setNotFound] = useState(false)
 
-  return {
-    props: {
-      page: page || null,
-    },
-    revalidate: 5,
-  }
-}
+  useEffect(() => {
+    const fetchContent = async () => {
+      try {
+        const pages = await builder.getAll('page', {
+          options: { noTargeting: true },
+          apiKey: config.apiKey,
+        })
+        console.log(pages)
 
-export async function getStaticPaths() {
-  // Get a list of all pages in builder
-  const pages = await builder.getAll('page', {
-    // We only need the URL field
-    fields: 'data.url',
-    options: { noTargeting: true },
-  })
+        const pagecontent = pages.find((page) => {
+          const path = page.query.find((value) => value.property === 'urlPath')
+          if (path && path.value === location.pathname) {
+            return page
+          }
+        })
 
-  return {
-    paths: pages.map((page) => `${page.data?.url}`),
-    fallback: true,
-  }
-}
+        setContent(pagecontent)
+        !pagecontent && setNotFound(true)
+      } catch (error) {
+        console.log('rrr', error)
+      }
+    }
+    fetchContent()
+  }, [location.pathname])
 
-export default function Page({ page }) {
-  //   const router = useRouter()
-  //   console.log('router', router)
-  //   const isPreviewing = useIsPreviewing()
-  const isPreviewing = true
-
-  //   if (router.isFallback) {
-  //     return <h1>Loading...</h1>
-  //   }
-
-  if (!page && !isPreviewing) {
-    return <div>no page</div>
-  }
-  const data = { products: [] }
-
-  return (
-    <>
-      {/* <Head>
-        <title>{page?.data.title}</title>
-      </Head> */}
-      {/* Render the Builder page */}
-      <BuilderComponent model="page" content={page} data={data} />
-    </>
+  console.log('not found', notFound)
+  return !notFound ? (
+    <BuilderComponent model="page" content={content}>
+      <div className="loading">Loading...</div>
+    </BuilderComponent>
+  ) : (
+    <NotFound />
   )
 }
+
+export default CatchallPage
