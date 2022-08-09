@@ -13,7 +13,7 @@ builder.init(config.apiKey)
 
 import './components/Card/Card.builder'
 
-const App = ({ Component, pageProps }) => {
+const App = () => {
   return (
     <Provider store={store}>
       <Router>

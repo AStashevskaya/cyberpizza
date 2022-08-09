@@ -10,9 +10,11 @@ restrictedRegister(
       'Product details, should only be used in product page template, dynamically bind to product in context.',
     defaults: {
       bindings: {
-        'component.options.product': 'state.products[index]',
-        // 'component.options.title': 'state.product.title',
-        // 'component.options.description': 'state.product.descriptionHtml',
+        'component.product': 'state.productsItem',
+        'component.options.name': 'state.productsItem.name',
+        'component.description': 'state.productsItem.description',
+        'component.price': 'state.productsItem.price',
+        'component.item': 'state.productsItem',
       },
     },
   },
@@ -26,7 +28,7 @@ restrictedRegister(
     inputs: [
       {
         name: 'product',
-        type: `SwellProductHandle`,
+        type: `object`,
       },
       {
         name: 'description',
@@ -35,9 +37,19 @@ restrictedRegister(
         helperText: 'Override product description from swell',
       },
       {
-        name: 'title',
+        name: 'name',
         type: 'text',
         helperText: 'Override product title from swell',
+      },
+      {
+        name: 'image',
+        type: 'text',
+        helperText: 'Override product title from swell',
+      },
+      {
+        name: 'price',
+        type: 'text',
+        helperText: 'Override product price from swell',
       },
     ],
     image: 'https://unpkg.com/css.gg@2.0.0/icons/svg/ereader.svg',
