@@ -68,7 +68,10 @@ const ProductPage = () => {
     <BuilderComponent
       model="product-page"
       content={builderContentJson}
-      data={{ product, addToCart }}
+      data={{ product }}
+      context={{
+        addToCart
+      }}
     />
   )
 }
