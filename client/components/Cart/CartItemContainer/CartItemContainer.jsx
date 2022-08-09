@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 import CartItem from '../CartItem/CartItem'
 import { removeProduct } from '../../../redux/cart/actions'
 
-const CartItemContainer = ({ product }) => {
+const CartItemContainer = ({ product, removeItem }) => {
   const { _id: id } = product
   const dispatch = useDispatch()
 
@@ -15,7 +15,7 @@ const CartItemContainer = ({ product }) => {
 
   return (
     <>
-      <CartItem product={product} handleClick={deleteProduct} />
+      <CartItem product={product} handleClick={deleteProduct} removeItem={removeItem} />
     </>
   )
 }
