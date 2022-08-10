@@ -50,7 +50,7 @@ const ProductPage = () => {
       .finally(setLoading(false))
   }, [product])
 
-  const addToCart = async () => {
+  const addToCart = async (product) => {
     await swell.cart.addItem({
       product_id: product.id,
       quantity: 1,
