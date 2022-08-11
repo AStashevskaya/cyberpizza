@@ -6,8 +6,12 @@ import {
   FETCH_CART_PRODUCTS_REQUEST,
   UPDATE_CART_ID,
 } from './constants'
+import swell from 'swell-js'
+import config from '../../../config'
 
 import * as api from '../../api/cart'
+
+swell.init(config.storeId, config.publicKey)
 
 export const toggleCart = () => ({
   type: TOGGLE_CART,
@@ -32,27 +36,27 @@ export const fetchCartProductsSuccess = (products) => ({
   payload: products,
 })
 
-export const getCartProducts = () => async (dispatch, getState) => {
-  const { id: cartId } = getState().cart
+// export const getCartProducts = () => async (dispatch, getState) => {
+//   const { id: cartId } = getState().cart
 
-  if (!cartId) {
-    return
-  }
+//   if (!cartId) {
+//     return
+//   }
 
-  dispatch(fetchCartProductsRequest())
+//   dispatch(fetchCartProductsRequest())
 
-  try {
-    const data = await api.getCart(cartId)
+//   try {
+//     const data = await api.getCart(cartId)
 
-    const { products, total } = await data.data
+//     const { products, total } = await data.data
 
-    const quantity = products.reduce((accum, product) => accum + product.quantity, 0)
+//     const quantity = products.reduce((accum, product) => accum + product.quantity, 0)
 
-    dispatch(fetchCartProductsSuccess({ products, total, quantity }))
-  } catch (error) {
-    dispatch(fetchCartProductsFailure(error.message))
-  }
-}
+//     dispatch(fetchCartProductsSuccess({ products, total, quantity }))
+//   } catch (error) {
+//     dispatch(fetchCartProductsFailure(error.message))
+//   }
+// }
 
 export const createCart = (productId) => async (dispatch) => {
   try {
@@ -105,22 +109,74 @@ export const updateCartProducts = (productId) => async (dispatch, getState) => {
   }
 }
 
-export const removeProduct = (productId) => async (dispatch, getState) => {
+// export const removeProduct = (productId) => async (dispatch, getState) => {
+//   dispatch(fetchCartProductsRequest())
+//   const { products, id: cartId } = getState().cart
+
+//   try {
+//     await api.deleteProduct(productId, cartId)
+
+//     const prodIdx = products.findIndex((product) => product._id === productId)
+
+//     products.splice(prodIdx, 1)
+
+//     const total = products.reduce((accum, product) => accum + product.quantity * product.price, 0)
+
+//     const quantity = products.reduce((accum, product) => accum + product.quantity, 0)
+
+//     dispatch(updateCart({ total, products, quantity }))
+//   } catch (error) {
+//     dispatch(fetchCartProductsFailure(error.message))
+//   }
+// }
+
+export const getCartProducts = () => async (dispatch) => {
   dispatch(fetchCartProductsRequest())
-  const { products, id: cartId } = getState().cart
 
   try {
-    await api.deleteProduct(productId, cartId)
+    const cart = await swell.cart.get()
 
-    const prodIdx = products.findIndex((product) => product._id === productId)
+    const quantity =
+      (cart && cart.items.reduce((accum, product) => accum + product.quantity, 0)) || 0
 
-    products.splice(prodIdx, 1)
+    dispatch(
+      fetchCartProductsSuccess({
+        products: (cart && cart.items) || [],
+        total: (cart && cart.grand_total) || 0,
+        quantity,
+        cart: cart,
+      })
+    )
+  } catch (error) {
+    dispatch(fetchCartProductsFailure(error.message))
+  }
+}
 
-    const total = products.reduce((accum, product) => accum + product.quantity * product.price, 0)
+export const removeProduct = (productId) => async (dispatch) => {
+  dispatch(fetchCartProductsRequest())
 
-    const quantity = products.reduce((accum, product) => accum + product.quantity, 0)
+  try {
+    const cart = await swell.cart.removeItem(productId)
+    const quantity = cart.items.reduce((accum, product) => accum + product.quantity, 0)
 
-    dispatch(updateCart({ total, products, quantity }))
+    dispatch(updateCart({ cart, total: cart.grand_total, products: cart.items, quantity }))
+  } catch (error) {
+    dispatch(fetchCartProductsFailure(error.message))
+  }
+}
+
+export const addToCart = (productId) => async (dispatch) => {
+  dispatch(fetchCartProductsRequest())
+
+  try {
+    const cart = await swell.cart.addItem({
+      product_id: productId,
+      quantity: 1,
+    })
+
+    const quantity = cart.items.reduce((accum, product) => accum + product.quantity, 0)
+
+    dispatch(updateCart({ cart, total: cart.grand_total, products: cart.items, quantity }))
   } catch (error) {
     dispatch(fetchCartProductsFailure(error.message))
   }

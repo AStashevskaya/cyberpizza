@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { builder, BuilderComponent } from '@builder.io/react'
+import { builder, BuilderComponent, BuilderContent } from '@builder.io/react'
 import swell from 'swell-js'
+import { useDispatch } from 'react-redux'
+import Header from '../Header'
+import Cart from '../Cart'
+import { addToCart } from '../../redux/cart/actions'
 
 import config from '../../../config'
 
@@ -13,6 +17,7 @@ const ProductCollection = ({ location }) => {
   const [products, setProducts] = useState([])
   const { pathname } = location
   const category = pathname.replace('/products/', '')
+  const dispatch = useDispatch()
 
   useEffect(() => {
     async function getProducts() {
@@ -28,9 +33,30 @@ const ProductCollection = ({ location }) => {
       .then(getProducts)
       .catch((error) => new Error(error))
   }, [])
-  console.log('products', products)
 
-  return <BuilderComponent model={BUILDER_MODEL} content={builderContentJson} data={{ products }} />
+  const addToCart = async (event, product) => {
+    console.log('this', this, 'added', product, 'event', event)
+    dispatch(addToCart(product.id))
+  }
+
+  return (
+    <BuilderContent model={BUILDER_MODEL}>
+      {(data) => {
+        return (
+          <>
+            <Header />
+            <Cart />
+            <BuilderComponent
+              model={BUILDER_MODEL}
+              content={builderContentJson}
+              data={{ products }}
+              context={{ addToCart }}
+            />
+          </>
+        )
+      }}
+    </BuilderContent>
+  )
 }
 
 export default ProductCollection

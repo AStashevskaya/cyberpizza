@@ -16,6 +16,7 @@ const initialState = {
   total: 0,
   quantity: 0,
   error: '',
+  cart: null,
 }
 
 const cart = (state = initialState, action) => {
@@ -39,6 +40,7 @@ const cart = (state = initialState, action) => {
         products: payload.products,
         total: payload.total,
         quantity: payload.quantity,
+        cart: payload.cart,
       }
     case FETCH_CART_PRODUCTS_FAILURE:
       return {
@@ -53,6 +55,7 @@ const cart = (state = initialState, action) => {
         products: payload.products,
         total: payload.total,
         quantity: payload.quantity,
+        cart: payload.cart,
       }
     case UPDATE_CART_ID:
       return {

@@ -8,7 +8,7 @@ import CartListContainer from './CartListContainer/CartListContainer'
 import Total from './Total/Total'
 import Popup from '../Popup/'
 
-import { toggleCart } from '../../redux/cart/actions'
+import { toggleCart, getCartProducts, removeProduct } from '../../redux/cart/actions'
 import { createOrder, order } from '../../redux/order'
 import arrow from '../../assets/icons/right-arrow.svg'
 
@@ -28,12 +28,15 @@ const Cart = () => {
       setCart(cart)
     }
 
-    getCart()
+    // getCart()
+    // dispatch(getCartProducts)
   }, [])
 
   const isOpen = useSelector((state) => state.cart.isOpen)
-  // const totalSum = useSelector((state) => state.cart.total)
+  const totalSum = useSelector((state) => state.cart.total)
   const message = useSelector((state) => state.order.message)
+  const products = useSelector((state) => state.cart.products)
+  console.log(totalSum, products)
 
   const dispatch = useDispatch()
 
@@ -42,9 +45,10 @@ const Cart = () => {
   }, [dispatch])
 
   const removeItem = async (id) => {
-    await swell.cart.removeItem(id)
-    await swell.cart.get()
-    setCart(cart)
+    dispatch(removeProduct(id))
+    // await swell.cart.removeItem(id)
+    // await swell.cart.get()
+    // setCart(cart)
   }
 
   const sendOrder = useCallback(() => {
@@ -71,8 +75,8 @@ const Cart = () => {
           </span>
           <div className="cart__info">
             <span className="cart__order">Orders:</span>
-            <CartListContainer products={cart ? cart.items : []} removeItem={removeItem} />
-            <Total sum={cart ? cart.grand_total : 0} />
+            <CartListContainer products={products} removeItem={removeItem} />
+            <Total sum={totalSum} />
             <button onClick={sendOrder} className="cart__button">
               Submit order
             </button>

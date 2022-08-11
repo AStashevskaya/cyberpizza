@@ -7,7 +7,7 @@ const Cards = ({ cards, loading, cartId }) => {
   return (
     <div className="container_cards">
       {cards.map((el) => (
-        <Card item={el} key={el._id} loading={loading} cartId={cartId} />
+        <Card item={el} key={el.id} loading={loading} cartId={cartId} />
       ))}
     </div>
   )

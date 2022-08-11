@@ -1,4 +1,8 @@
 import { fetchPizza } from '../../api/catalog'
+import swell from 'swell-js'
+import config from '../../../config'
+
+swell.init(config.storeId, config.publicKey)
 
 const FETCH_PRODUCTS_REQUEST = 'FETCH_PRODUCTS_REQUEST'
 const FETCH_PRODUCTS_SUCCESS = 'FETCH_PRODUCTS_SUCCESS'
@@ -18,14 +22,28 @@ const fetchProductsFail = (error) => ({
   payload: error,
 })
 
+// export const fetchProducts = () => async (dispatch) => {
+//   dispatch(fetchProductsRequest)
+
+//   try {
+//     const products = await fetchPizza()
+//     const { data } = await products
+
+//     dispatch(fetchProductsSuccess(data))
+//   } catch (error) {
+//     const { messege } = error
+//     dispatch(fetchProductsFail(messege))
+//   }
+// }
+
 export const fetchProducts = () => async (dispatch) => {
   dispatch(fetchProductsRequest)
 
   try {
-    const products = await fetchPizza()
-    const { data } = await products
+    const result = await swell.products.list()
+    const products = result.results
 
-    dispatch(fetchProductsSuccess(data))
+    dispatch(fetchProductsSuccess(products))
   } catch (error) {
     const { messege } = error
     dispatch(fetchProductsFail(messege))
