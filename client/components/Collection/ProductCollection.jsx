@@ -34,7 +34,7 @@ const ProductCollection = ({ location }) => {
       .catch((error) => new Error(error))
   }, [])
 
-  const addToCart = async (productId) => {
+  const addItemToCart = async (productId) => {
     console.log(productId, 'added')
     dispatch(addToCart(productId))
   }
@@ -50,7 +50,7 @@ const ProductCollection = ({ location }) => {
               model={BUILDER_MODEL}
               content={builderContentJson}
               data={{ products }}
-              context={{ addToCart }}
+              context={{ addToCart: addItemToCart }}
             />
           </>
         )
