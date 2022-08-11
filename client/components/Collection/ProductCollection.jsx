@@ -34,9 +34,9 @@ const ProductCollection = ({ location }) => {
       .catch((error) => new Error(error))
   }, [])
 
-  const addToCart = async (event, product) => {
-    console.log('this', this, 'added', product, 'event', event)
-    dispatch(addToCart(product.id))
+  const addToCart = async (productId) => {
+    console.log(productId, 'added')
+    dispatch(addToCart(productId))
   }
 
   return (
