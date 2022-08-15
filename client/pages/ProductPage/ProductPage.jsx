@@ -43,8 +43,7 @@ const ProductPage = ({ header }) => {
   return loading ? (
     <div>loading</div>
   ) : (
-    <BuilderContent model="page">
-      {' '}
+    <BuilderContent model="product-page">
       {() => {
         return (
           <>

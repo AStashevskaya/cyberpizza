@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { useLocation } from 'react-router-dom'
+
 import swell from 'swell-js'
 
 import config from '../../../config'
@@ -10,19 +12,24 @@ import Popup from '../Popup/'
 
 import { toggleCart, getCartProducts, removeProduct } from '../../redux/cart/actions'
 import { createOrder, order } from '../../redux/order'
-import arrow from '../../assets/icons/right-arrow.svg'
 
 import './Cart.scss'
 
 const Cart = () => {
   const [showCart, setShowCart] = useState(false)
   const [showPopup, setShowPopup] = useState(false)
+  const location = useLocation()
+  const { pathname } = location
 
   const isOpen = useSelector((state) => state.cart.isOpen)
   const totalSum = useSelector((state) => state.cart.total)
   const message = useSelector((state) => state.order.message)
   const products = useSelector((state) => state.cart.products)
   const currency = useSelector((state) => state.cart.currency)
+
+  useEffect(() => {
+    dispatch(getCartProducts())
+  }, [pathname, dispatch])
 
   const dispatch = useDispatch()
 
@@ -47,6 +54,7 @@ const Cart = () => {
       setShowCart(false)
     }
   }, [isOpen])
+  console.log('totalSum ', totalSum)
 
   return (
     <div className={showCart ? 'cart active' : 'cart'}>
@@ -54,7 +62,7 @@ const Cart = () => {
         <div className="cart__wrapper">
           <span onClick={handleClick}>
             Hide
-            <img src={arrow} alt="arrow" />
+            <img src={'./icons/right-arrow.svg'} alt="arrow" />
           </span>
           <div className="cart__info">
             <span className="cart__order">Orders:</span>

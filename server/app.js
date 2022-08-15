@@ -30,6 +30,7 @@ function prepareApp(url) {
   app.use(express.json())
   app.use(express.static('dist'))
   app.use('/files', express.static(path.join(__dirname, './files')))
+  app.use('/icons', express.static(path.join(__dirname, './icons')))
 
   app.use(productsRoutes)
   app.use(cartRoutes)

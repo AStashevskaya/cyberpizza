@@ -18,7 +18,7 @@ const OrderDisplay = () => {
   return (
     <div className="order">
       <div className="order__status" onClick={handleClick}>
-        <img src={dish} alt="dish" />
+        <img src={'./icons/dish.svg'} alt="dish" />
         <span>{status ? status : 'Cart'}</span>
       </div>
 
