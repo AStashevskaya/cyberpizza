@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { builder, BuilderComponent, BuilderContent } from '@builder.io/react'
 import swell from 'swell-js'
 import { useDispatch } from 'react-redux'
-import Header from '../Header'
 import Cart from '../Cart'
 import { addToCart } from '../../redux/cart/actions'
 
@@ -12,7 +11,7 @@ builder.init(config.apiKey)
 
 const BUILDER_MODEL = 'products-categories'
 
-const ProductCollection = ({ location }) => {
+const ProductCollection = ({ location, header }) => {
   const [builderContentJson, setBuilderContentJson] = useState(null)
   const [products, setProducts] = useState([])
   const { pathname } = location
@@ -35,7 +34,6 @@ const ProductCollection = ({ location }) => {
   }, [])
 
   const addItemToCart = async (productId) => {
-    console.log(productId, 'added')
     dispatch(addToCart(productId))
   }
 
@@ -44,7 +42,7 @@ const ProductCollection = ({ location }) => {
       {(data) => {
         return (
           <>
-            <Header />
+            <BuilderComponent model="new-header" content={header && header.value}/>
             <Cart />
             <BuilderComponent
               model={BUILDER_MODEL}

@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import { BuilderComponent, builder, BuilderContent } from '@builder.io/react'
 import { useLocation } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import swell from 'swell-js'
 
 import config from '../../../config'
+import Cart from '../../components/Cart'
 
 builder.init(config.apiKey)
 
-const ProductPage = () => {
+const ProductPage = ({ header }) => {
   const [builderContentJson, setBuilderContentJson] = useState(null)
   const [product, setProduct] = useState(null)
-  const [cart, setCart] = useState(null)
   const [loading, setLoading] = useState(true)
   const location = useLocation()
   const productPath = location.pathname.replace('/product/', '').toLowerCase()
-  console.log(productPath)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     swell.init(config.storeId, config.publicKey)
@@ -23,21 +24,6 @@ const ProductPage = () => {
 
       setProduct(product)
     }
-
-    const getCart = async () => {
-      const cart = await swell.cart.get()
-      console.log('cart', cart)
-      setCart(cart)
-    }
-
-    // const fetchData = async () => {
-    //   const result = await builder.getAll('product-page', {
-    //     options: { noTargeting: true },
-    //     apiKey: config.apiKey,
-    //   })
-    //   console.log('result', result)
-    // }
-    // fetchData()
     if (!product) {
       getProduct()
     }
@@ -46,33 +32,36 @@ const ProductPage = () => {
       .get('product-page', { url: '/product/' })
       .promise()
       .then(setBuilderContentJson)
-      .then(getCart())
+      // .then(getCart())
       .finally(setLoading(false))
   }, [product])
 
-  const addToCart = async (product) => {
-    await swell.cart.addItem({
-      product_id: product.id,
-      quantity: 1,
-    })
-    console.log('added')
-
-    const cart = await swell.cart.get()
-    console.log('cart', cart)
-    setCart(cart)
+  const addItemToCart = async (product) => {
+    dispatch(addToCart(product.id))
   }
 
   return loading ? (
     <div>loading</div>
   ) : (
-    <BuilderComponent
-      model="product-page"
-      content={builderContentJson}
-      data={{ product }}
-      context={{
-        addToCart
+    <BuilderContent model="page">
+      {' '}
+      {() => {
+        return (
+          <>
+            <BuilderComponent model="new-header" content={header && header.value} />
+            <BuilderComponent
+              model="product-page"
+              content={builderContentJson}
+              data={{ product }}
+              context={{
+                addToCart: addItemToCart,
+              }}
+            />
+            <Cart />
+          </>
+        )
       }}
-    />
+    </BuilderContent>
   )
 }
 

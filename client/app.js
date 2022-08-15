@@ -12,6 +12,8 @@ import config from '../config'
 builder.init(config.apiKey)
 
 import './components/Card/Card.builder'
+import './components/Navigation/Navigation.builder'
+import './components/Order/Order.builder'
 
 const App = () => {
   return (

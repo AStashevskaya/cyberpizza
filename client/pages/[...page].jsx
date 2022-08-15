@@ -5,6 +5,8 @@ import config from '../../config'
 import NotFound from './NotFoundPage/NotFound'
 import ProductCollection from '../components/Collection/ProductCollection'
 import ProductPage from '../pages/ProductPage/ProductPage'
+import Navigation from '../components/Navigation/Navigation'
+import Cart from '../components/Cart'
 
 builder.init(config.apiKey)
 
@@ -15,9 +17,12 @@ const CatchallPage = ({ location }) => {
   console.log('loc', location)
   const [content, setContent] = useState(null)
   const [notFound, setNotFound] = useState(false)
+  const [links, setLinks] = useState([])
+  const [headerJson, setHeaderJson] = useState(null)
+  console.log('pathname', location.pathname)
 
-  const isProductCollection = location.pathname.includes(PRODACTS_PATH)
-  const isProductPage = location.pathname.includes(PRODACT_PAGE)
+  const isProductCollection = location.pathname && location.pathname.includes(PRODACTS_PATH)
+  const isProductPage = location.pathname && location.pathname.includes(PRODACT_PAGE)
   console.log('isProductPage', isProductPage)
 
   useEffect(() => {
@@ -27,7 +32,10 @@ const CatchallPage = ({ location }) => {
           options: { noTargeting: true },
           apiKey: config.apiKey,
         })
-        console.log(pages)
+
+        const links = await builder.getAll('nav-links')
+        console.log('links', links)
+        setLinks(links)
 
         const pagecontent = pages.find((page) => {
           const path = page.query.find((value) => value.property === 'urlPath')
@@ -40,31 +48,39 @@ const CatchallPage = ({ location }) => {
           }
         })
 
-        const isLive = !Builder.isEditing && !Builder.isPreviewing
         setContent(pagecontent)
         !pagecontent && setNotFound(true)
       } catch (error) {
         console.log('rrr', error)
       }
     }
+
+    const fetchHeader = async () => {
+      const header = await builder.get('new-header')
+      console.log('header', header)
+
+      setHeaderJson(header)
+    }
     if (!isProductCollection && !isProductPage) {
       fetchContent()
     }
+
+    fetchHeader()
   }, [])
 
+  console.log('headerJson', headerJson)
   return isProductCollection ? (
-    <ProductCollection location={location} />
+    <ProductCollection location={location} header={headerJson} />
   ) : isProductPage ? (
-    <ProductPage />
+    <ProductPage header={headerJson} />
   ) : !notFound ? (
     <BuilderContent model="page">
       {(data) => {
         return (
           <>
-            <div> looool</div>
-            <BuilderComponent model="page" content={content}>
-              <div className="loading">comp</div>
-            </BuilderComponent>
+            <BuilderComponent model="new-header" content={headerJson && headerJson.value} />
+            <BuilderComponent model="page" content={content} />
+            <Cart />
           </>
         )
       }}

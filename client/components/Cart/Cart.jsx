@@ -17,26 +17,12 @@ import './Cart.scss'
 const Cart = () => {
   const [showCart, setShowCart] = useState(false)
   const [showPopup, setShowPopup] = useState(false)
-  const [cart, setCart] = useState(null)
-
-  useEffect(() => {
-    swell.init(config.storeId, config.publicKey)
-
-    const getCart = async () => {
-      const cart = await swell.cart.get()
-      console.log('cart', cart)
-      setCart(cart)
-    }
-
-    // getCart()
-    // dispatch(getCartProducts)
-  }, [])
 
   const isOpen = useSelector((state) => state.cart.isOpen)
   const totalSum = useSelector((state) => state.cart.total)
   const message = useSelector((state) => state.order.message)
   const products = useSelector((state) => state.cart.products)
-  console.log(totalSum, products)
+  const currency = useSelector((state) => state.cart.currency)
 
   const dispatch = useDispatch()
 
@@ -46,9 +32,6 @@ const Cart = () => {
 
   const removeItem = async (id) => {
     dispatch(removeProduct(id))
-    // await swell.cart.removeItem(id)
-    // await swell.cart.get()
-    // setCart(cart)
   }
 
   const sendOrder = useCallback(() => {
@@ -76,7 +59,7 @@ const Cart = () => {
           <div className="cart__info">
             <span className="cart__order">Orders:</span>
             <CartListContainer products={products} removeItem={removeItem} />
-            <Total sum={totalSum} />
+            <Total sum={totalSum} currency={currency} />
             <button onClick={sendOrder} className="cart__button">
               Submit order
             </button>
