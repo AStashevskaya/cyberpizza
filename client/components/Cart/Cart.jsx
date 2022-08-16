@@ -62,7 +62,7 @@ const Cart = () => {
         <div className="cart__wrapper">
           <span onClick={handleClick}>
             Hide
-            <img src={'./icons/right-arrow.svg'} alt="arrow" />
+            <img src={'/icons/right-arrow.svg'} alt="arrow" />
           </span>
           <div className="cart__info">
             <span className="cart__order">Orders:</span>
