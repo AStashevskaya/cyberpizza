@@ -7,6 +7,7 @@ import ProductCollection from '../components/Collection/ProductCollection'
 import ProductPage from '../pages/ProductPage/ProductPage'
 import Navigation from '../components/Navigation/Navigation'
 import Cart from '../components/Cart'
+import Footer from '../components/Footer/Footer'
 
 builder.init(config.apiKey)
 
@@ -80,7 +81,9 @@ const CatchallPage = ({ location }) => {
           <>
             <BuilderComponent model="new-header" content={headerJson && headerJson.value} />
             <BuilderComponent model="page" content={content} />
+            {/* <BuilderComponent model="new-header" content={footerJson && footerJson.value} /> */}
             <Cart />
+            <Footer />
           </>
         )
       }}

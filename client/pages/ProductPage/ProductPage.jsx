@@ -7,6 +7,7 @@ import { addToCart } from '../../redux/cart/actions'
 
 import config from '../../../config'
 import Cart from '../../components/Cart'
+import Footer from '../../components/Footer/Footer'
 
 builder.init(config.apiKey)
 
@@ -58,6 +59,7 @@ const ProductPage = ({ header }) => {
               }}
             />
             <Cart />
+            <Footer />
           </>
         )
       }}

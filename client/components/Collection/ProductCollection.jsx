@@ -3,6 +3,7 @@ import { builder, BuilderComponent, BuilderContent } from '@builder.io/react'
 import swell from 'swell-js'
 import { useDispatch } from 'react-redux'
 import Cart from '../Cart'
+import Footer from '../Footer/Footer'
 import { addToCart } from '../../redux/cart/actions'
 
 import config from '../../../config'
@@ -42,7 +43,7 @@ const ProductCollection = ({ location, header }) => {
       {(data) => {
         return (
           <>
-            <BuilderComponent model="new-header" content={header && header.value}/>
+            <BuilderComponent model="new-header" content={header && header.value} />
             <Cart />
             <BuilderComponent
               model={BUILDER_MODEL}
@@ -50,6 +51,7 @@ const ProductCollection = ({ location, header }) => {
               data={{ products }}
               context={{ addToCart: addItemToCart }}
             />
+            <Footer />
           </>
         )
       }}
