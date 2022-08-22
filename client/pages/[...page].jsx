@@ -43,6 +43,8 @@ const CatchallPage = ({ location }) => {
           }
         })
 
+        console.log('pagecontent', pagecontent)
+
         setContent(pagecontent)
         !pagecontent && setNotFound(true)
       } catch (error) {

@@ -5,10 +5,10 @@ import AdminPage from './pages/AdminPage'
 // import { ADMIN_LIST } from './constants/adminRoutes'
 
 const ROUTES = [
-  // {
-  //   component: CatalogPage,
-  //   path: '/',
-  // },
+  {
+    component: CatalogPage,
+    path: '/',
+  },
 
   {
     component: LoginPage,

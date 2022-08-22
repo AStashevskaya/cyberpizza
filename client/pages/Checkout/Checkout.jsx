@@ -13,7 +13,7 @@ import Navigation from '../../components/Navigation/Navigation'
 builder.init(config.apiKey)
 
 const Checkout = ({ content }) => {
-    console.log('content'. content)
+    console.log('content', content)
   return !content ? (
     <BuilderComponent model="page" content={content} />
   ) : (
