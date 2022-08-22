@@ -8,10 +8,11 @@ import { addToCart } from '../../redux/cart/actions'
 import config from '../../../config'
 import Cart from '../../components/Cart'
 import Footer from '../../components/Footer/Footer'
+import Navigation from '../../components/Navigation/Navigation'
 
 builder.init(config.apiKey)
 
-const ProductPage = ({ header }) => {
+const ProductPage = () => {
   const [builderContentJson, setBuilderContentJson] = useState(null)
   const [product, setProduct] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -34,7 +35,6 @@ const ProductPage = ({ header }) => {
       .get('product-page', { url: '/product/' })
       .promise()
       .then(setBuilderContentJson)
-      // .then(getCart())
       .finally(setLoading(false))
   }, [product])
 
@@ -49,7 +49,7 @@ const ProductPage = ({ header }) => {
       {() => {
         return (
           <>
-            <BuilderComponent model="new-header" content={header && header.value} />
+            <Navigation />
             <BuilderComponent
               model="product-page"
               content={builderContentJson}

@@ -42,6 +42,10 @@ const MainPage = () => {
       title: 'not found',
       path: '/sldsldsld',
     },
+    {
+      title: 'checkout',
+      path: '/checkout',
+    },
   ]
 
   useEffect(() => {

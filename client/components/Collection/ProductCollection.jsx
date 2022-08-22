@@ -12,7 +12,7 @@ builder.init(config.apiKey)
 
 const BUILDER_MODEL = 'products-categories'
 
-const ProductCollection = ({ location, header }) => {
+const ProductCollection = ({ location }) => {
   const [builderContentJson, setBuilderContentJson] = useState(null)
   const [products, setProducts] = useState([])
   const { pathname } = location
@@ -43,7 +43,7 @@ const ProductCollection = ({ location, header }) => {
       {(data) => {
         return (
           <>
-            <BuilderComponent model="new-header" content={header && header.value} />
+            {/* <BuilderComponent model="new-header" content={header && header.value} /> */}
             <Cart />
             <BuilderComponent
               model={BUILDER_MODEL}

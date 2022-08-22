@@ -2,7 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { hot } from 'react-hot-loader/root'
-import { builder, Builder, BuilderContent } from '@builder.io/react'
+import { builder } from '@builder.io/react'
 import CatchallPage from './pages/[...page]'
 
 import store from './redux/store'
@@ -12,8 +12,8 @@ import config from '../config'
 builder.init(config.apiKey)
 
 import './components/Card/Card.builder'
-import './components/Navigation/Navigation.builder'
 import './components/Order/Order.builder'
+import './pages/Checkout/CheckoutForm.builder'
 
 const App = () => {
   return (
