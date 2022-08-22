@@ -67,9 +67,7 @@ const CatchallPage = ({ location }) => {
         return (
           <>
             <Navigation />
-            {/* <BuilderComponent model="new-header" content={headerJson && headerJson.value} /> */}
             <BuilderComponent model="page" content={content} />
-            {/* <BuilderComponent model="new-header" content={footerJson && footerJson.value} /> */}
             <Cart />
             <Footer />
           </>
