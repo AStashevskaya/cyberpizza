@@ -32,6 +32,8 @@ const Checkout = ({ content }) => {
         }
       })
 
+      console.log('page', pagecontent)
+
       pagecontent && setContentJson(pagecontent)
     }
 
@@ -40,7 +42,9 @@ const Checkout = ({ content }) => {
       fetchContent()
     }
   }, [])
-  return !content || !contentJson ? (
+
+  console.log('content', content, contentJson)
+  return !content && !contentJson ? (
     <div> loading </div>
   ) : (
     <BuilderContent model="page">
