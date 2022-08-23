@@ -43,7 +43,7 @@ const ProductCollection = ({ location }) => {
       {(data) => {
         return (
           <>
-            {/* <BuilderComponent model="new-header" content={header && header.value} /> */}
+            <BuilderComponent model="new-header" content={header && header.value} />
             <Cart />
             <BuilderComponent
               model={BUILDER_MODEL}

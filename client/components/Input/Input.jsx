@@ -15,6 +15,7 @@ const Input = ({ placeholder, value, handleChange, type, name, id, error }) => {
         type={type}
         name={name}
         id={id}
+        className={error ? 'error__input' : ''}
       />
       {error ? <ErrorField text={error} /> : ''}
     </div>

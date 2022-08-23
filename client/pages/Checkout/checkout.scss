@@ -1,0 +1,15 @@
+button {
+    margin-top: 20px;
+    padding: 15px 25px;
+    font-size: 20px;
+    width: 100%;
+    color: white;
+    background-color: black;
+    text-transform: capitalize;
+    letter-spacing: 1.25px;
+}
+
+button:disabled {
+        background-color: black;
+        opacity: 0.8
+}

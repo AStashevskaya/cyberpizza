@@ -6,6 +6,7 @@ import * as yup from 'yup'
 import Input from '../../components/Input'
 import ErrorField from '../../components/ErrorFIeld'
 import { signIn } from '../../redux/user'
+import './checkout.scss'
 
 const schema = yup.object().shape({
   name: yup.string().required('Required'),
@@ -13,7 +14,16 @@ const schema = yup.object().shape({
   shipping: yup.string().required('Required'),
   city: yup.string().required('Required'),
   address: yup.string().required('Required'),
-  mobile: yup.string().required('Required'),
+  mobile: yup
+    .string()
+    .required('Required')
+    .test('number', 'Unsupported mobile number', (value) => {
+      // console.log(value.trim().match(/[^ ([0 - 9] * $)]/))
+      let tel = value && value.startsWith('+') ? value.slice(1, -1) : value
+      tel = tel && tel.split('-').join('')
+      tel = Number(tel)
+      return !isNaN(tel)
+    }),
 })
 
 const initValues = {
@@ -28,16 +38,10 @@ const initValues = {
 const Checkout = (props) => {
   const dispatch = useDispatch()
 
-  const handleFormSubmit = useCallback(
-    async (values) => {
-      console.log('values', values)
-      //   dispatch(signIn(values))
-    },
-    [dispatch]
-  )
-
-  console.log('checkout props', props)
-  console.log('checkout children', props.children)
+  const handleFormSubmit = useCallback(async (values) => {
+    console.log('values', values)
+    //   dispatch(signIn(values))
+  }, [])
 
   return (
     <Formik initialValues={initValues} validationSchema={schema} onSubmit={handleFormSubmit}>
@@ -94,6 +98,16 @@ const Checkout = (props) => {
           <Field
             component={Input}
             type="text"
+            name="address"
+            id="address"
+            placeholder="address"
+            value={values.address}
+            handleChange={handleChange}
+            error={touched.address ? errors.address : ''}
+          />
+          <Field
+            component={Input}
+            type="text"
             name="mobile"
             id="mobile"
             placeholder="mobile"
@@ -102,9 +116,8 @@ const Checkout = (props) => {
             error={touched.mobile ? errors.mobile : ''}
           />
           <button type="submit" disabled={isSubmitting}>
-            submit
+            Submit
           </button>
-          {props.children && props.children.map((element) => element)}
         </Form>
       )}
     </Formik>
