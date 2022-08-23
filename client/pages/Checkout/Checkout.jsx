@@ -44,9 +44,7 @@ const Checkout = ({ content }) => {
   }, [])
 
   console.log('content', content, contentJson)
-  return !content && !contentJson ? (
-    <div> loading </div>
-  ) : (
+  return (
     <BuilderContent model="page">
       {() => {
         return (
