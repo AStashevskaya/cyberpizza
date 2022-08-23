@@ -7,6 +7,7 @@ import Footer from '../Footer/Footer'
 import { addToCart } from '../../redux/cart/actions'
 
 import config from '../../../config'
+import Navigation from '../Navigation/Navigation'
 
 builder.init(config.apiKey)
 
@@ -43,7 +44,8 @@ const ProductCollection = ({ location }) => {
       {(data) => {
         return (
           <>
-            <BuilderComponent model="new-header" content={header && header.value} />
+            {/* <BuilderComponent model="new-header" content={header && header.value} /> */}
+            <Navigation />
             <Cart />
             <BuilderComponent
               model={BUILDER_MODEL}

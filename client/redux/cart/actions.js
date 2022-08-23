@@ -139,6 +139,7 @@ export const getCartProducts = () => async (dispatch) => {
     const quantity =
       (cart && cart.items.reduce((accum, product) => accum + product.quantity, 0)) || 0
 
+    console.log('cart', cart)
     dispatch(
       fetchCartProductsSuccess({
         products: (cart && cart.items) || [],

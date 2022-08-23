@@ -44,6 +44,7 @@ const Checkout = ({ content }) => {
   }, [])
 
   console.log('content', content, contentJson)
+  console.log('cart from checkout', cart)
   return (
     <BuilderContent model="page">
       {() => {
