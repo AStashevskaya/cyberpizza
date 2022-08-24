@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import swell from 'swell-js'
 import { addToCart, getCartProducts } from '../../redux/cart/actions'
+import { fetchProducts } from '../../redux/catalog'
 
 import config from '../../../config'
 import Cart from '../../components/Cart'
@@ -15,6 +16,8 @@ builder.init(config.apiKey)
 const Checkout = ({ content }) => {
   const [contentJson, setContentJson] = useState(null)
   const cart = useSelector((state) => state.cart.cart)
+  const products = useSelector(state => state.cart.products)
+  const catalog = useSelector(state => state.catalog.products)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -38,20 +41,20 @@ const Checkout = ({ content }) => {
     }
 
     dispatch(getCartProducts())
+    dispatch(fetchProducts())
     if (!content) {
       fetchContent()
     }
   }, [])
 
   console.log('content', content, contentJson)
-  console.log('cart from checkout', cart)
+  console.log('cart from checkout', cart, products)
   return (
     <BuilderContent model="page">
       {() => {
         return (
           <>
-            <Navigation />
-            <BuilderComponent model="page" content={content || contentJson} data={{ cart }} />
+            <BuilderComponent model="page" content={content || contentJson} data={{ cart, products, catalog }} />
             <Footer />
           </>
         )
