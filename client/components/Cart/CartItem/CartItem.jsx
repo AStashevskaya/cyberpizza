@@ -11,7 +11,6 @@ const CartItem = ({ product, handleClick, removeItem }) => {
   const { quantity, name, images } = product.product
   const { id } = product
   const dispatch = useDispatch()
-  console.log(product)
 
   const handleClickPlus = useCallback(() => {
     dispatch(updateItemQuantity(id, 1))

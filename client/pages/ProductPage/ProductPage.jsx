@@ -9,6 +9,7 @@ import config from '../../../config'
 import Cart from '../../components/Cart'
 import Footer from '../../components/Footer/Footer'
 import Navigation from '../../components/Navigation/Navigation'
+import { useCallback } from 'react'
 
 builder.init(config.apiKey)
 
@@ -35,11 +36,16 @@ const ProductPage = () => {
       const product = await swell.products.get(productPath)
       const sizeOption = product.options.find((option) => option.name === 'size')
       const baseOption = product.options.find((option) => option.name === 'base')
+      const defaultVariation = await swell.products.variation(product, {
+        ...options,
+      })
 
       setSizes(sizeOption.values)
       setBase(baseOption.values)
       setProduct(product)
+      setVariation(defaultVariation)
     }
+
     if (!product) {
       getProduct()
     }
@@ -49,13 +55,13 @@ const ProductPage = () => {
       .promise()
       .then(setBuilderContentJson)
       .finally(setLoading(false))
-  }, [product])
+  }, [product, productPath])
 
   const addItemToCart = async (product) => {
     dispatch(addToCart(product.id))
   }
 
-  const chooseSize = async (name) => {
+  const chooseSize = async (product, name) => {
     setOptions({ size: name, ...options })
     const swellVariation = await swell.products.variation(product, {
       ...options,
@@ -65,8 +71,9 @@ const ProductPage = () => {
     setVariation(swellVariation)
   }
 
-  const chooseBase = async (name) => {
+  const chooseBase = async (product, name) => {
     setOptions({ base: name, ...options })
+
     const swellVariation = await swell.products.variation(product, {
       ...options,
     })
@@ -86,10 +93,10 @@ const ProductPage = () => {
             <BuilderComponent
               model="product-page"
               content={builderContentJson}
-              data={{ product, variation, sizes, base }}
+              data={{ product, variation, sizes, base, defaultOptions }}
               context={{
                 addToCart: addItemToCart,
-                chooseSize,
+                chooseSize: chooseSize,
                 chooseBase,
               }}
             />
