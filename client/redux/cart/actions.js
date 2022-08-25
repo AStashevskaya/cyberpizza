@@ -182,3 +182,39 @@ export const addToCart = (productId) => async (dispatch) => {
     dispatch(fetchCartProductsFailure(error.message))
   }
 }
+
+export const updateItemQuantity = (productId, quantity) => async (dispatch, getState) => {
+  dispatch(fetchCartProductsRequest())
+  const { products } = getState().cart
+  const currentProduct = products.find((product) => product.id === productId)
+  const currentQuantity = currentProduct && currentProduct.quantity
+  const newQuantity = currentQuantity + quantity
+  console.log('currentProduct', currentProduct, currentQuantity, newQuantity)
+
+  try {
+    let cart
+    console.log('newQuantity', newQuantity >= 1)
+
+    if (currentProduct && newQuantity >= 1) {
+      cart = await swell.cart.updateItem(productId, {
+        quantity: newQuantity,
+      })
+    } else if (!currentProduct) {
+      cart = await swell.cart.addItem({
+        product_id: productId,
+        quantity: 1,
+      })
+    } else if (newQuantity <= 0) {
+      cart = await swell.cart.removeItem(productId)
+    }
+
+    console.log('cart from actions', cart)
+
+    const quantity = cart.items.reduce((accum, product) => accum + product.quantity, 0)
+
+    dispatch(updateCart({ cart, total: cart.grand_total, products: cart.items, quantity }))
+  } catch (error) {
+    console.log('eroor from update', error)
+    dispatch(fetchCartProductsFailure(error.message))
+  }
+}

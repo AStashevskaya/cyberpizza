@@ -46,6 +46,10 @@ const MainPage = () => {
       title: 'checkout',
       path: '/checkout',
     },
+    {
+      title: 'italian',
+      path: '/product/italian',
+    },
   ]
 
   useEffect(() => {

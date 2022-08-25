@@ -12,10 +12,19 @@ import Navigation from '../../components/Navigation/Navigation'
 
 builder.init(config.apiKey)
 
+const defaultOptions = {
+  size: 'small',
+  base: 'american',
+}
+
 const ProductPage = () => {
   const [builderContentJson, setBuilderContentJson] = useState(null)
   const [product, setProduct] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [options, setOptions] = useState(defaultOptions)
+  const [variation, setVariation] = useState(null)
+  const [sizes, setSizes] = useState([])
+  const [base, setBase] = useState([])
   const location = useLocation()
   const productPath = location.pathname.replace('/product/', '').toLowerCase()
   const dispatch = useDispatch()
@@ -24,7 +33,11 @@ const ProductPage = () => {
     swell.init(config.storeId, config.publicKey)
     const getProduct = async () => {
       const product = await swell.products.get(productPath)
+      const sizeOption = product.options.find((option) => option.name === 'size')
+      const baseOption = product.options.find((option) => option.name === 'base')
 
+      setSizes(sizeOption.values)
+      setBase(baseOption.values)
       setProduct(product)
     }
     if (!product) {
@@ -42,6 +55,26 @@ const ProductPage = () => {
     dispatch(addToCart(product.id))
   }
 
+  const chooseSize = async (name) => {
+    setOptions({ size: name, ...options })
+    const swellVariation = await swell.products.variation(product, {
+      ...options,
+    })
+    console.log('swellVariation', swellVariation)
+
+    setVariation(swellVariation)
+  }
+
+  const chooseBase = async (name) => {
+    setOptions({ base: name, ...options })
+    const swellVariation = await swell.products.variation(product, {
+      ...options,
+    })
+
+    console.log('swellVariation', swellVariation)
+    setVariation(swellVariation)
+  }
+
   return loading ? (
     <div>loading</div>
   ) : (
@@ -53,9 +86,11 @@ const ProductPage = () => {
             <BuilderComponent
               model="product-page"
               content={builderContentJson}
-              data={{ product }}
+              data={{ product, variation, sizes, base }}
               context={{
                 addToCart: addItemToCart,
+                chooseSize,
+                chooseBase,
               }}
             />
             <Cart />

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import swell from 'swell-js'
 
@@ -25,7 +26,7 @@ const Cart = () => {
   const totalSum = useSelector((state) => state.cart.total)
   const message = useSelector((state) => state.order.message)
   const products = useSelector((state) => state.cart.products)
-  const currency = useSelector((state) => state.cart.currency)
+  const cart = useSelector((state) => state.cart.cart)
 
   useEffect(() => {
     dispatch(getCartProducts())
@@ -41,11 +42,11 @@ const Cart = () => {
     dispatch(removeProduct(id))
   }
 
-  const sendOrder = useCallback(() => {
-    dispatch(createOrder())
-    setShowPopup(true)
-    setShowCart(false)
-  }, [dispatch])
+  // const sendOrder = useCallback(() => {
+  //   dispatch(createOrder())
+  //   setShowPopup(true)
+  //   setShowCart(false)
+  // }, [dispatch])
 
   useEffect(() => {
     if (isOpen) {
@@ -67,10 +68,13 @@ const Cart = () => {
           <div className="cart__info">
             <span className="cart__order">Orders:</span>
             <CartListContainer products={products} removeItem={removeItem} />
-            <Total sum={totalSum} currency={currency} />
-            <button onClick={sendOrder} className="cart__button">
+            <Total sum={totalSum} currency={cart && cart.currency} />
+            {/* <button onClick={sendOrder} className="cart__button">
               Submit order
-            </button>
+            </button> */}
+            <Link to="/checkout" className="cart__button">
+              Submit order
+            </Link>
           </div>
         </div>
       </div>

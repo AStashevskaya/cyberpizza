@@ -1,23 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import { BuilderComponent, builder, BuilderContent } from '@builder.io/react'
-import { useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import swell from 'swell-js'
-import { addToCart, getCartProducts } from '../../redux/cart/actions'
+import { getCartProducts, removeProduct } from '../../redux/cart/actions'
 import { fetchProducts } from '../../redux/catalog'
 
 import config from '../../../config'
-import Cart from '../../components/Cart'
 import Footer from '../../components/Footer/Footer'
-import Navigation from '../../components/Navigation/Navigation'
 
 builder.init(config.apiKey)
 
 const Checkout = ({ content }) => {
   const [contentJson, setContentJson] = useState(null)
   const cart = useSelector((state) => state.cart.cart)
-  const products = useSelector(state => state.cart.products)
-  const catalog = useSelector(state => state.catalog.products)
+  const products = useSelector((state) => state.cart.products)
+  const catalog = useSelector((state) => state.catalog.products)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -47,6 +43,14 @@ const Checkout = ({ content }) => {
     }
   }, [])
 
+  const removeItemFromCart = (id) => {
+    dispatch(removeProduct(id))
+  }
+
+  const updateCartItem = (id) => {
+
+  }
+
   console.log('content', content, contentJson)
   console.log('cart from checkout', cart, products)
   return (
@@ -54,7 +58,11 @@ const Checkout = ({ content }) => {
       {() => {
         return (
           <>
-            <BuilderComponent model="page" content={content || contentJson} data={{ cart, products, catalog }} />
+            <BuilderComponent
+              model="page"
+              content={content || contentJson}
+              data={{ cart, products, catalog }}
+            />
             <Footer />
           </>
         )
