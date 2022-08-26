@@ -14,20 +14,30 @@ import './productPage.scss'
 builder.init(config.apiKey)
 
 const defaultOptions = {
-  size: 'small',
-  base: 'american',
+  pizza: {
+    size: 'small',
+    base: 'american',
+  },
+  drink: {
+    size: '0.3',
+  },
+  wok: {
+    size: 'small',
+    spicy: 'hot',
+    noodles: 'rice',
+  },
 }
 
 const ProductPage = () => {
   const [builderContentJson, setBuilderContentJson] = useState(null)
   const [product, setProduct] = useState(null)
   const [loading, setLoading] = useState(true)
-  const [options, setOptions] = useState(defaultOptions)
   const [variation, setVariation] = useState(null)
   const [sizes, setSizes] = useState([])
   const [base, setBase] = useState([])
   const location = useLocation()
   const productPath = location.pathname.replace('/product/', '').toLowerCase()
+  const [options, setOptions] = useState(defaultOptions[productPath])
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -89,6 +99,34 @@ const ProductPage = () => {
     setVariation(swellVariation)
   }
 
+  const chooseNoodles = async (product, name, options) => {
+    const newOptions = { ...options, noodles: name }
+    setOptions(newOptions)
+    console.log('vase opt', options, 'name', options)
+
+    const swellVariation = await swell.products.variation(product, {
+      ...newOptions,
+    })
+    console.log('base new opt', newOptions)
+
+    console.log('swellVariation', swellVariation)
+    setVariation(swellVariation)
+  }
+
+  const chooseOption = async (product, option, options) => {
+    const newOptions = { ...options, ...option }
+    setOptions(newOptions)
+    console.log('choose Option', options, 'name', option)
+
+    const swellVariation = await swell.products.variation(product, {
+      ...newOptions,
+    })
+    console.log('base new opt', newOptions)
+
+    console.log('swellVariation', swellVariation)
+    setVariation(swellVariation)
+  }
+
   return loading ? (
     <div>loading</div>
   ) : (
@@ -100,11 +138,13 @@ const ProductPage = () => {
             <BuilderComponent
               model="product-page"
               content={builderContentJson}
-              data={{ product, variation, sizes, base, options }}
+              data={{ product, variation, sizes, base, options, productType: productPath }}
               context={{
                 addToCart: addItemToCart,
                 chooseSize: chooseSize,
                 chooseBase,
+                chooseNoodles,
+                chooseOption
               }}
             />
             <Cart />
