@@ -19,12 +19,11 @@ const defaultOptions = {
     base: 'american',
   },
   drink: {
-    size: '0.3',
+    size: '0.33',
   },
   wok: {
-    size: 'small',
+    size: 'medium',
     spicy: 'hot',
-    noodles: 'rice',
   },
 }
 
@@ -35,6 +34,7 @@ const ProductPage = () => {
   const [variation, setVariation] = useState(null)
   const [sizes, setSizes] = useState([])
   const [base, setBase] = useState([])
+  const [spicy, setSpicy] = useState([])
   const location = useLocation()
   const productPath = location.pathname.replace('/product/', '').toLowerCase()
   const [options, setOptions] = useState(defaultOptions[productPath])
@@ -46,12 +46,14 @@ const ProductPage = () => {
       const product = await swell.products.get(productPath)
       const sizeOption = product.options.find((option) => option.name === 'size')
       const baseOption = product.options.find((option) => option.name === 'base')
+      const spiceOption = product.options.find((option) => option.name === 'spicy')
       const defaultVariation = await swell.products.variation(product, {
         ...options,
       })
 
       sizeOption && setSizes(sizeOption.values)
       baseOption && setBase(baseOption.values)
+      spiceOption && setSpicy(spiceOption.values)
       setProduct(product)
       setVariation(defaultVariation)
     }
@@ -138,7 +140,7 @@ const ProductPage = () => {
             <BuilderComponent
               model="product-page"
               content={builderContentJson}
-              data={{ product, variation, sizes, base, options, productType: productPath }}
+              data={{ product, variation, sizes, base, options, spicy }}
               context={{
                 addToCart: addItemToCart,
                 chooseSize: chooseSize,
