@@ -166,13 +166,14 @@ export const removeProduct = (productId) => async (dispatch) => {
   }
 }
 
-export const addToCart = (productId) => async (dispatch) => {
+export const addToCart = (productId, options) => async (dispatch) => {
   dispatch(fetchCartProductsRequest())
 
   try {
     const cart = await swell.cart.addItem({
       product_id: productId,
       quantity: 1,
+      options,
     })
 
     const quantity = cart.items.reduce((accum, product) => accum + product.quantity, 0)

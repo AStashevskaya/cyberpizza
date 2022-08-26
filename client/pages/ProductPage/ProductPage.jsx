@@ -9,7 +9,7 @@ import config from '../../../config'
 import Cart from '../../components/Cart'
 import Footer from '../../components/Footer/Footer'
 import Navigation from '../../components/Navigation/Navigation'
-import { useCallback } from 'react'
+import './productPage.scss'
 
 builder.init(config.apiKey)
 
@@ -57,26 +57,33 @@ const ProductPage = () => {
       .finally(setLoading(false))
   }, [product, productPath])
 
-  const addItemToCart = async (product) => {
-    dispatch(addToCart(product.id))
+  const addItemToCart = async (product, options) => {
+    console.log('opt from memo', options, product, this)
+    dispatch(addToCart(product.id, options))
   }
 
-  const chooseSize = async (product, name) => {
-    setOptions({ size: name, ...options })
-    const swellVariation = await swell.products.variation(product, {
-      ...options,
-    })
-    console.log('swellVariation', swellVariation)
+  const chooseSize = async (product, name, options) => {
+    console.log('size options', options)
+    const newOptions = { ...options, size: name }
 
+    console.log('size new opt', newOptions)
+    setOptions(newOptions)
+
+    const swellVariation = await swell.products.variation(product, {
+      ...newOptions,
+    })
     setVariation(swellVariation)
   }
 
-  const chooseBase = async (product, name) => {
+  const chooseBase = async (product, name, options) => {
+    const newOptions = { ...options, base: name }
     setOptions({ base: name, ...options })
+    console.log('vase opt', options)
 
     const swellVariation = await swell.products.variation(product, {
-      ...options,
+      ...newOptions,
     })
+    console.log('base new opt', newOptions)
 
     console.log('swellVariation', swellVariation)
     setVariation(swellVariation)
@@ -93,7 +100,7 @@ const ProductPage = () => {
             <BuilderComponent
               model="product-page"
               content={builderContentJson}
-              data={{ product, variation, sizes, base, defaultOptions }}
+              data={{ product, variation, sizes, base, options }}
               context={{
                 addToCart: addItemToCart,
                 chooseSize: chooseSize,
