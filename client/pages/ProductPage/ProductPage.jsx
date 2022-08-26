@@ -27,6 +27,8 @@ const defaultOptions = {
   },
 }
 
+const DEFAULT_PRODUCT_TYPE = 'pizza'
+
 const ProductPage = () => {
   const [builderContentJson, setBuilderContentJson] = useState(null)
   const [product, setProduct] = useState(null)
@@ -37,7 +39,7 @@ const ProductPage = () => {
   const [spicy, setSpicy] = useState([])
   const location = useLocation()
   const productPath = location.pathname.replace('/product/', '').toLowerCase()
-  const [options, setOptions] = useState(defaultOptions[productPath])
+  const [options, setOptions] = useState(null)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -51,9 +53,16 @@ const ProductPage = () => {
         ...options,
       })
 
+      const productType =
+        (product.attributes &&
+          product.attributes.product_type &&
+          product.attributes.product_type.value) ||
+        DEFAULT_PRODUCT_TYPE
+
       sizeOption && setSizes(sizeOption.values)
       baseOption && setBase(baseOption.values)
       spiceOption && setSpicy(spiceOption.values)
+      setOptions(defaultOptions[productType])
       setProduct(product)
       setVariation(defaultVariation)
     }
@@ -70,62 +79,17 @@ const ProductPage = () => {
   }, [product, productPath])
 
   const addItemToCart = async (product, options) => {
-    console.log('opt from memo', options, product, this)
     dispatch(addToCart(product.id, options))
-  }
-
-  const chooseSize = async (product, name, options) => {
-    console.log('size options', options)
-    const newOptions = { ...options, size: name }
-
-    console.log('size new opt', newOptions)
-    setOptions(newOptions)
-
-    const swellVariation = await swell.products.variation(product, {
-      ...newOptions,
-    })
-    setVariation(swellVariation)
-  }
-
-  const chooseBase = async (product, name, options) => {
-    const newOptions = { ...options, base: name }
-    setOptions(newOptions)
-    console.log('vase opt', options, 'name', options)
-
-    const swellVariation = await swell.products.variation(product, {
-      ...newOptions,
-    })
-    console.log('base new opt', newOptions)
-
-    console.log('swellVariation', swellVariation)
-    setVariation(swellVariation)
-  }
-
-  const chooseNoodles = async (product, name, options) => {
-    const newOptions = { ...options, noodles: name }
-    setOptions(newOptions)
-    console.log('vase opt', options, 'name', options)
-
-    const swellVariation = await swell.products.variation(product, {
-      ...newOptions,
-    })
-    console.log('base new opt', newOptions)
-
-    console.log('swellVariation', swellVariation)
-    setVariation(swellVariation)
   }
 
   const chooseOption = async (product, option, options) => {
     const newOptions = { ...options, ...option }
     setOptions(newOptions)
-    console.log('choose Option', options, 'name', option)
 
     const swellVariation = await swell.products.variation(product, {
       ...newOptions,
     })
-    console.log('base new opt', newOptions)
 
-    console.log('swellVariation', swellVariation)
     setVariation(swellVariation)
   }
 
@@ -143,10 +107,7 @@ const ProductPage = () => {
               data={{ product, variation, sizes, base, options, spicy }}
               context={{
                 addToCart: addItemToCart,
-                chooseSize: chooseSize,
-                chooseBase,
-                chooseNoodles,
-                chooseOption
+                chooseOption,
               }}
             />
             <Cart />
