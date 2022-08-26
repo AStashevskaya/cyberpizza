@@ -40,8 +40,8 @@ const ProductPage = () => {
         ...options,
       })
 
-      setSizes(sizeOption.values)
-      setBase(baseOption.values)
+      sizeOption && setSizes(sizeOption.values)
+      baseOption && setBase(baseOption.values)
       setProduct(product)
       setVariation(defaultVariation)
     }
@@ -77,8 +77,8 @@ const ProductPage = () => {
 
   const chooseBase = async (product, name, options) => {
     const newOptions = { ...options, base: name }
-    setOptions({ base: name, ...options })
-    console.log('vase opt', options)
+    setOptions(newOptions)
+    console.log('vase opt', options, 'name', options)
 
     const swellVariation = await swell.products.variation(product, {
       ...newOptions,

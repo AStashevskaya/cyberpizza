@@ -50,6 +50,10 @@ const MainPage = () => {
       title: 'italian',
       path: '/product/italian',
     },
+    {
+      title: 'sprite',
+      path: '/product/sprite',
+    },
   ]
 
   useEffect(() => {
